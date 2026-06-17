@@ -82,6 +82,11 @@
     font-size:clamp(1.8rem,4vw,3rem)}
   .teaser-copy h2 .grad-text{display:inline}
   .teaser-copy p{color:var(--muted);margin-top:16px;font-size:.96rem;max-width:42ch}
+  .yt-link{display:inline-flex;align-items:center;gap:8px;margin-top:20px;text-decoration:none;
+    color:var(--text);font-weight:700;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:10px 16px;border:1px solid var(--line-strong);border-radius:999px;transition:all .25s}
+  .yt-link:hover{border-color:var(--pink);color:var(--pink)}
+  .yt-link svg{width:16px;height:16px;display:block}
   .teaser-frame{position:relative;width:100%;max-width:340px;margin:0 auto;aspect-ratio:9/16;
     border-radius:14px;overflow:hidden;border:1px solid var(--line-strong);
     box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
@@ -168,6 +173,10 @@
         <span class="eyebrow">Ein erster Blick</span>
         <h2>buttje <span class="grad-text">in Bewegung</span></h2>
         <p>Verbrauchsgüter mit Haltung — handgeführt, nummeriert, ernst gemeint. Der Shop kommt bald.</p>
+        <a class="yt-link" href="https://youtube.com/shorts/ET-zmiwPL0w" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.5 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>
+          Auf YouTube ansehen
+        </a>
       </div>
       <div class="teaser-frame">
         <video id="teaserVideo" src="shop-teaser.mp4" poster="shop-teaser-poster.jpg"
