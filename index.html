@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>buttje® — Shop · Demnächst</title>
+<meta name="description" content="Der buttje Shop kommt bald. Verbrauchsgüter mit Haltung — handgeführt, ernst gemeint. Wien.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --base:#0E0E12;
+    --text:#F4F4F6;
+    --muted:rgba(244,244,246,.52);
+    --line:rgba(244,244,246,.14);
+    --line-strong:rgba(244,244,246,.34);
+    --pink:#5CC8FF;
+    --grad:linear-gradient(115deg,#FFE24A 0%,#8DE3B0 17%,#5CC8FF 40%,#4A86FF 60%,#5B6CFF 80%,#8A5BFF 100%);
+    --near-black:#0E0E12;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--base);color:var(--text);font-family:'Inter',sans-serif;
+    font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    min-height:100vh;display:flex;flex-direction:column}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 clamp(18px,5vw,64px);width:100%}
+
+  @keyframes holo{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes glitch{
+    0%,90%,100%{text-shadow:2px 0 rgba(92,200,255,.55),-2px 0 rgba(255,95,168,.55);transform:translate(0)}
+    92%{text-shadow:6px 0 rgba(92,200,255,.75),-6px 0 rgba(255,95,168,.75);transform:translate(-2px,1px)}
+    94%{text-shadow:-5px 0 rgba(92,200,255,.75),5px 0 rgba(255,95,168,.75);transform:translate(2px,-1px)}
+    96%{text-shadow:2px 0 rgba(92,200,255,.55),-2px 0 rgba(255,95,168,.55);transform:translate(0)}
+  }
+
+  .grad-text{background:var(--grad);background-size:240% 240%;animation:holo 9s ease-in-out infinite;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--pink)}
+  .eyebrow{font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+
+  .topbar{border-bottom:1px solid var(--line);font-size:.64rem;letter-spacing:.24em;
+    text-transform:uppercase;font-weight:600;text-align:center;padding:9px 12px;color:var(--text)}
+
+  nav{border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .mark{font-weight:800;font-size:1.4rem;letter-spacing:-.04em;text-transform:lowercase;text-decoration:none}
+  .mark sup{font-size:.5em;font-weight:600;top:-.7em;-webkit-text-fill-color:var(--text)}
+  .nav-back{color:var(--text);text-decoration:none;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;font-weight:600}
+  .nav-back:hover{color:var(--pink)}
+
+  /* HERO – Coming Soon */
+  .hero{position:relative;flex:1;display:flex;align-items:center;
+    background:var(--grad);background-size:240% 240%;animation:holo 12s ease-in-out infinite}
+  .hero::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 90% at 50% 120%, rgba(14,14,18,.55), transparent 62%)}
+  .seal{position:absolute;top:clamp(24px,6vw,56px);right:clamp(18px,5vw,64px);z-index:3;
+    width:clamp(96px,14vw,150px);height:clamp(96px,14vw,150px);border-radius:50%;
+    background:var(--grad);background-size:240% 240%;
+    animation:holo 9s ease-in-out infinite, spin 18s linear infinite;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    box-shadow:inset 0 0 0 2px rgba(14,14,18,.28)}
+  .seal span{color:var(--near-black);font-weight:800;font-size:.58rem;letter-spacing:.12em;
+    text-transform:uppercase;line-height:1.3;padding:0 12px}
+  .hero-content{position:relative;z-index:2;width:100%;padding:clamp(80px,12vw,140px) 0}
+  .hero-eyebrow{color:var(--near-black);font-weight:800;font-size:.68rem;letter-spacing:.3em;
+    text-transform:uppercase;margin-bottom:18px}
+  .hero h1{color:var(--near-black);font-weight:900;letter-spacing:-.035em;line-height:.9;
+    font-size:clamp(3rem,11vw,8.5rem);text-transform:uppercase;animation:glitch 6s infinite}
+  .hero-sub{color:rgba(14,14,18,.74);margin-top:24px;font-size:clamp(.85rem,1.4vw,1.05rem);
+    font-weight:600;max-width:46ch}
+  .hero-meta{color:rgba(14,14,18,.7);margin-top:26px;font-size:.72rem;letter-spacing:.2em;
+    text-transform:uppercase;font-weight:700;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+
+  /* Aktions-Leiste */
+  .actions{border-top:1px solid var(--line)}
+  .actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .act{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--text);
+    padding:clamp(28px,5vw,48px) clamp(18px,4vw,40px);transition:background .35s;
+    border-top:1px solid var(--line);border-right:1px solid var(--line)}
+  .act:nth-child(odd){border-right:1px solid var(--line)}
+  .act:nth-child(even){border-right:0}
+  .act:nth-child(1),.act:nth-child(2){border-top:0}
+  .act:hover{background:rgba(244,244,246,.04)}
+  .act .eyebrow{margin-bottom:2px}
+  .act-title{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;
+    font-size:clamp(1.1rem,2.4vw,1.6rem)}
+  .act-title .grad-text{display:inline}
+  .act-desc{color:var(--muted);font-size:.9rem;max-width:40ch}
+  .act-cta{margin-top:6px;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:700;color:var(--text)}
+  .act:hover .act-cta{color:var(--pink)}
+
+  footer{border-top:1px solid var(--line)}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    padding:22px 0;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+  @media(max-width:640px){
+    .actions-grid{grid-template-columns:1fr}
+    .act{border-right:0;border-top:1px solid var(--line)}
+    .act:nth-child(1){border-top:0}
+    .seal{width:84px;height:84px}
+    .seal span{font-size:.5rem}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .grad-text,.hero,.seal{animation:none}
+    .hero h1{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">[ Shop · Demnächst ] &middot; Handgeführt &middot; Nummeriert &middot; Ernst gemeint</div>
+
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="mark grad-text" href="https://buttje.at">buttje<sup>&reg;</sup></a>
+      <a class="nav-back" href="https://buttje.at">Zur Reinigung &rarr;</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="seal"><span>buttje &times; Edition 01 &times; Bald</span></div>
+    <div class="wrap hero-content">
+      <div class="hero-eyebrow">Maison buttje &middot; Wien</div>
+      <h1>Demnächst.</h1>
+      <p class="hero-sub">Der buttje Shop kommt bald. Verbrauchsgüter mit Haltung — handgeführt, nummeriert, ernst gemeint.</p>
+      <div class="hero-meta">
+        <span>Wien</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="actions">
+    <div class="wrap">
+      <div class="actions-grid">
+        <a class="act" href="https://buttje.at">
+          <span class="eyebrow">In der Zwischenzeit</span>
+          <span class="act-title">Gebäudereinigung für <span class="grad-text">Unternehmen</span></span>
+          <span class="act-desc">Büro-, Kanzlei- &amp; Ordinationsreinigung in Wiens inneren Bezirken. Feste Teams, fester Ansprechpartner.</span>
+          <span class="act-cta">Zur Gebäudereinigung &rarr;</span>
+        </a>
+        <a class="act" href="tel:+4367762080802">
+          <span class="eyebrow">Kontakt</span>
+          <span class="act-title">Direkt <span class="grad-text">anrufen</span></span>
+          <span class="act-desc">Fragen zum Shop oder zur Reinigung? Wir sind erreichbar.</span>
+          <span class="act-cta">+43 677 62080802 &rarr;</span>
+        </a>
+        <a class="act" href="mailto:info@buttje.at">
+          <span class="eyebrow">Kontakt</span>
+          <span class="act-title">Per <span class="grad-text">E-Mail</span></span>
+          <span class="act-desc">Schreib uns — wir melden uns zeitnah zurück.</span>
+          <span class="act-cta">info@buttje.at &rarr;</span>
+        </a>
+        <a class="act" href="https://wa.me/4367762080802" target="_blank" rel="noopener">
+          <span class="eyebrow">Kontakt</span>
+          <span class="act-title">Per <span class="grad-text">WhatsApp</span></span>
+          <span class="act-desc">Direkt per Nachricht an unseren Business-Account.</span>
+          <span class="act-cta">WhatsApp öffnen &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <span>&copy; 2026 buttje e.U. &middot; Wien</span>
+      <span>shop.buttje.at</span>
+    </div>
+  </footer>
+
+</body>
+</html>
