@@ -28,9 +28,8 @@ export default function AgbPage() {
       </p>
       <p>
         1.3 Der Verkauf erfolgt <strong>ausschließlich an Unternehmer</strong>{" "}
-        im Sinne des § 1 UGB bzw. § 14 BGB, an juristische Personen des
-        öffentlichen Rechts sowie an Vereine. Ein Verkauf an Verbraucher findet
-        nicht statt.
+        im Sinne des § 1 UGB, an juristische Personen des öffentlichen Rechts
+        sowie an Vereine. Ein Verkauf an Verbraucher findet nicht statt.
       </p>
       <p>
         1.4 Mit der Bestellung bestätigt der Kunde, als Unternehmer und nicht
@@ -49,7 +48,14 @@ export default function AgbPage() {
       </p>
 
       <h2>3. Preise</h2>
-      <p>3.1 Alle Preise verstehen sich inklusive der gesetzlichen Umsatzsteuer.</p>
+      <p>
+        3.1 Alle Preise verstehen sich netto zuzüglich der jeweils geltenden
+        gesetzlichen Umsatzsteuer. Für Lieferungen an österreichische Kunden
+        wird die österreichische Umsatzsteuer berechnet. Für Lieferungen an
+        Unternehmer in Deutschland mit gültiger UID-Nummer erfolgt die
+        Abrechnung im Reverse-Charge-Verfahren ohne Umsatzsteuerausweis; die
+        Steuerschuld geht auf den Leistungsempfänger über.
+      </p>
       <p>
         3.2 Versandkosten werden im Bestellprozess gesondert ausgewiesen und sind
         vor Abschluss der Bestellung ersichtlich.

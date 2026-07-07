@@ -48,7 +48,7 @@ export default function DatenschutzPage() {
       <p>
         Wir speichern Daten so lange, wie es für die Vertragsabwicklung und zur
         Erfüllung gesetzlicher Aufbewahrungsfristen (insbesondere steuerrechtlich
-        7 Jahre) erforderlich ist.
+        10 Jahre) erforderlich ist.
       </p>
 
       <h2>6. Hosting und technische Dienstleister</h2>
