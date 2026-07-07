@@ -1,0 +1,7 @@
+node_modules
+.next
+.env*
+produktbilder-roh
+produktbilder-buehne
+produktbilder-buehne-v2
+tsconfig.tsbuildinfo

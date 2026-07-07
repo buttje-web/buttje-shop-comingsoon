@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+/*
+  buttje Shop - dunkler, edler Look.
+  Design-Tokens 1:1 aus der bestehenden Platzhalter-/Geruest-Seite portiert.
+*/
+
+:root {
+  --base: #0e0e12; /* fast-schwarzer Hintergrund */
+  --text: #f4f4f6;
+  --muted: rgba(244, 244, 246, 0.52);
+  --line: rgba(244, 244, 246, 0.14);
+  --line-strong: rgba(244, 244, 246, 0.34);
+  --accent: #5cc8ff; /* Cyan-Blau Akzent */
+  --text-soft: rgba(244, 244, 246, 0.74); /* lesbar fuer lange Texte */
+  --near-black: #0e0e12;
+  --grad: linear-gradient(
+    115deg,
+    #ffe24a 0%,
+    #8de3b0 17%,
+    #5cc8ff 40%,
+    #4a86ff 60%,
+    #5b6cff 80%,
+    #8a5bff 100%
+  );
+}
+
+/* Tailwind v4: Tokens als Utilities verfuegbar machen (bg-base, text-muted, border-line, ...) */
+@theme inline {
+  --color-base: var(--base);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-near-black: var(--near-black);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--base);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* --- Wiederkehrende buttje-Bausteine --- */
+
+/* Holografischer Verlaufs-Text fuer Akzente */
+.grad-text {
+  background: var(--grad);
+  background-size: 240% 240%;
+  animation: holo 9s ease-in-out infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent);
+}
+
+/* Weit gesperrtes Label */
+.eyebrow {
+  font-size: 0.66rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+  word-spacing: 0.22em;
+}
+
+/*
+  Typografie: Wortabstand fuer gesperrte GROSSBUCHSTABEN-Texte (shopweit).
+  Enge Laufweite + Uppercase laesst Woerter zusammenkleben; ein kleiner Tick
+  word-spacing macht sie fuers Auge trennbar, ohne den Stil zu brechen.
+  Gilt fuer alle Elemente mit Tailwinds .uppercase.
+  AUSNAHME: der Start-Hero (.hero-title) bleibt exakt wie er ist.
+*/
+.uppercase {
+  word-spacing: 0.14em;
+}
+.hero-title {
+  word-spacing: normal;
+}
+
+@keyframes holo {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grad-text {
+    animation: none;
+  }
+}
+
+/* --- Hero im bewegten Platzhalter-Look (1:1 aus der Coming-Soon-Seite) --- */
+.hero-grad {
+  position: relative;
+  background: var(--grad);
+  background-size: 240% 240%;
+  animation: holo 12s ease-in-out infinite;
+}
+.hero-grad::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 50% 120%,
+    rgba(14, 14, 18, 0.55),
+    transparent 62%
+  );
+  pointer-events: none;
+}
+.hero-title {
+  color: var(--near-black);
+  animation: glitch 6s infinite;
+  /* Innenabstand rechts: verhindert, dass Glitch-Versatz das letzte Zeichen (P.) anschneidet */
+  padding-right: 0.14em;
+}
+@keyframes glitch {
+  0%,
+  90%,
+  100% {
+    text-shadow: 2px 0 rgba(92, 200, 255, 0.55), -2px 0 rgba(255, 95, 168, 0.55);
+    transform: translate(0);
+  }
+  92% {
+    text-shadow: 6px 0 rgba(92, 200, 255, 0.75), -6px 0 rgba(255, 95, 168, 0.75);
+    transform: translate(-2px, 1px);
+  }
+  94% {
+    text-shadow: -5px 0 rgba(92, 200, 255, 0.75), 5px 0 rgba(255, 95, 168, 0.75);
+    transform: translate(2px, -1px);
+  }
+  96% {
+    text-shadow: 2px 0 rgba(92, 200, 255, 0.55), -2px 0 rgba(255, 95, 168, 0.55);
+    transform: translate(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-grad,
+  .hero-title {
+    animation: none;
+  }
+}
+
+/*
+  --- Navigation: Desktop vs. Mobil, garantiert wechselseitig exklusiv ---
+  Bewusst als klassisches, UNgelayertes CSS mit alter Media-Query-Syntax:
+  Tailwind v4 legt Utilities in @layer und nutzt Range-Syntax
+  ("width >= 64rem") - aeltere Safari/WebKit ignorieren beides und rendern
+  dann BEIDE Varianten. Diese Regeln versteht jede Engine; !important stellt
+  sicher, dass immer exakt eine Variante sichtbar ist.
+*/
+.nav-desktop {
+  display: none !important;
+}
+.nav-mobile {
+  display: flex !important;
+}
+@media (min-width: 1024px) {
+  .nav-desktop {
+    display: flex !important;
+  }
+  .nav-mobile {
+    display: none !important;
+  }
+}
+
+/* Warenkorb-Label: kurz (mobil) vs. lang (ab 640px) - gleiche Technik */
+.cart-label-long {
+  display: none !important;
+}
+.cart-label-short {
+  display: inline !important;
+}
+@media (min-width: 640px) {
+  .cart-label-long {
+    display: inline !important;
+  }
+  .cart-label-short {
+    display: none !important;
+  }
+}
+
+/*
+  Dropdown-Position explizit (kein Tailwind-Utility, keine transform/filter-
+  Eltern): relative am Menuepunkt, absolute am Panel. Safari-sicher.
+*/
+.pnav-root {
+  position: relative;
+}
+/*
+  Wrapper ueberbrueckt die optische Luecke zwischen Trigger und Panel mit
+  unsichtbarem padding-top: Trigger + Steg + Panel sind EIN zusammen-
+  haengender Hover-Bereich (padding empfaengt Hover, margin nicht).
+*/
+.pnav-panel-wrap {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  padding-top: 12px;
+}
+.pnav-panel {
+  min-width: 230px;
+  background-color: #0e0e12;
+  border: 1px solid var(--line-strong);
+}
+
+/* --- Technische Datentabelle auf der Produktseite --- */
+.techdata > p:first-child {
+  margin-bottom: 0.75rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+}
+.techdata table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+.techdata th,
+.techdata td {
+  border-top: 1px solid var(--line);
+  padding: 8px 0;
+  text-align: left;
+  vertical-align: top;
+}
+.techdata th {
+  width: 42%;
+  font-weight: 600;
+  color: var(--muted);
+  padding-right: 16px;
+}
+.techdata td {
+  color: var(--text-soft);
+}
+
+/* --- Lesbarer Fliesstext fuer Rechts-/Pflichtseiten --- */
+.legal {
+  max-width: 72ch;
+}
+.legal h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 0.85rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.legal h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.legal h3 {
+  margin-top: 1.6rem;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.legal p {
+  margin-bottom: 1rem;
+  color: var(--text-soft);
+}
+.legal ul {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+.legal li {
+  margin-bottom: 0.35rem;
+  color: var(--text-soft);
+}
+.legal a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal strong {
+  color: var(--text);
+  font-weight: 700;
+}
+.legal address {
+  font-style: normal;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.legal .meta {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
