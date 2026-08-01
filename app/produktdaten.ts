@@ -552,3 +552,31 @@ export const SDB_VERFUEGBAR = new Set([
 export function inhaltFuer(sku: string): Produktinhalt | null {
   return PRODUKTINHALTE[sku] ?? null;
 }
+
+/**
+ * Die Zeilen der Produktdaten-Box als [Label, Wert].
+ *
+ * EINE Quelle fuer zwei Verbraucher: ProduktInfo rendert daraus die Box,
+ * die Produktseite leitet daraus ab, welche Zeilen aus der alten
+ * Herstellertabelle herausfallen. Wuerden beide getrennt gepflegt, waeren
+ * Anzeige und Dubletten-Filter zwangslaeufig irgendwann auseinander.
+ */
+export function boxZeilen(
+  sku: string,
+  stamm: { hersteller?: string | null; ean?: string | null; ve?: string | null },
+): [string, string][] {
+  const inhalt = inhaltFuer(sku);
+  if (!inhalt) return [];
+  const t = inhalt.technik ?? {};
+  const zeilen: [string, string | null | undefined][] = [
+    ["Hersteller", stamm.hersteller],
+    ["Artikelnr.", sku],
+    ["EAN", stamm.ean],
+    ["Einheit", stamm.ve],
+    ["Inhalt", t.inhalt],
+    ["pH-Wert", t.ph],
+    ["GISBAU", t.gisbau],
+    ...(t.weitere ?? []),
+  ];
+  return zeilen.filter((z): z is [string, string] => Boolean(z[1]));
+}

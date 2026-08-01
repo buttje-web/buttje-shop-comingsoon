@@ -1,5 +1,6 @@
 import {
   inhaltFuer,
+  boxZeilen,
   SDB_DOWNLOADS_AKTIV,
   SDB_VERFUEGBAR,
 } from "../produktdaten";
@@ -27,15 +28,26 @@ function Abschnitt({ titel, text }: { titel: string; text?: string }) {
   );
 }
 
+/*
+  Eine Box-Zeile als zwei Grid-Zellen.
+
+  FRUEHER stand hier eine feste Label-Breite (w-[13ch]). Lange Labels wie
+  "FASSUNGSVERMOEGEN" liefen darueber hinaus und ueberlagerten den Wert.
+  Jetzt bestimmt die Grid-Spalte max-content ihre Breite selbst — sie ist
+  immer so breit wie das laengste Label der jeweiligen Box, nie schmaler.
+  Unter 420 px klappt das Grid auf eine Spalte um, Label ueber Wert.
+*/
 function Datenzeile({ feld, wert }: { feld: string; wert?: string | null }) {
   if (!wert) return null;
   return (
-    <div className="flex flex-wrap gap-x-4 border-b border-line py-2 last:border-b-0">
-      <dt className="w-[13ch] shrink-0 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-muted">
+    <>
+      <dt className="border-b border-line py-2 pr-4 text-[0.72rem] font-semibold uppercase leading-[1.6] tracking-[0.14em] text-muted max-[419px]:border-b-0 max-[419px]:pb-0">
         {feld}
       </dt>
-      <dd className="text-[0.92rem] text-text-soft">{wert}</dd>
-    </div>
+      <dd className="border-b border-line py-2 text-[0.92rem] leading-[1.35] text-text-soft max-[419px]:pt-0">
+        {wert}
+      </dd>
+    </>
   );
 }
 
@@ -53,11 +65,8 @@ export default function ProduktInfo({
   const inhalt = inhaltFuer(sku);
   if (!inhalt) return null;
 
-  const t = inhalt.technik ?? {};
-  // Box nur zeigen, wenn wenigstens ein Feld belegt ist.
-  const hatDaten = Boolean(
-    hersteller || sku || ean || ve || t.inhalt || t.ph || t.gisbau || t.weitere?.length,
-  );
+  const zeilen = boxZeilen(sku, { hersteller, ean, ve });
+  const hatDaten = zeilen.length > 0;
   const zeigeDownloads = SDB_DOWNLOADS_AKTIV && SDB_VERFUEGBAR.has(sku);
 
   return (
@@ -75,16 +84,8 @@ export default function ProduktInfo({
       {hatDaten && (
         <section className="border-t border-line pt-6">
           <h2 className="eyebrow mb-3">Produktdaten</h2>
-          <dl className="max-w-[52ch] border border-line px-4 py-1">
-            <Datenzeile feld="Hersteller" wert={hersteller} />
-            <Datenzeile feld="Artikelnr." wert={sku} />
-            <Datenzeile feld="EAN" wert={ean} />
-            <Datenzeile feld="Einheit" wert={ve} />
-            <Datenzeile feld="Inhalt" wert={t.inhalt} />
-            <Datenzeile feld="pH-Wert" wert={t.ph} />
-            <Datenzeile feld="GISBAU" wert={t.gisbau} />
-            {/* Warengruppen-spezifische Zusatzzeilen, Reihenfolge wie gepflegt */}
-            {(t.weitere ?? []).map(([feld, wert]) => (
+          <dl className="grid max-w-[52ch] grid-cols-1 border border-line px-4 py-1 [&>*:nth-last-child(-n+2)]:border-b-0 min-[420px]:grid-cols-[max-content_1fr]">
+            {zeilen.map(([feld, wert]) => (
               <Datenzeile key={feld} feld={feld} wert={wert} />
             ))}
           </dl>

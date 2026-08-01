@@ -5,6 +5,7 @@ import OptInForm from "../../components/OptInForm";
 import BildPlatzhalter from "../../components/BildPlatzhalter";
 import JsonLd from "../../components/JsonLd";
 import ProduktInfo from "../../components/ProduktInfo";
+import { boxZeilen } from "../../produktdaten";
 import { einheitenSchuetzen } from "../../lib/titel";
 import { PRODUKTINHALTE } from "../../produktdaten";
 import BuyBox from "../../components/BuyBox";
@@ -95,16 +96,44 @@ export default async function ProductPage({ params }: { params: Params }) {
 
   const variant = product.variants?.[0];
 
-  // Zeilen, die bereits in der Produktdaten-Box stehen. Nur diese drei —
-  // Gebinde, Produktart, Masse usw. bleiben in der Herstellertabelle.
-  const DUBLETTEN = ["Hersteller", "Artikelnummer", "EAN"];
+  // Dubletten zwischen Produktdaten-Box und Herstellertabelle.
+  //
+  // Frueher stand hier eine feste Liste aus drei Feldnamen. Die griff zu
+  // kurz: Material, Masse und Fassungsvermoegen standen doppelt, sobald die
+  // Box sie fuehrte. Jetzt wird aus der Box selbst abgeleitet, was raus muss
+  // — ueber Label UND Wert, weil dieselbe Angabe links unterschiedlich
+  // heissen kann ("Blatt/Rolle" gegen "Blatt je Rolle").
+  //
+  // Zeilen, die nur die Herstellertabelle hat (Gewicht, Produktart,
+  // Zolltarifnummer …), bleiben unangetastet.
+  const boxDaten = variant?.sku ? boxZeilen(variant.sku, {
+    hersteller: product.vendor, ean: variant.barcode, ve: product.ve ?? variant.title,
+  }) : [];
 
-  /** Entfernt <tr>-Zeilen, deren <th> eine der Dubletten ist. */
+  /** Klein, ohne Sonderzeichen und ohne Fuellwoerter — zum Vergleichen. */
+  const norm = (s: string) =>
+    s.toLowerCase()
+      .replace(/ä/g, "a").replace(/ö/g, "o").replace(/ü/g, "u").replace(/ß/g, "ss")
+      .replace(/\b(je|pro|der|die|das|ca|circa)\b/g, "")
+      .replace(/[^a-z0-9]/g, "");
+
+  const boxLabels = new Set(boxDaten.map(([l]) => norm(l)));
+  const boxWerte = new Set(boxDaten.map(([, w]) => norm(w)).filter((w) => w.length >= 3));
+
+  /** Entfernt Tabellenzeilen, die inhaltlich schon in der Box stehen. */
   function ohneDubletten(html: string): string {
     const bereinigt = html.replace(
-      /<tr>\s*<th[^>]*>([^<]*)<\/th>[\s\S]*?<\/tr>\s*/g,
-      (treffer, feld: string) =>
-        DUBLETTEN.includes(feld.trim()) ? "" : treffer,
+      /<tr>\s*<th[^>]*>([^<]*)<\/th>\s*<td[^>]*>([\s\S]*?)<\/td>\s*<\/tr>\s*/g,
+      (treffer, feld: string, wert: string) => {
+        const l = norm(feld);
+        const w = norm(wert.replace(/<[^>]+>/g, ""));
+        // Label deckungsgleich, oder eines im anderen enthalten
+        // ("blattrolle" gegen "blattrolle", "masse" gegen "massebxh").
+        const labelTrifft = [...boxLabels].some(
+          (b) => b === l || (b.length >= 4 && l.length >= 4 && (b.includes(l) || l.includes(b))),
+        );
+        return labelTrifft || boxWerte.has(w) ? "" : treffer;
+      },
     );
     // Leer gewordene Tabelle samt Ueberschrift ganz weglassen.
     return /<td>/.test(bereinigt) ? bereinigt : "";
