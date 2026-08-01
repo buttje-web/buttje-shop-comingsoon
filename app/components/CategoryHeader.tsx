@@ -34,7 +34,10 @@ export default function CategoryHeader({
         {/* Text-Spalte */}
         <div>
           <span className="eyebrow">Kategorie</span>
-          <h1 className="mt-3 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
+          {/* hyphens-auto + break-words: lange Woerter wie "UNGLAMOUROES."
+              liefen auf sehr schmalen Viewports aus dem Bild. Trennung
+              greift, weil <html lang="de"> gesetzt ist. */}
+          <h1 className="mt-3 hyphens-auto break-words text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
             {headline || label}
           </h1>
           {intro && (
