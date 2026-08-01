@@ -6,6 +6,7 @@ import { removeItem, updateItem } from "@/lib/cart/actions";
 import type { CartLine } from "@/lib/shopify/types";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
+import { einheitenSchuetzen } from "../lib/titel";
 import PriceTag from "./PriceTag";
 
 function CartLineRow({ line }: { line: CartLine }) {
@@ -59,7 +60,7 @@ function CartLineRow({ line }: { line: CartLine }) {
 
       <div className="min-w-[200px] flex-1">
         <p className="text-sm font-bold uppercase tracking-[-0.01em]">
-          {line.merchandise.product.title}
+          {einheitenSchuetzen(line.merchandise.product.title)}
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-3">
           <QuantityStepper value={qty} onChange={change} />

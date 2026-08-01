@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { bereiteVor, suche, type SuchEintrag } from "@/lib/suche";
+import { einheitenSchuetzen } from "../lib/titel";
 
 // Produktsuche. variant="header": Lupe im Header, Klick klappt Eingabefeld
 // inline auf, Live-Dropdown mit max. 6 Treffern. variant="menue": Eingabefeld
@@ -124,7 +125,7 @@ export default function Suche({
             </span>
             <span className="min-w-0">
               <span className="block truncate text-[0.82rem] font-bold uppercase leading-tight">
-                {t.titel}
+                {einheitenSchuetzen(t.titel)}
               </span>
               {t.ve && (
                 <span className="block text-[0.72rem] text-muted">VE: {t.ve}</span>

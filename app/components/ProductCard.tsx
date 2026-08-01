@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BildPlatzhalter from "./BildPlatzhalter";
+import { einheitenSchuetzen } from "../lib/titel";
 import PriceTag from "./PriceTag";
 import {
   KAUFBAR,
@@ -44,7 +45,7 @@ export default function ProductCard({ product: p }: { product: Product }) {
         </div>
 
         <h2 className="text-sm font-bold uppercase leading-tight tracking-[-0.01em]">
-          {p.title}
+          {einheitenSchuetzen(p.title)}
         </h2>
 
         {p.teaser && (

@@ -5,6 +5,7 @@ import Link from "next/link";
 import BildPlatzhalter from "../components/BildPlatzhalter";
 import PriceTag from "../components/PriceTag";
 import { bereiteVor, suche, type SuchEintrag } from "@/lib/suche";
+import { einheitenSchuetzen } from "../lib/titel";
 
 // Ergebnisseite: liest den Suchbegriff aus dem URL-Hash (#q=...), damit er
 // den Browser nie verlaesst (kein Server-Log, keine Dritten). Suche laeuft
@@ -123,7 +124,7 @@ export default function SuchErgebnisse({ kaufbar }: { kaufbar: boolean }) {
                     )}
                   </div>
                   <h2 className="text-sm font-bold uppercase leading-tight tracking-[-0.01em]">
-                    {t.titel}
+                    {einheitenSchuetzen(t.titel)}
                   </h2>
                   {t.teaser && (
                     <p className="mt-1 text-[0.8rem] leading-snug text-muted">{t.teaser}</p>

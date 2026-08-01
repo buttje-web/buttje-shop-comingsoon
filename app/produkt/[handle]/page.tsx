@@ -5,6 +5,7 @@ import OptInForm from "../../components/OptInForm";
 import BildPlatzhalter from "../../components/BildPlatzhalter";
 import JsonLd from "../../components/JsonLd";
 import ProduktInfo from "../../components/ProduktInfo";
+import { einheitenSchuetzen } from "../../lib/titel";
 import { PRODUKTINHALTE } from "../../produktdaten";
 import BuyBox from "../../components/BuyBox";
 import { SITE_URL, SITE_NAME } from "../../lib/seo";
@@ -186,7 +187,7 @@ export default async function ProductPage({ params }: { params: Params }) {
         <div>
           {/* 1. Produktname (H1, SEO) */}
           <h1 className="text-[clamp(1.8rem,4vw,3rem)] font-black uppercase leading-[0.95] tracking-[-0.02em]">
-            {product.title}
+            {einheitenSchuetzen(product.title)}
           </h1>
 
           {/* 2. Frecher Kurztext (Langtext) */}
@@ -220,8 +221,8 @@ export default async function ProductPage({ params }: { params: Params }) {
                 {(product.variants?.length ?? 0) > 0 && (
                   <p className="text-[0.8rem] text-muted">
                     {product.variants!.length === 1
-                      ? `Verpackungseinheit: ${product.variants![0].title}`
-                      : `Verpackungseinheiten: ${product.variants!.map((v) => v.title).join(" · ")}`}
+                      ? `Verpackungseinheit: ${einheitenSchuetzen(product.variants![0].title)}`
+                      : `Verpackungseinheiten: ${product.variants!.map((v) => einheitenSchuetzen(v.title)).join(" · ")}`}
                   </p>
                 )}
                 <p className="mt-2 text-[0.98rem] font-semibold">
@@ -251,7 +252,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             sku={variant?.sku ?? ""}
             hersteller={product.vendor}
             ean={variant?.barcode}
-            ve={product.ve ?? variant?.title}
+            ve={einheitenSchuetzen(product.ve ?? variant?.title)}
           />
 
           {/* 5. Technische Datentabelle des Herstellers.

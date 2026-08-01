@@ -6,6 +6,7 @@ import { trackEvent } from "../lib/analytics";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
+import { einheitenSchuetzen } from "../lib/titel";
 import { VERSAND, VERSAND_AB, GRATIS_BIS_KG, euro } from "../lib/versand";
 import type { ProductVariant, Money } from "@/lib/shopify/types";
 
@@ -59,7 +60,7 @@ export default function BuyBox({
                       : "border-line-strong text-text hover:border-accent hover:text-accent"
                   }`}
                 >
-                  {v.title}
+                  {einheitenSchuetzen(v.title)}
                 </button>
               );
             })}
