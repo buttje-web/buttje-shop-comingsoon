@@ -18,17 +18,17 @@ export function generateStaticParams() {
 // Nuechterne, faktische Kategorie-Descriptions (kein frecher Ton fuer Suche).
 const CATEGORY_SEO: Record<string, string> = {
   entsorgung:
-    "Müllsäcke und Abfallsäcke für Gewerbe: von dünnen Beuteln bis zu reißfesten 120-Liter-Säcken sowie Hygienebeutel. Markenware von DEISS zu Nettopreisen. Lieferung nach Deutschland und Österreich.",
+    "Müllsäcke und Abfallsäcke für Gewerbe: von dünnen Beuteln bis zu reißfesten 120-Liter-Säcken sowie Hygienebeutel. Markenware von DEISS zu Nettopreisen. Lieferung innerhalb Österreichs.",
   papier:
-    "Toilettenpapier, Falthandtücher, Küchen- und Putztuchrollen für Objekte und Betriebe. Marken wie Papernet, Tork und Scott zu Nettopreisen. B2B-Verkauf, Lieferung nach DE und AT.",
+    "Toilettenpapier, Falthandtücher, Küchen- und Putztuchrollen für Objekte und Betriebe. Marken wie Papernet, Tork und Scott zu Nettopreisen. B2B-Verkauf, Lieferung innerhalb Österreichs.",
   chemie:
-    "Professionelle Reinigungschemie von Dr. Schnell, Buzil, TASKI, Diversey und Kiehl: Unterhaltsreiniger, Sanitär, Glas, Grundreiniger. Nettopreise für Gewerbe, Lieferung nach DE und AT.",
+    "Professionelle Reinigungschemie von Dr. Schnell, Buzil, TASKI, Diversey und Kiehl: Unterhaltsreiniger, Sanitär, Glas, Grundreiniger. Nettopreise für Gewerbe, Lieferung innerhalb Österreichs.",
   seifen:
-    "Seifencreme, Handseife und Waschlotion für Spendersysteme und Waschräume. Marken wie CWS, STERN und Diversey zu Nettopreisen. B2B, Lieferung nach Deutschland und Österreich.",
+    "Seifencreme, Handseife und Waschlotion für Spendersysteme und Waschräume. Marken wie CWS, STERN und Diversey zu Nettopreisen. B2B, Lieferung innerhalb Österreichs.",
   handschuhe:
-    "Einweg- und Arbeitshandschuhe aus Nitril, Latex und Vinyl in gängigen Größen. Nettopreise für Gewerbe, Lieferung nach Deutschland und Österreich.",
+    "Einweg- und Arbeitshandschuhe aus Nitril, Latex und Vinyl in gängigen Größen. Nettopreise für Gewerbe, Lieferung innerhalb Österreichs.",
   zubehoer:
-    "Reinigungszubehör: Mikrofasertücher, Pads, Schwämme, Moppbezüge, Fensterabzieher und Sprühflaschen. Nettopreise für Gewerbe, Lieferung nach DE und AT.",
+    "Reinigungszubehör: Mikrofasertücher, Pads, Schwämme, Moppbezüge, Fensterabzieher und Sprühflaschen. Nettopreise für Gewerbe, Lieferung innerhalb Österreichs.",
 };
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {

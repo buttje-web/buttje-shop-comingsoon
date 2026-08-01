@@ -1,11 +1,9 @@
-// Fortschrittsanzeige zur Versandfrei-Schwelle (100 EUR netto, DE + AT).
+// Fortschrittsanzeige zur Versandfrei-Schwelle (Werte aus app/lib/versand.ts).
 // Reine Darstellung aus dem Warenkorb-Nettowert; aktualisiert mit dem Server-Refresh.
 
-const THRESHOLD = 100;
+import { VERSAND, euro } from "../lib/versand";
 
-function euro(n: number) {
-  return new Intl.NumberFormat("de-AT", { style: "currency", currency: "EUR" }).format(n);
-}
+const THRESHOLD = VERSAND.freiAb;
 
 export default function FreeShippingBar({ amount }: { amount: number }) {
   const reached = amount >= THRESHOLD;
@@ -36,7 +34,7 @@ export default function FreeShippingBar({ amount }: { amount: number }) {
         />
       </div>
       <p className="mt-1.5 text-[0.64rem] text-muted">
-        Kostenloser Versand ab {euro(THRESHOLD)} (netto) nach DE und AT.
+        Kostenloser Versand ab {euro(THRESHOLD)} (netto) innerhalb {VERSAND.land}s.
       </p>
     </div>
   );

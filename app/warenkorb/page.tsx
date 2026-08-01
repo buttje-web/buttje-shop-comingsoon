@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "../components/Container";
+import CartLines from "../components/CartLines";
+import CheckoutGate from "../components/CheckoutGate";
+import FreeShippingBar from "../components/FreeShippingBar";
+import PriceTag from "../components/PriceTag";
+import { KAUFBAR } from "../lib/shop-mode";
+import { loadCart } from "@/lib/cart/actions";
 
 export const metadata: Metadata = {
   title: "Warenkorb",
   robots: { index: false, follow: true },
 };
 
-// Katalogmodus: Kauf ist bis zur Eroeffnung deaktiviert. Die Seite bleibt
-// als neutraler Hinweis erreichbar (alte Lesezeichen/Links), fuehrt aber
+// Katalogmodus (KAUFBAR=aus): Kauf ist deaktiviert. Die Seite bleibt als
+// neutraler Hinweis erreichbar (alte Lesezeichen/Links), fuehrt aber
 // nirgendwohin ausser zurueck ins Sortiment.
+// Kaufmodus (KAUFBAR=ein): echter Warenkorb mit Weg zum Shopify-Checkout.
 
-export default function CartPage() {
+function Geschlossen() {
   return (
     <Container className="py-[clamp(40px,7vw,88px)]">
       <p className="eyebrow mb-3">Warenkorb</p>
@@ -29,6 +36,74 @@ export default function CartPage() {
         >
           Zum Sortiment →
         </Link>
+      </div>
+    </Container>
+  );
+}
+
+function Leer() {
+  return (
+    <Container className="py-[clamp(40px,7vw,88px)]">
+      <p className="eyebrow mb-3">Warenkorb</p>
+      <h1 className="mb-10 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
+        Ihr Warenkorb
+      </h1>
+      <div className="border border-line px-6 py-16 text-center">
+        <p className="text-muted">Ihr Warenkorb ist noch leer.</p>
+        <Link
+          href="/produkte"
+          className="mt-8 inline-block border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
+        >
+          Zu den Produkten →
+        </Link>
+      </div>
+    </Container>
+  );
+}
+
+export default async function CartPage() {
+  if (!KAUFBAR) return <Geschlossen />;
+
+  const cart = await loadCart();
+  if (!cart || cart.lines.length === 0) return <Leer />;
+
+  const netto = Number(cart.cost.subtotalAmount.amount);
+
+  return (
+    <Container className="py-[clamp(40px,7vw,88px)]">
+      <p className="eyebrow mb-3">Warenkorb</p>
+      <h1 className="mb-10 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
+        Ihr Warenkorb
+      </h1>
+
+      <div className="grid grid-cols-1 gap-[clamp(24px,5vw,64px)] lg:grid-cols-[1fr_340px]">
+        <div>
+          <CartLines lines={cart.lines} />
+        </div>
+
+        <aside className="h-fit border border-line p-6">
+          <FreeShippingBar amount={netto} />
+
+          <div className="flex items-baseline justify-between border-t border-line pt-4">
+            <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted">
+              Zwischensumme
+            </span>
+            <span className="text-lg font-semibold">
+              <PriceTag
+                amount={cart.cost.subtotalAmount.amount}
+                currency={cart.cost.subtotalAmount.currencyCode}
+              />
+            </span>
+          </div>
+
+          <p className="mt-2 text-[0.66rem] leading-relaxed text-muted">
+            Versandkosten werden im Bestellprozess ausgewiesen.
+          </p>
+
+          <div className="mt-6 border-t border-line pt-6">
+            <CheckoutGate checkoutUrl={cart.checkoutUrl} />
+          </div>
+        </aside>
       </div>
     </Container>
   );

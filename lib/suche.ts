@@ -13,6 +13,7 @@ export type SuchEintrag = {
   beschreibung: string;
   bild: string | null;
   bildAlt: string | null;
+  preis?: { amount: string; currencyCode: string } | null;
 };
 
 /** Kleinschreibung, Umlaute/ss vereinheitlicht, Sonderzeichen zu Leerzeichen.

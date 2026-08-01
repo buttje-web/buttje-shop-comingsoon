@@ -3,13 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BildPlatzhalter from "../components/BildPlatzhalter";
+import PriceTag from "../components/PriceTag";
 import { bereiteVor, suche, type SuchEintrag } from "@/lib/suche";
 
 // Ergebnisseite: liest den Suchbegriff aus dem URL-Hash (#q=...), damit er
 // den Browser nie verlaesst (kein Server-Log, keine Dritten). Suche laeuft
 // client-seitig ueber den Produktindex; Raster im Katalog-Look.
 
-export default function SuchErgebnisse() {
+export default function SuchErgebnisse({ kaufbar }: { kaufbar: boolean }) {
   const [query, setQuery] = useState("");
   const [treffer, setTreffer] = useState<SuchEintrag[] | null>(null);
   const vorbereitetRef = useRef<ReturnType<typeof bereiteVor>>([]);
@@ -127,9 +128,22 @@ export default function SuchErgebnisse() {
                   {t.teaser && (
                     <p className="mt-1 text-[0.8rem] leading-snug text-muted">{t.teaser}</p>
                   )}
-                  <p className="mt-2 text-[0.8rem] text-muted">
-                    Preise für Geschäftskunden in Kürze
-                  </p>
+                  {!kaufbar ? (
+                    <p className="mt-2 text-[0.8rem] text-muted">
+                      Preise für Geschäftskunden in Kürze
+                    </p>
+                  ) : !(Number(t.preis?.amount) > 0) ? (
+                    <p className="mt-2 text-[0.8rem] font-semibold text-muted">
+                      Preis auf Anfrage
+                    </p>
+                  ) : (
+                    <p className="mt-2 text-[0.8rem] font-semibold">
+                      <PriceTag
+                        amount={t.preis!.amount}
+                        currency={t.preis!.currencyCode}
+                      />
+                    </p>
+                  )}
                   {t.ve && <p className="mt-0.5 text-[0.72rem] text-muted">VE: {t.ve}</p>}
                 </Link>
               </li>

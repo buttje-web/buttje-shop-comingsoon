@@ -17,7 +17,7 @@ export const ORG = {
     addressLocality: "Wien",
     addressCountry: "AT",
   },
-  areaServed: ["DE", "AT"],
+  areaServed: ["AT"],
 };
 
 export const FREE_SHIPPING_THRESHOLD = 100;

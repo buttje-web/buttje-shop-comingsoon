@@ -42,6 +42,7 @@ export const SEARCH_INDEX_QUERY = `
           vendor
           tags
           featuredImage { url altText }
+          priceRange { minVariantPrice { amount currencyCode } }
           teaser: metafield(namespace: "custom", key: "teaser") { value }
           ve: metafield(namespace: "custom", key: "ve") { value }
           variants(first: 1) {

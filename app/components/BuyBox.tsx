@@ -6,6 +6,7 @@ import { trackEvent } from "../lib/analytics";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
+import { VERSAND, euro } from "../lib/versand";
 import type { ProductVariant, Money } from "@/lib/shopify/types";
 
 // Kaufbereich: Verpackungseinheit-Auswahl (Varianten) VOR der Mengenauswahl.
@@ -31,7 +32,10 @@ export default function BuyBox({
   const price = selected?.price ?? fallbackPrice;
   const available = selected?.availableForSale ?? false;
   const merchandiseId = selected?.id ?? null;
-  const disabled = !merchandiseId || !available || pending;
+  // 0,00 heisst "noch nicht kalkuliert": anzeigen als "Preis auf Anfrage",
+  // und die Einheit ist NICHT in den Warenkorb legbar.
+  const preisOffen = !(Number(price?.amount) > 0);
+  const disabled = !merchandiseId || !available || preisOffen || pending;
 
   return (
     <div>
@@ -65,12 +69,39 @@ export default function BuyBox({
 
       {/* Preis der gewaehlten Einheit */}
       <p className="text-lg font-semibold">
-        <PriceTag amount={price.amount} currency={price.currencyCode} />
+        {preisOffen ? (
+          <span className="text-muted">Preis auf Anfrage</span>
+        ) : (
+          <PriceTag amount={price.amount} currency={price.currencyCode} />
+        )}
       </p>
+
+      {preisOffen && (
+        <p className="mt-2 max-w-[42ch] text-[0.78rem] leading-relaxed text-muted">
+          Für diese Verpackungseinheit nennen wir Ihnen den Preis gern direkt —
+          per{" "}
+          <a
+            href="https://wa.me/4367762080802"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent underline underline-offset-2"
+          >
+            WhatsApp
+          </a>{" "}
+          oder{" "}
+          <a
+            href="mailto:shop@buttje.at"
+            className="text-accent underline underline-offset-2"
+          >
+            shop@buttje.at
+          </a>
+          .
+        </p>
+      )}
 
       {/* Menge + In den Warenkorb */}
       <div className="mt-5 flex flex-wrap items-center gap-3">
-        <QuantityStepper value={qty} onChange={setQty} disabled={!available} />
+        <QuantityStepper value={qty} onChange={setQty} disabled={!available || preisOffen} />
         <button
           type="button"
           disabled={disabled}
@@ -89,14 +120,21 @@ export default function BuyBox({
           }}
           className="min-h-[44px] border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors enabled:hover:border-accent enabled:hover:text-accent disabled:opacity-40"
         >
-          {pending ? "Wird hinzugefügt..." : available ? "In den Warenkorb" : "Nicht verfügbar"}
+          {pending
+            ? "Wird hinzugefügt..."
+            : preisOffen
+              ? "Preis auf Anfrage"
+              : available
+                ? "In den Warenkorb"
+                : "Nicht verfügbar"}
         </button>
       </div>
       {error && <p className="mt-2 text-[0.72rem] text-muted">{error}</p>}
 
-      {/* Versand-Kurzinfo (Preise: siehe Versand & Zahlung; Schwelle = FreeShippingBar) */}
+      {/* Versand-Kurzinfo (Werte zentral in app/lib/versand.ts) */}
       <p className="mt-3 text-[0.66rem] text-muted">
-        Versand DE 5,95 / AT 9,90 - versandkostenfrei ab 100 EUR netto.
+        Versand {VERSAND.land} {euro(VERSAND.standard)} — versandkostenfrei ab{" "}
+        {euro(VERSAND.freiAb)} netto.
       </p>
     </div>
   );

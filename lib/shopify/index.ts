@@ -63,6 +63,7 @@ export async function getSearchIndex(): Promise<
     beschreibung: string;
     bild: string | null;
     bildAlt: string | null;
+    preis: { amount: string; currencyCode: string } | null;
   }[]
 > {
   type Raw = {
@@ -72,6 +73,7 @@ export async function getSearchIndex(): Promise<
     vendor: string | null;
     tags: string[];
     featuredImage: { url: string; altText: string | null } | null;
+    priceRange: { minVariantPrice: { amount: string; currencyCode: string } } | null;
     teaser: MetafieldRef;
     ve: MetafieldRef;
     variants: Edges<{ sku: string | null }>;
@@ -92,6 +94,7 @@ export async function getSearchIndex(): Promise<
     beschreibung: (p.description ?? "").slice(0, 400),
     bild: p.featuredImage?.url ?? null,
     bildAlt: p.featuredImage?.altText ?? null,
+    preis: p.priceRange?.minVariantPrice ?? null,
   }));
 }
 

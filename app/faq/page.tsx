@@ -5,7 +5,7 @@ import JsonLd from "../components/JsonLd";
 export const metadata: Metadata = {
   title: { absolute: "Häufige Fragen (FAQ) | buttje Shop" },
   description:
-    "Antworten zu Bestellung, Versand und Zahlung im buttje Shop: Verkauf ausschließlich an Gewerbe, Lieferung nach Deutschland und Österreich, Nettopreise zzgl. USt, versandkostenfrei ab 100 EUR netto.",
+    "Antworten zu Bestellung, Versand und Zahlung im buttje Shop: Verkauf ausschließlich an Gewerbe, Lieferung innerhalb Österreichs, Nettopreise zzgl. USt, versandkostenfrei ab 150 EUR netto.",
   alternates: { canonical: "/faq" },
 };
 
@@ -17,11 +17,11 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Wohin wird geliefert?",
-    a: "Wir liefern nach Deutschland und Österreich.",
+    a: "Wir liefern innerhalb Österreichs.",
   },
   {
     q: "Ab wann ist der Versand kostenlos?",
-    a: "Ab einem Netto-Warenwert von 100 EUR liefern wir versandkostenfrei innerhalb von Deutschland und Österreich. Darunter werden die Versandkosten im Bestellprozess ausgewiesen.",
+    a: "Ab einem Netto-Warenwert von 150 EUR liefern wir versandkostenfrei innerhalb Österreichs. Darunter werden die Versandkosten im Bestellprozess ausgewiesen.",
   },
   {
     q: "Wie sind die Preise angegeben?",

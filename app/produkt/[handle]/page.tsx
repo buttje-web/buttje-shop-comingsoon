@@ -4,7 +4,9 @@ import Container from "../../components/Container";
 import OptInForm from "../../components/OptInForm";
 import BildPlatzhalter from "../../components/BildPlatzhalter";
 import JsonLd from "../../components/JsonLd";
+import BuyBox from "../../components/BuyBox";
 import { SITE_URL, SITE_NAME } from "../../lib/seo";
+import { KAUFBAR, istPreisOffen, PREIS_HINWEIS_KATALOG } from "../../lib/shop-mode";
 import { getProductByHandle } from "@/lib/shopify";
 import type { Product } from "@/lib/shopify/types";
 
@@ -31,7 +33,9 @@ function seoDescription(p: Product): string {
   if (v?.barcode) ids.push(`EAN ${v.barcode}`);
   if (ids.length) parts.push(`${ids.join(", ")}.`);
   parts.push(
-    `B2B-Shop für Gewerbe — Preise für Geschäftskunden in Kürze. Lieferung nach Deutschland und Österreich.`,
+    KAUFBAR
+      ? `B2B-Shop für Gewerbe — Nettopreise zzgl. USt. Lieferung innerhalb Österreichs.`
+      : `B2B-Shop für Gewerbe — ${PREIS_HINWEIS_KATALOG}. Lieferung innerhalb Österreichs.`,
   );
   return parts.join(" ");
 }
@@ -89,7 +93,12 @@ export default async function ProductPage({ params }: { params: Params }) {
   const variant = product.variants?.[0];
   const url = `${SITE_URL}/produkt/${product.handle}`;
 
+  const min = product.priceRange?.minVariantPrice;
+  const preisOffen = istPreisOffen(min?.amount);
+
   // Katalogmodus: bewusst KEIN offers-Block (kein Preis in strukturierten Daten).
+  // Kaufmodus: offers nur, wenn ein echter Preis existiert — ein Angebot mit
+  // 0,00 waere eine Falschaussage gegenueber Suchmaschinen.
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -99,6 +108,20 @@ export default async function ProductPage({ params }: { params: Params }) {
     ...(variant?.barcode ? { gtin13: variant.barcode } : {}),
     ...(product.vendor ? { brand: { "@type": "Brand", name: product.vendor } } : {}),
     ...(product.featuredImage ? { image: product.featuredImage.url } : {}),
+    ...(KAUFBAR && !preisOffen && min
+      ? {
+          offers: {
+            "@type": "Offer",
+            url,
+            price: min.amount,
+            priceCurrency: min.currencyCode,
+            valueAddedTaxIncluded: false,
+            availability: variant?.availableForSale
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+          },
+        }
+      : {}),
   };
 
   const breadcrumbLd = {
@@ -149,32 +172,53 @@ export default async function ProductPage({ params }: { params: Params }) {
             </p>
           )}
 
-          {/* 3. Katalogmodus: VE-Info, Preis-Hinweis, Eroeffnungs-Opt-in + WhatsApp */}
+          {/* 3. Kaufmodus: echter Kaufbereich. Katalogmodus: VE-Info,
+                 Preis-Hinweis, Eroeffnungs-Opt-in + WhatsApp. */}
           <div className="mt-6 border border-line p-5">
-            {(product.variants?.length ?? 0) > 0 && (
-              <p className="text-[0.8rem] text-muted">
-                {product.variants!.length === 1
-                  ? `Verpackungseinheit: ${product.variants![0].title}`
-                  : `Verpackungseinheiten: ${product.variants!.map((v) => v.title).join(" · ")}`}
-              </p>
+            {KAUFBAR ? (
+              <>
+                <BuyBox
+                  variants={product.variants ?? []}
+                  fallbackPrice={min ?? { amount: "0", currencyCode: "EUR" }}
+                  productHandle={product.handle}
+                />
+                <a
+                  href="https://wa.me/4367762080802"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-block border border-line-strong px-5 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
+                >
+                  Fragen? Per WhatsApp →
+                </a>
+              </>
+            ) : (
+              <>
+                {(product.variants?.length ?? 0) > 0 && (
+                  <p className="text-[0.8rem] text-muted">
+                    {product.variants!.length === 1
+                      ? `Verpackungseinheit: ${product.variants![0].title}`
+                      : `Verpackungseinheiten: ${product.variants!.map((v) => v.title).join(" · ")}`}
+                  </p>
+                )}
+                <p className="mt-2 text-[0.98rem] font-semibold">
+                  {PREIS_HINWEIS_KATALOG}
+                </p>
+
+                <div className="mt-5 border-t border-line pt-5">
+                  <p className="eyebrow mb-3">Zur Eröffnung informieren</p>
+                  <OptInForm variant="compact" />
+                </div>
+
+                <a
+                  href="https://wa.me/4367762080802"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-block border border-line-strong px-5 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
+                >
+                  Fragen? Per WhatsApp →
+                </a>
+              </>
             )}
-            <p className="mt-2 text-[0.98rem] font-semibold">
-              Preise für Geschäftskunden in Kürze
-            </p>
-
-            <div className="mt-5 border-t border-line pt-5">
-              <p className="eyebrow mb-3">Zur Eröffnung informieren</p>
-              <OptInForm variant="compact" />
-            </div>
-
-            <a
-              href="https://wa.me/4367762080802"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-block border border-line-strong px-5 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
-            >
-              Fragen? Per WhatsApp →
-            </a>
           </div>
 
           {/* 4. Technische Datentabelle */}

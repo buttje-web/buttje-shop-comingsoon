@@ -5,7 +5,10 @@ import "./globals.css";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import JsonLd from "./components/JsonLd";
+import { CartProvider } from "./components/CartContext";
 import { ORG, SITE_URL } from "./lib/seo";
+import { KAUFBAR } from "./lib/shop-mode";
+import { loadCart } from "@/lib/cart/actions";
 
 const organizationLd = {
   "@context": "https://schema.org",
@@ -38,7 +41,7 @@ export const metadata: Metadata = {
     template: "%s | buttje Shop",
   },
   description:
-    "buttje Shop, Wien. Verbrauchsgüter und Hygienebedarf für Gewerbe: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung DE und AT.",
+    "buttje Shop, Wien. Verbrauchsgüter und Hygienebedarf für Gewerbe: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung innerhalb Österreichs.",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
 };
@@ -69,9 +72,21 @@ export default async function RootLayout({
             </Script>
           </>
         )}
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+        {/* Im Katalogmodus gibt es keinen Warenkorb — dann auch keinen
+            CartProvider und keinen Cart-Abruf pro Seitenaufruf. */}
+        {KAUFBAR ? (
+          <CartProvider initialCount={(await loadCart())?.totalQuantity ?? 0}>
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </CartProvider>
+        ) : (
+          <>
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </>
+        )}
       </body>
     </html>
   );

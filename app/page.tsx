@@ -17,7 +17,7 @@ const KACHEL_TEASER: Record<string, string> = {
 export const metadata: Metadata = {
   title: { absolute: "buttje Shop — Verbrauchsgüter & Hygienebedarf für Gewerbe" },
   description:
-    "buttje Shop, Wien. Verbrauchsgüter und Hygienebedarf für Gewerbe: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung DE und AT.",
+    "buttje Shop, Wien. Verbrauchsgüter und Hygienebedarf für Gewerbe: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung innerhalb Österreichs.",
   alternates: { canonical: "/" },
 };
 

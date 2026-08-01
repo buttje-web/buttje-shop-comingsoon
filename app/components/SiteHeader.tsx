@@ -2,6 +2,8 @@ import Link from "next/link";
 import ProductsNav from "./ProductsNav";
 import MobileNav from "./MobileNav";
 import Suche from "./Suche";
+import CartLink from "./CartLink";
+import { KAUFBAR } from "../lib/shop-mode";
 
 // Sticky Nav im dunklen buttje-Look.
 // Desktop (>= lg): Kategorie-Dropdown + Links. Mobil/Tablet hochkant: Burger-Menue.
@@ -34,10 +36,13 @@ export default function SiteHeader() {
             Versand &amp; Zahlung
           </Link>
           <Suche variant="header" />
+          {/* Warenkorb-Link nur im Kaufmodus */}
+          {KAUFBAR && <CartLink />}
         </div>
 
         {/* Mobil/Tablet hochkant: Burger (via .nav-mobile) */}
         <div className="nav-mobile items-center gap-2">
+          {KAUFBAR && <CartLink />}
           <MobileNav />
         </div>
       </nav>
