@@ -55,7 +55,9 @@ export default function ProduktInfo({
 
   const t = inhalt.technik ?? {};
   // Box nur zeigen, wenn wenigstens ein Feld belegt ist.
-  const hatDaten = Boolean(hersteller || sku || ean || ve || t.inhalt || t.ph || t.gisbau);
+  const hatDaten = Boolean(
+    hersteller || sku || ean || ve || t.inhalt || t.ph || t.gisbau || t.weitere?.length,
+  );
   const zeigeDownloads = SDB_DOWNLOADS_AKTIV && SDB_VERFUEGBAR.has(sku);
 
   return (
@@ -81,6 +83,10 @@ export default function ProduktInfo({
             <Datenzeile feld="Inhalt" wert={t.inhalt} />
             <Datenzeile feld="pH-Wert" wert={t.ph} />
             <Datenzeile feld="GISBAU" wert={t.gisbau} />
+            {/* Warengruppen-spezifische Zusatzzeilen, Reihenfolge wie gepflegt */}
+            {(t.weitere ?? []).map(([feld, wert]) => (
+              <Datenzeile key={feld} feld={feld} wert={wert} />
+            ))}
           </dl>
         </section>
       )}

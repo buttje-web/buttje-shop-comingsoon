@@ -25,6 +25,12 @@ export type Produktinhalt = {
     inhalt?: string;
     ph?: string;
     gisbau?: string;
+    /**
+     * Weitere Zeilen fuer die Box, in dieser Reihenfolge angehaengt.
+     * Gedacht fuer Warengruppen mit ganz anderen Kennzahlen als Chemie —
+     * Papier braucht Lagen, Blatt und Rollenlaenge, nicht pH und GISBAU.
+     */
+    weitere?: [string, string][];
   };
 };
 
@@ -169,6 +175,135 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
     gutZuWissen:
       "Farbechtheit vor der ersten Anwendung an verdeckter Stelle prüfen.",
     technik: { inhalt: "1 l", ph: "6,5–7,5 (Konzentrat)" },
+  },
+  // ---- Batch 2: Papier (Texte von Rami, Fachdaten aus den Hersteller-
+  // Datenblaettern; bei Abweichung gilt der Hersteller) ----------------------
+  "401977": {
+    aufmacher:
+      "2.000 Blatt pro Packung. Rechnen Sie den Blattpreis aus, dann reden wir weiter.",
+    anwendung:
+      "Standard-Toilettenpapier für Spender mit Hülse, Objektbereich und Büro.",
+    technik: {
+      inhalt: "8 Rollen = 2.000 Blatt / 224 m",
+      weitere: [
+        ["Lagen", "3-lagig"],
+        ["Material", "Zellstoff"],
+        ["Blatt je Rolle", "250"],
+        ["Länge je Rolle", "28 m"],
+        ["Rollendurchm.", "11 cm"],
+        ["Hülse", "4,2 cm"],
+        ["Prägung", "Lily"],
+        ["Spender", "Papernet 417812, 403616"],
+      ],
+    },
+  },
+  "404578": {
+    aufmacher:
+      "Vier Lagen sind kein Luxus. Sie sind die Entscheidung, dass am stillen Ort nicht gespart wird.",
+    anwendung:
+      "Komfort-Toilettenpapier für Bereiche mit Anspruch: Kanzlei, Empfang, Chefetage.",
+    technik: {
+      inhalt: "8 Rollen = 1.200 Blatt / 150 m",
+      weitere: [
+        ["Lagen", "4-lagig"],
+        ["Farbe", "hochweiß"],
+        ["Blatt je Rolle", "150"],
+        ["Länge je Rolle", "18,75 m"],
+        ["Rollendurchm.", "11 cm"],
+        ["Prägung", "Lily"],
+      ],
+    },
+  },
+  "110255": {
+    aufmacher:
+      "120 Meter pro Rolle. Nachfüllen wird vom Tagesgeschäft zum Quartalstermin.",
+    anwendung:
+      "Großrollen für Tork-T2-Spendersysteme in stark frequentierten Sanitärbereichen.",
+    zertifikate:
+      "EU Ecolabel, FSC-zertifiziert, Werk nach ISO 9001 und ISO 14001.",
+    technik: {
+      inhalt: "12 Rollen = 1.440 m",
+      weitere: [
+        ["Lagen", "3-lagig"],
+        ["Blatt je Rolle", "600"],
+        ["Länge je Rolle", "120 m"],
+        ["Breite", "9,7 cm"],
+        ["Spender", "Tork T2-Serie (u. a. 555000, 555500)"],
+      ],
+    },
+  },
+  "CWS-1700332": {
+    aufmacher:
+      "3.600 Meter in einem Karton. Das Nachbestell-Thema ist damit für lange erledigt.",
+    anwendung:
+      "Großrollen für CWS-Spendersysteme, Recyclingqualität für den Objektbereich.",
+    technik: {
+      inhalt: "36 Rollen = 3.600 m",
+      weitere: [
+        ["Lagen", "2-lagig"],
+        ["Material", "Recycling"],
+        ["Länge je Rolle", "100 m"],
+      ],
+    },
+  },
+  "CU-3380CN": {
+    aufmacher: "Eine Rolle, 380 Meter. Manche Probleme löst man mit Größe.",
+    anwendung:
+      "Maxi-Jumbo-Rollen für Großrollenspender in stark genutzten Sanitärräumen.",
+    technik: {
+      inhalt: "6 Rollen = 2.280 m",
+      weitere: [
+        ["Lagen", "2-lagig"],
+        ["Länge je Rolle", "380 m"],
+      ],
+    },
+  },
+  "402292": {
+    aufmacher:
+      "Ein Blatt, trockene Hände, weiter. Mehr muss ein Handtuchspender nicht können.",
+    anwendung:
+      "Einzelblatt-Entnahme für gängige V-Falz-Spender in Sanitär- und Waschräumen.",
+    technik: {
+      inhalt: "15 Packungen à 210 Blatt = 3.150 Blatt",
+      weitere: [
+        ["Lagen", "2-lagig"],
+        ["Material", "Zellstoff"],
+        ["Farbe", "hochweiß"],
+        ["Blattmaß", "21 x 24 cm"],
+        ["gefaltet", "24 x 10,5 cm"],
+        ["Prägung", "Wave"],
+        ["Spender", "Papernet 416143, 417204"],
+      ],
+    },
+  },
+  "416602": {
+    aufmacher:
+      "W-Falz heißt: das nächste Blatt steht schon bereit. Kein Zupfen, kein Stau.",
+    anwendung:
+      "Interfold-Falthandtücher für W-Falz-Spender, volle Entnahme mit einer Hand.",
+    technik: {
+      inhalt: "20 Packungen à 150 Blatt = 3.000 Blatt",
+      weitere: [
+        ["Lagen", "2-lagig"],
+        ["Farbe", "weiß"],
+      ],
+    },
+  },
+  "416596": {
+    aufmacher:
+      "Steht in jeder Teeküche, fehlt immer genau dann, wenn was passiert. Deshalb im Vorrat.",
+    anwendung:
+      "Küchenrolle für Teeküche, Pausenraum und schnelle Zwischenreinigung.",
+    technik: {
+      inhalt: "4 Rollen = 44 m",
+      weitere: [
+        ["Lagen", "3-lagig"],
+        ["Material", "Zellstoff"],
+        ["Blatt je Rolle", "51"],
+        ["Länge je Rolle", "11 m"],
+        ["Rollendurchm.", "10,5 cm"],
+      ],
+    },
   },
 };
 
