@@ -3,6 +3,7 @@ import Link from "next/link";
 import Container from "./components/Container";
 import OptInForm from "./components/OptInForm";
 import { CATEGORIES } from "./categories";
+import { KAUFBAR } from "./lib/shop-mode";
 
 // Kachel-Halbsaetze im buttje-Ton (kompakter als die Kategorie-Headlines).
 const KACHEL_TEASER: Record<string, string> = {
@@ -38,7 +39,9 @@ export default function HomePage() {
           </h1>
           <p className="mt-6 max-w-[46ch] text-[clamp(0.85rem,1.4vw,1.05rem)] font-semibold text-[rgba(14,14,18,0.74)]">
             Verbrauchsgüter mit Haltung: handgefüllt, nummeriert, ernst gemeint.
-            Das Sortiment wird gerade vorbereitet.
+            {KAUFBAR
+              ? " Jetzt für Geschäftskunden bestellbar."
+              : " Das Sortiment wird gerade vorbereitet."}
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
@@ -51,16 +54,28 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Eroeffnungs-Opt-in (Anker fuer "Neu eintragen" auf /bestaetigen) */}
+      {/* Newsletter-Opt-in (Anker fuer "Neu eintragen" auf /bestaetigen).
+          Zwei Zustaende: vor der Eroeffnung wird die Eroeffnung angekuendigt,
+          danach geht es um neue Produkte und Angebote. Formular, Checkbox und
+          Datenschutz-Zeile sind in beiden Zustaenden identisch. */}
       <section id="newsletter" className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
           <p className="eyebrow mb-3">Newsletter</p>
           <h2 className="text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase tracking-[-0.02em]">
-            Wir eröffnen bald. <span className="grad-text">Zuerst erfahren.</span>
+            {KAUFBAR ? (
+              <>
+                Wir sind offen. <span className="grad-text">Nichts verpassen.</span>
+              </>
+            ) : (
+              <>
+                Wir eröffnen bald. <span className="grad-text">Zuerst erfahren.</span>
+              </>
+            )}
           </h2>
           <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
-            Tragen Sie sich ein und erfahren Sie als Erste, wenn der Shop für
-            Geschäftskunden öffnet.
+            {KAUFBAR
+              ? "Tragen Sie sich ein und erfahren Sie als Erste von neuen Produkten und Angeboten für Geschäftskunden."
+              : "Tragen Sie sich ein und erfahren Sie als Erste, wenn der Shop für Geschäftskunden öffnet."}
           </p>
           <div className="mt-7">
             <OptInForm variant="full" />
