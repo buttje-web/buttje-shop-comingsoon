@@ -88,8 +88,8 @@ export default function HomePage() {
         <Container>
           <div className="grid grid-cols-1 gap-0 md:grid-cols-3">
             {[
-              ["Handgefüllt", "Jedes Produkt mit Sorgfalt ausgewählt."],
-              ["Nummeriert", "Klare Herkunft, klare Verantwortung."],
+              ["Ausgewählt", "Kein Katalog mit 10.000 Artikeln. Nur was im Objekt wirklich gebraucht wird."],
+              ["Netto", "Preise für Gewerbe, ohne Theater. Was dasteht, gilt."],
               ["Ernst gemeint", "Verbrauchsgüter, die ihren Zweck erfüllen."],
             ].map(([title, desc], i) => (
               <div

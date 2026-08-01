@@ -4,6 +4,7 @@ import Container from "../../components/Container";
 import OptInForm from "../../components/OptInForm";
 import BildPlatzhalter from "../../components/BildPlatzhalter";
 import JsonLd from "../../components/JsonLd";
+import ProduktInfo from "../../components/ProduktInfo";
 import BuyBox from "../../components/BuyBox";
 import { SITE_URL, SITE_NAME } from "../../lib/seo";
 import { KAUFBAR, istPreisOffen, PREIS_HINWEIS_KATALOG } from "../../lib/shop-mode";
@@ -221,7 +222,18 @@ export default async function ProductPage({ params }: { params: Params }) {
             )}
           </div>
 
-          {/* 4. Technische Datentabelle */}
+          {/* 4. Gegliederter Produktinhalt (Abschnitte + Produktdaten-Box).
+                 Rendert nur, wenn fuer die SKU Inhalte gepflegt sind. */}
+          <ProduktInfo
+            sku={variant?.sku ?? ""}
+            hersteller={product.vendor}
+            ean={variant?.barcode}
+            ve={product.ve ?? variant?.title}
+          />
+
+          {/* 5. Technische Datentabelle des Herstellers.
+                 Bleibt fuer Produkte OHNE gepflegte Abschnitte die einzige
+                 Datenquelle; bei gepflegten Produkten ergaenzt sie die Box. */}
           {product.descriptionHtml && (
             <div
               className="techdata mt-10"
