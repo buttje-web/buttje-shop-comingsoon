@@ -191,18 +191,14 @@ body {
 }
 
 /* Warenkorb-Label: kurz (mobil) vs. lang (ab 640px) - gleiche Technik */
+/* Sackerl-Knopf: unter 640 px nur Icon + Zahl, ab 640 px zusaetzlich das Wort.
+   Ungelayertes CSS, damit aeltere Safari die Sichtbarkeit sicher treffen. */
 .cart-label-long {
   display: none !important;
-}
-.cart-label-short {
-  display: inline !important;
 }
 @media (min-width: 640px) {
   .cart-label-long {
     display: inline !important;
-  }
-  .cart-label-short {
-    display: none !important;
   }
 }
 

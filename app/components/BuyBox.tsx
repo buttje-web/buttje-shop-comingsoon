@@ -125,7 +125,7 @@ export default function BuyBox({
             : preisOffen
               ? "Preis auf Anfrage"
               : available
-                ? "In den Warenkorb"
+                ? "Ins Sackerl"
                 : "Nicht verfügbar"}
         </button>
       </div>

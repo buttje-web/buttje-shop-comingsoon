@@ -43,7 +43,7 @@ export default function AddToCartButton({
           }}
           className="border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors enabled:hover:border-accent enabled:hover:text-accent disabled:opacity-40"
         >
-          {pending ? "Wird hinzugefügt..." : available ? "In den Warenkorb" : "Nicht verfügbar"}
+          {pending ? "Wird hinzugefügt..." : available ? "Ins Sackerl" : "Nicht verfügbar"}
         </button>
       </div>
       {error && <p className="text-[0.72rem] text-muted">{error}</p>}

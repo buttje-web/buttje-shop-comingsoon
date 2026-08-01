@@ -9,7 +9,7 @@ import { KAUFBAR } from "../lib/shop-mode";
 import { loadCart } from "@/lib/cart/actions";
 
 export const metadata: Metadata = {
-  title: "Warenkorb",
+  title: "Sackerl",
   robots: { index: false, follow: true },
 };
 
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 function Geschlossen() {
   return (
     <Container className="py-[clamp(40px,7vw,88px)]">
-      <p className="eyebrow mb-3">Warenkorb</p>
+      <p className="eyebrow mb-3">Sackerl</p>
       <h1 className="mb-10 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
         Noch nicht geöffnet
       </h1>
@@ -44,12 +44,12 @@ function Geschlossen() {
 function Leer() {
   return (
     <Container className="py-[clamp(40px,7vw,88px)]">
-      <p className="eyebrow mb-3">Warenkorb</p>
+      <p className="eyebrow mb-3">Sackerl</p>
       <h1 className="mb-10 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
-        Ihr Warenkorb
+        Ihr Sackerl
       </h1>
       <div className="border border-line px-6 py-16 text-center">
-        <p className="text-muted">Ihr Warenkorb ist noch leer.</p>
+        <p className="text-muted">Dein Sackerl ist leer.</p>
         <Link
           href="/produkte"
           className="mt-8 inline-block border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
@@ -82,9 +82,9 @@ export default async function CartPage() {
 
   return (
     <Container className="py-[clamp(40px,7vw,88px)]">
-      <p className="eyebrow mb-3">Warenkorb</p>
+      <p className="eyebrow mb-3">Sackerl</p>
       <h1 className="mb-10 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
-        Ihr Warenkorb
+        Ihr Sackerl
       </h1>
 
       <div className="grid grid-cols-1 gap-[clamp(24px,5vw,64px)] lg:grid-cols-[1fr_340px]">
