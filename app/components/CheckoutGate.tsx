@@ -62,8 +62,8 @@ export default function CheckoutGate({ checkoutUrl }: { checkoutUrl: string }) {
         Gewerbetreibende und öffentliche Einrichtungen.
       </p>
       <p className="text-[0.62rem] leading-relaxed text-muted opacity-80">
-        Sichere Zahlung per Karte, EPS oder Klarna. Rechnung mit ausgewiesener
-        USt erhalten Sie automatisch per E-Mail.
+        Sichere Zahlung per Karte oder EPS-Überweisung. Rechnung mit
+        ausgewiesener USt erhalten Sie automatisch per E-Mail.
       </p>
     </div>
   );
