@@ -113,7 +113,6 @@ export default function HomePage() {
           Bis zum Klick laedt nur das Posterbild (preload="none"). */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
-          <p className="eyebrow mb-3">Film</p>
           <h2 className="max-w-[20ch] text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
             Jeder hat etwas <span className="grad-text">zu verbergen.</span>
           </h2>
