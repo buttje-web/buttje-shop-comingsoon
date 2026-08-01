@@ -34,10 +34,12 @@ export default function CategoryHeader({
         {/* Text-Spalte */}
         <div>
           <span className="eyebrow">Kategorie</span>
-          {/* hyphens-auto + break-words: lange Woerter wie "UNGLAMOUROES."
-              liefen auf sehr schmalen Viewports aus dem Bild. Trennung
-              greift, weil <html lang="de"> gesetzt ist. */}
-          <h1 className="mt-3 hyphens-auto break-words text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
+          {/* KEINE Silbentrennung. Ein frueherer Versuch mit hyphens-auto
+              hat lange Woerter zwar gebaendigt, dafuer aber Versalien-
+              Headlines als "KEI-NE" umgebrochen. Umbruch jetzt nur an
+              Wortgrenzen; laeuft ein Wort ueber, wird das gemeldet und
+              per Schriftgroesse oder manuellem Umbruch geloest. */}
+          <h1 className="mt-3 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
             {headline || label}
           </h1>
           {intro && (
