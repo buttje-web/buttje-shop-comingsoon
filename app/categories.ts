@@ -7,13 +7,17 @@ export type Category = {
   label: string; // Anzeigename (Navigation)
   headline: string; // Kategorie-Headline (Teil 4)
   intro: string; // Intro-Text (Teil 4)
-  // Optionales Header-Video (autoplay/muted/loop). Ohne Video: Platzhalter.
+  // Header-Standbild (9:16) aus den Buehnen-Mastern. Ohne Bild: dunkler Verlauf.
+  bild?: string;
+  // STILLGELEGT seit 01.08.2026: Kategorie-Videos werden nicht mehr gerendert.
+  // Feld und Daten bleiben bewusst erhalten (Beschluss: stilllegen, nicht loeschen).
   video?: { src: string; poster: string };
 };
 
 export const CATEGORIES: Category[] = [
   {
     slug: "entsorgung",
+    bild: "/kategorie/entsorgung.webp",
     tag: "entsorgung",
     label: "Entsorgung",
     headline: "Müllsäcke, die mehr aushalten als dein Team am Montagmorgen.",
@@ -25,6 +29,7 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: "papier",
+    bild: "/kategorie/papier.webp",
     tag: "papier",
     label: "Papier",
     headline: "Von grau und gnadenlos günstig bis vierlagig hochweiß.",
@@ -33,6 +38,7 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: "chemie",
+    bild: "/kategorie/chemie.webp",
     tag: "chemie",
     label: "Chemie",
     headline: "Kein Wundermittel. Keine Zaubersprüche. Nur Zeug, das funktioniert.",
@@ -41,6 +47,7 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: "seifen",
+    bild: "/kategorie/seifen.webp",
     tag: "seife",
     label: "Seifen",
     headline: "Saubere Hände, saubere Sache.",
@@ -49,6 +56,7 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: "handschuhe",
+    bild: "/kategorie/handschuhe.webp",
     tag: "handschuhe",
     label: "Handschuhe",
     headline: "Damit deine Hände nach Feierabend noch aussehen wie Hände.",
@@ -57,6 +65,7 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: "zubehoer",
+    bild: "/kategorie/zubehoer.webp",
     tag: "zubehoer",
     label: "Zubehör",
     headline: "Unglamourös. Unverzichtbar. Unschlagbar praktisch.",

@@ -79,7 +79,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
         headline={cat.headline}
         intro={cat.intro}
         label={cat.label}
-        video={cat.video}
+        bild={cat.bild}
       />
 
       <Container className="py-[clamp(32px,5vw,64px)]">
