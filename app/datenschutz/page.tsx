@@ -82,7 +82,7 @@ export default function DatenschutzPage() {
 
       <h2>9. Newsletter (Opt-in)</h2>
       <p>
-        Wenn Sie sich für unsere Eröffnungs-Information anmelden, verarbeiten
+        Wenn Sie sich für unseren Newsletter anmelden, verarbeiten
         wir Ihre E-Mail-Adresse sowie den Zeitpunkt Ihrer Einwilligung, um Sie
         per E-Mail über Neuigkeiten und Angebote unseres Shops zu
         informieren. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1
