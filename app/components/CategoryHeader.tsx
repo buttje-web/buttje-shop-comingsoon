@@ -38,8 +38,10 @@ export default function CategoryHeader({
               hat lange Woerter zwar gebaendigt, dafuer aber Versalien-
               Headlines als "KEI-NE" umgebrochen. Umbruch jetzt nur an
               Wortgrenzen; laeuft ein Wort ueber, wird das gemeldet und
-              per Schriftgroesse oder manuellem Umbruch geloest. */}
-          <h1 className="mt-3 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
+              per Schriftgroesse geloest. Genau das ist am 2026-08-01
+              passiert: unterster clamp-Wert von 2rem auf 1,7rem, damit
+              "Montagmorgen." bei 320 px in die Zeile passt. */}
+          <h1 className="mt-3 text-[clamp(1.7rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
             {headline || label}
           </h1>
           {intro && (

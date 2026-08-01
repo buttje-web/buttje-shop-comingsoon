@@ -7,7 +7,12 @@ import { useCart } from "./CartContext";
 // Schmal (< 640 px): nur Icon + Zahl, damit der Knopf nicht umbricht.
 // Ab 640 px zusaetzlich das Wort. Touch-Ziel >= 44px.
 
-// lucide "shopping-bag" — Linienstil und Strichstaerke wie die Header-Lupe.
+// Eigenes Sackerl-Icon (Variante D, von Rami gewaehlt): Papiertragetasche
+// als Silhouette — Trapezkorpus, oben schmaler als unten, darueber ein
+// Henkelbogen. Das lucide "shopping-bag" war quadratisch und wirkte wie ein
+// Koffer. Zwei getrennte Henkelboegen waren angedacht, verschmelzen bei 18 px
+// aber zu einer Kuppe; deshalb ein breiter Bogen.
+// Linienstil, Strichstaerke und Groesse identisch zur Header-Lupe.
 function SackerlIcon() {
   return (
     <svg
@@ -21,9 +26,8 @@ function SackerlIcon() {
       strokeLinejoin="round"
       aria-hidden
     >
-      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-      <path d="M3 6h18" />
-      <path d="M16 10a4 4 0 0 1-8 0" />
+      <path d="M6.6 8h10.8l1.7 12.6a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1L6.6 8Z" />
+      <path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8" />
     </svg>
   );
 }

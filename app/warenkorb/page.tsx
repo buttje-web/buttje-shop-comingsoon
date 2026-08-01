@@ -49,7 +49,7 @@ function Leer() {
         Ihr Sackerl
       </h1>
       <div className="border border-line px-6 py-16 text-center">
-        <p className="text-muted">Dein Sackerl ist leer.</p>
+        <p className="text-muted">Ihr Sackerl ist leer.</p>
         <Link
           href="/produkte"
           className="mt-8 inline-block border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
