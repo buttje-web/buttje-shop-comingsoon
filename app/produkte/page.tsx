@@ -30,10 +30,10 @@ export default async function ProductsPage() {
 
       {products.length === 0 ? (
         <div className="border border-line px-6 py-16 text-center">
-          <p className="eyebrow mb-3">In Vorbereitung</p>
+          <p className="eyebrow mb-3">Vorübergehend nicht verfügbar</p>
           <p className="mx-auto max-w-[42ch] text-muted">
-            Das Sortiment wird gerade aufgebaut. Sobald die Produkte da sind,
-            erscheinen sie hier.
+            Das Sortiment ist gerade nicht erreichbar. Bitte versuchen Sie es
+            in wenigen Minuten erneut.
           </p>
         </div>
       ) : (

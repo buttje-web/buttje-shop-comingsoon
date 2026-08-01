@@ -8,7 +8,7 @@ import Link from "next/link";
 // (variant="full") und auf Produktseiten (variant="compact") verwendet.
 
 const CONSENT_TEXT =
-  "Ich möchte per E-Mail über die Eröffnung und Angebote von buttje informiert werden. Abmeldung jederzeit möglich.";
+  "Ich möchte per E-Mail über Neuigkeiten und Angebote von buttje informiert werden. Abmeldung jederzeit möglich.";
 
 export default function OptInForm({ variant = "full" }: { variant?: "full" | "compact" }) {
   const [email, setEmail] = useState("");

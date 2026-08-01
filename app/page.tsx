@@ -64,7 +64,7 @@ export default function HomePage() {
           <h2 className="text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase tracking-[-0.02em]">
             {KAUFBAR ? (
               <>
-                Wir sind offen. <span className="grad-text">Nichts verpassen.</span>
+                Neues zuerst. <span className="grad-text">Direkt ins Postfach.</span>
               </>
             ) : (
               <>

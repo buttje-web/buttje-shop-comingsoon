@@ -80,11 +80,11 @@ export default function DatenschutzPage() {
         Onlineshops (Art. 6 Abs. 1 lit. f DSGVO).
       </p>
 
-      <h2>9. Eröffnungs-Information und Newsletter (Opt-in)</h2>
+      <h2>9. Newsletter (Opt-in)</h2>
       <p>
         Wenn Sie sich für unsere Eröffnungs-Information anmelden, verarbeiten
         wir Ihre E-Mail-Adresse sowie den Zeitpunkt Ihrer Einwilligung, um Sie
-        per E-Mail über die Eröffnung und Angebote unseres Shops zu
+        per E-Mail über Neuigkeiten und Angebote unseres Shops zu
         informieren. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1
         lit. a DSGVO). Die Anmeldung erfolgt im Double-Opt-in-Verfahren: Erst
         nach Bestätigung gilt Ihre Einwilligung als erteilt. Sie können sich
