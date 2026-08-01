@@ -35,6 +35,8 @@ export default function FreeShippingBar({
   const zuSchwer = gewichtBekannt && gewichtKg > GRATIS_BIS_KG;
   const ueberMax = gewichtBekannt && gewichtKg > MAX_KG;
   const tarif = gewichtBekannt ? tarifFuerGewicht(gewichtKg) : null;
+  // Der Fortschrittsbalken hat nur Sinn, wenn das Ziel erreichbar ist.
+  const balkenZeigen = !zuSchwer && !ueberMax;
 
   return (
     <div className="mb-6">
@@ -60,16 +62,27 @@ export default function FreeShippingBar({
           </>
         )}
       </p>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-[rgba(244,244,246,0.1)]">
+      {/* Balken nur, solange Gratisversand ueberhaupt erreichbar ist. Ein
+          voller Balken neben "greift nicht" wuerde sich selbst widersprechen. */}
+      {balkenZeigen && (
         <div
-          className="h-full rounded-full transition-[width] duration-500"
-          style={{
-            width: `${pct}%`,
-            background: wertErreicht && !zuSchwer ? "var(--accent)" : "var(--grad)",
-            backgroundSize: "240% 240%",
-          }}
-        />
-      </div>
+          className="h-2 w-full overflow-hidden rounded-full border border-[rgba(244,244,246,0.22)] bg-[rgba(244,244,246,0.06)]"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={pct}
+          aria-label="Fortschritt bis zum kostenlosen Versand"
+        >
+          <div
+            className="h-full rounded-full transition-[width] duration-500"
+            style={{
+              width: `${pct}%`,
+              background: wertErreicht ? "var(--accent)" : "var(--grad)",
+              backgroundSize: "240% 240%",
+            }}
+          />
+        </div>
+      )}
       <p className="mt-1.5 text-[0.64rem] text-muted">
         Kostenloser Versand ab {euro(THRESHOLD)} (netto) innerhalb{" "}
         {VERSAND.land}s, bei Sendungen bis {GRATIS_BIS_KG} kg. Schwerere
