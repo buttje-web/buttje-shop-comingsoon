@@ -118,8 +118,7 @@ export default function HomePage() {
             Jeder hat etwas <span className="grad-text">zu verbergen.</span>
           </h2>
           <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
-            Ein Kurzfilm über reißfeste Müllsäcke und die Dinge, die niemand
-            sehen soll. 48 Sekunden, Ton an.
+            Wir beraten gern. Und schweigen besser.
           </p>
           <div className="mt-8">
             <FilmSektion
