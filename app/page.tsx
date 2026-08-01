@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "./components/Container";
 import OptInForm from "./components/OptInForm";
+import FilmSektion from "./components/FilmSektion";
 import { CATEGORIES } from "./categories";
 import { KAUFBAR } from "./lib/shop-mode";
 
@@ -50,35 +51,6 @@ export default function HomePage() {
             >
               Zum Sortiment →
             </Link>
-          </div>
-        </Container>
-      </section>
-
-      {/* Newsletter-Opt-in (Anker fuer "Neu eintragen" auf /bestaetigen).
-          Zwei Zustaende: vor der Eroeffnung wird die Eroeffnung angekuendigt,
-          danach geht es um neue Produkte und Angebote. Formular, Checkbox und
-          Datenschutz-Zeile sind in beiden Zustaenden identisch. */}
-      <section id="newsletter" className="border-t border-line">
-        <Container className="py-[clamp(40px,7vw,80px)]">
-          <p className="eyebrow mb-3">Newsletter</p>
-          <h2 className="text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase tracking-[-0.02em]">
-            {KAUFBAR ? (
-              <>
-                Neues zuerst. <span className="grad-text">Direkt ins Postfach.</span>
-              </>
-            ) : (
-              <>
-                Wir eröffnen bald. <span className="grad-text">Zuerst erfahren.</span>
-              </>
-            )}
-          </h2>
-          <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
-            {KAUFBAR
-              ? "Tragen Sie sich ein und erfahren Sie als Erste von neuen Produkten und Angeboten für Geschäftskunden."
-              : "Tragen Sie sich ein und erfahren Sie als Erste, wenn der Shop für Geschäftskunden öffnet."}
-          </p>
-          <div className="mt-7">
-            <OptInForm variant="full" />
           </div>
         </Container>
       </section>
@@ -136,6 +108,58 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      {/* Film. Bewusst am Ende der Seite: schwerstes Element, rein optional.
+          Bis zum Klick laedt nur das Posterbild (preload="none"). */}
+      <section className="border-t border-line">
+        <Container className="py-[clamp(40px,7vw,80px)]">
+          <p className="eyebrow mb-3">Film</p>
+          <h2 className="max-w-[20ch] text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
+            Jeder hat etwas <span className="grad-text">zu verbergen.</span>
+          </h2>
+          <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
+            Ein Kurzfilm über reißfeste Müllsäcke und die Dinge, die niemand
+            sehen soll. 48 Sekunden, Ton an.
+          </p>
+          <div className="mt-8">
+            <FilmSektion
+              src="/video/entsorgung-full.mp4"
+              poster="/video/poster-entsorgung.webp"
+              titel="buttje Kurzfilm: Jeder hat etwas zu verbergen"
+            />
+          </div>
+        </Container>
+      </section>
+
+      {/* Newsletter-Opt-in (Anker fuer "Neu eintragen" auf /bestaetigen).
+          Zwei Zustaende: vor der Eroeffnung wird die Eroeffnung angekuendigt,
+          danach geht es um neue Produkte und Angebote. Formular, Checkbox und
+          Datenschutz-Zeile sind in beiden Zustaenden identisch. */}
+      <section id="newsletter" className="border-t border-line">
+        <Container className="py-[clamp(40px,7vw,80px)]">
+          <p className="eyebrow mb-3">Newsletter</p>
+          <h2 className="text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase tracking-[-0.02em]">
+            {KAUFBAR ? (
+              <>
+                Neues zuerst. <span className="grad-text">Direkt ins Postfach.</span>
+              </>
+            ) : (
+              <>
+                Wir eröffnen bald. <span className="grad-text">Zuerst erfahren.</span>
+              </>
+            )}
+          </h2>
+          <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
+            {KAUFBAR
+              ? "Tragen Sie sich ein und erfahren Sie als Erste von neuen Produkten und Angeboten für Geschäftskunden."
+              : "Tragen Sie sich ein und erfahren Sie als Erste, wenn der Shop für Geschäftskunden öffnet."}
+          </p>
+          <div className="mt-7">
+            <OptInForm variant="full" />
+          </div>
+        </Container>
+      </section>
+
     </>
   );
 }
