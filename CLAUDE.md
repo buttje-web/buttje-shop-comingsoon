@@ -13,3 +13,4 @@
 - Österreichisches Deutsch in kundensichtbaren Texten: Sackerl, Kassa. Sie-Form durchgängig.
 - Keine kostenpflichtigen Aktionen, Apps oder Autorisierungen ohne Rami-Freigabe.
 - Keine erfundenen Produktdaten: nur belegte Herstellerangaben in kundensichtbare Texte.
+- Abgrenzung zur Shopify-Regel: Sie trifft nur Infrastruktur, die unsichtbar bleiben soll. Eigene Kanäle sind davon ausgenommen — der YouTube-Verweis (@buttje-wien) im Footer ist ein bewusster Verweis, das Logo dort ein erlaubtes Funktionssignal. Nicht entfernen (Entscheidung Rami, 01.08.2026).
