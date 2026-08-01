@@ -468,8 +468,60 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
       ph: "ca. 5",
       weitere: [["Gebinde", "Kartusche"], ["Einstufung", "kosmetisches Mittel, kein Gefahrstoff"]],
     },
+  },  // ---- Batch 1b: Chemie-Nachzuegler ---------------------------------------
+  // Bewusst weggelassen: bei DS-00724 die Ecolabel-Lizenznummer und die
+  // Rezyklat-Angabe (stehen nur auf der Produktseite, nicht im PDF), bei
+  // JK-j56115a das EU Ecolabel (Zertifikat ist ein Scan ohne Textebene, nur
+  // einfach belegt) und bei DI-7010209 der ganze Zertifikate-Abschnitt
+  // (der Hersteller weist keine aus).
+  "DS-00261": {
+    aufmacher:
+      "Wenn der Boden Jahre auf dem Buckel hat, hilft kein Wischen mehr. Der hier holt die Schichten runter, bis wieder Fliese da ist.",
+    anwendung:
+      "Grundreiniger für stark verschmutzte alkalibeständige Bodenbeläge, besonders keramische Fliesen und Feinsteinzeug, auch rau und mikroporös. Löst Fett, Öl und Eiweiß, schaumarm. Nicht auf alkaliempfindlichen Materialien.",
+    dosierung:
+      "Maschinelle Grundreinigung 10 % (1:9, kalt), Belag vorwässern, 500 bis 650 ml Lösung je m², ca. 5 Minuten einwirken, mit Einscheibenmaschine bearbeiten, absaugen, klar nachwaschen. Unterhaltsreinigung 0,25 bis 5 %.",
+    gutZuWissen:
+      "Stark alkalisch (pH 13,3), enthält Natronlauge. Augen- und Hautschutz tragen.",
+    zertifikate: "RK-gelistet für keramische Beläge, HACCP-konform.",
+    technik: { inhalt: "1 l", ph: "13,3 (Konzentrat)", gisbau: "GG 80" },
+  },
+  "DS-00724-1000": {
+    aufmacher:
+      "Grundreinigung für die Böden, die keine Lauge vertragen. Marmor, Linoleum, Gummi: hier räumt einer auf, ohne etwas kaputt zu machen.",
+    anwendung:
+      "Intensiv- und Grundreiniger für alle wasserfesten Hartböden, auch alkaliempfindliche wie Gummi, Linoleum, Marmor und Naturstein. Entfernt Wischpflegefilme und Schmutzaufbauten, auch zur Vorbereitung von Beschichtungen. Trocknet rückstandsfrei.",
+    dosierung:
+      "Maschinelle Intensivreinigung 10 % (1:9, kalt), 500 bis 650 ml Lösung je m², 10 bis 15 Minuten einwirken, mit Einscheibenmaschine bearbeiten, absaugen. Unterhaltsreinigung 0,25 bis 1 %.",
+    zertifikate: "EU Ecolabel. Kein Gefahrstoff, frei von Butylglykol.",
+    technik: { inhalt: "1 l", ph: "7,2 (Konzentrat)", gisbau: "GU 50" },
+  },
+  "DI-7010209": {
+    aufmacher:
+      "Edelstahl zeigt jeden Fingerabdruck. Der hier poliert die Front zurück in den Auslieferungszustand.",
+    anwendung:
+      "Gebrauchsfertige Edelstahlpflege für Flächen OHNE Lebensmittelkontakt: Kühl- und Gefrierschranktüren, Servierwagen, Geschirrspülmaschinen außen. Nur gewerblich.",
+    dosierung:
+      "Unverdünnt, nicht mit Wasser mischen. Sparsam auf ein sauberes trockenes Tuch sprühen und die gereinigte Fläche blank polieren.",
+    gutZuWissen:
+      "Nicht auf Flächen anwenden, auf denen Lebensmittel zubereitet werden. Ölbasiert.",
+    technik: { inhalt: "750 ml" },
+  },
+  "JK-j56115a": {
+    aufmacher:
+      "Ein Tab, ein Spülgang, keine Diskussion. Phosphatfrei und ohne Duftstoffe, dafür mit Umweltzeichen.",
+    anwendung:
+      "Geschirrspültabs für Haushalts- und gewerbliche Spülmaschinen in Küche, Kantine und Lebensmittelverarbeitung. Für alkalibeständiges Spülgut aus Porzellan, Glas, Edelstahl und Kunststoff. Nicht für Aluminium und Silber; Kristallglas und handbemaltes Porzellan von Hand spülen.",
+    dosierung:
+      "1 Tab je Spülgang, Schutzfolie entfernen, Tab in die Dosierkammer. Salz und Klarspüler separat nach Wasserhärte.",
+    gutZuWissen:
+      "Enthält Enzyme (Protease, Amylase), kann allergische Reaktionen hervorrufen. Nicht über 35 °C lagern.",
+    zertifikate:
+      "Österreichisches Umweltzeichen (UZ 20), HACCP-einbindbar, Verkehrsfähigkeit im Lebensmittelbereich bescheinigt, halal- und kosher-konforme Inhaltsstoffe, phosphatfrei, frei von Duftstoffen.",
+    technik: { inhalt: "60 Tabs", ph: "10,5 (Anwendungslösung 1 %)" },
   },
 };
+
 
 /**
  * Sicherheitsdatenblätter, die als Herstelleroriginal in
