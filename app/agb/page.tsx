@@ -85,11 +85,13 @@ export default function AgbPage() {
           wenn jemand die Versandkonstanten anfasst. Wer VERSAND aendert, muss
           diesen Absatz und /versand-zahlung bewusst mitziehen. */}
       <p>
-        5.4 Die Versandkosten betragen pauschal 10,00 EUR netto je Bestellung. Ab
-        einem Warenwert von 150,00 EUR netto erfolgt die Lieferung
-        versandkostenfrei. Bei sperriger oder schwerer Ware sowie bei
-        Lieferungen in Palettengröße erfolgt der Versand auf Anfrage zu
-        gesondertem Versandtarif.
+        5.4 Die Versandkosten betragen österreichweit gestaffelt nach
+        Sendungsgewicht: bis 20 kg 10,00 EUR netto, bis 40 kg 15,00 EUR netto,
+        bis 60 kg 20,00 EUR netto je Bestellung. Ab einem Warenwert von 150,00
+        EUR netto erfolgt die Lieferung bei Sendungen bis 20 kg
+        versandkostenfrei. Bei schwereren Sendungen sowie Lieferungen in
+        Palettengröße erfolgt der Versand auf Anfrage zu gesondertem
+        Versandtarif.
       </p>
 
       <h2>6. Eigentumsvorbehalt</h2>

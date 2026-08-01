@@ -6,7 +6,7 @@ import { trackEvent } from "../lib/analytics";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
-import { VERSAND, euro } from "../lib/versand";
+import { VERSAND, VERSAND_AB, GRATIS_BIS_KG, euro } from "../lib/versand";
 import type { ProductVariant, Money } from "@/lib/shopify/types";
 
 // Kaufbereich: Verpackungseinheit-Auswahl (Varianten) VOR der Mengenauswahl.
@@ -133,8 +133,8 @@ export default function BuyBox({
 
       {/* Versand-Kurzinfo (Werte zentral in app/lib/versand.ts) */}
       <p className="mt-3 text-[0.66rem] text-muted">
-        Versand {VERSAND.land} {euro(VERSAND.standard)} — versandkostenfrei ab{" "}
-        {euro(VERSAND.freiAb)} netto.
+        Versand ab {euro(VERSAND_AB)} — versandkostenfrei ab{" "}
+        {euro(VERSAND.freiAb)} netto (bis {GRATIS_BIS_KG} kg).
       </p>
     </div>
   );

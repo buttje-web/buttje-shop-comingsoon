@@ -117,6 +117,8 @@ export const CART_FRAGMENT = `
               title
               product { title handle featuredImage { url altText } }
               price { ...Money }
+              weight
+              weightUnit
             }
           }
         }

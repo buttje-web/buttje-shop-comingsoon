@@ -21,10 +21,11 @@ export default function VersandZahlungPage() {
           interpoliert — siehe Begruendung in app/agb/page.tsx (Punkt 5.4). */}
       <h2>Versandkosten</h2>
       <p>
-        Pauschal 10,00 EUR netto je Bestellung. Ab einem Warenwert von 150,00 EUR
-        netto liefern wir versandkostenfrei. Bei sperriger oder schwerer Ware
-        sowie bei Lieferungen in Palettengröße erstellen wir auf Anfrage ein
-        gesondertes Versandangebot.
+        Österreichweit gestaffelt nach Sendungsgewicht: bis 20 kg 10,00 €, bis
+        40 kg 15,00 €, bis 60 kg 20,00 € (jeweils netto). Ab einem Warenwert von
+        150,00 EUR netto liefern wir bei Sendungen bis 20 kg versandkostenfrei.
+        Schwerere Sendungen sowie Lieferungen in Palettengröße kalkulieren wir
+        individuell – fragen Sie uns an.
       </p>
 
       <h2>Zahlungsarten</h2>

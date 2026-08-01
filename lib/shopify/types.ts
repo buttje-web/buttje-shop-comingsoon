@@ -48,6 +48,9 @@ export type CartLine = {
     title: string;
     price: Money;
     product: { title: string; handle: string; featuredImage: Image | null };
+    /** Variantengewicht laut Shopify; null, wenn am Artikel nicht gepflegt. */
+    weight: number | null;
+    weightUnit: "KILOGRAMS" | "GRAMS" | "POUNDS" | "OUNCES" | null;
   };
 };
 

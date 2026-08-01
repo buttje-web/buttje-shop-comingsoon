@@ -69,6 +69,17 @@ export default async function CartPage() {
 
   const netto = Number(cart.cost.subtotalAmount.amount);
 
+  // Sendungsgewicht in kg. Varianten ohne gepflegtes Gewicht zaehlen als 0 —
+  // dann liegt die Schaetzung zu niedrig, nie zu hoch. gewichtVollstaendig
+  // sagt der Anzeige, ob sie sich auf den Wert verlassen darf.
+  const FAKTOR: Record<string, number> = { KILOGRAMS: 1, GRAMS: 0.001, POUNDS: 0.4535924, OUNCES: 0.0283495 };
+  const gewichtKg = cart.lines.reduce((s, l) => {
+    const w = l.merchandise.weight;
+    const f = FAKTOR[l.merchandise.weightUnit ?? "KILOGRAMS"] ?? 1;
+    return s + (w ? w * f * l.quantity : 0);
+  }, 0);
+  const gewichtVollstaendig = cart.lines.every((l) => (l.merchandise.weight ?? 0) > 0);
+
   return (
     <Container className="py-[clamp(40px,7vw,88px)]">
       <p className="eyebrow mb-3">Warenkorb</p>
@@ -82,7 +93,11 @@ export default async function CartPage() {
         </div>
 
         <aside className="h-fit border border-line p-6">
-          <FreeShippingBar amount={netto} />
+          <FreeShippingBar
+            amount={netto}
+            gewichtKg={gewichtKg}
+            gewichtBekannt={gewichtVollstaendig}
+          />
 
           <div className="flex items-baseline justify-between border-t border-line pt-4">
             <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted">
