@@ -5,6 +5,7 @@ import OptInForm from "../../components/OptInForm";
 import BildPlatzhalter from "../../components/BildPlatzhalter";
 import JsonLd from "../../components/JsonLd";
 import ProduktInfo from "../../components/ProduktInfo";
+import { PRODUKTINHALTE } from "../../produktdaten";
 import BuyBox from "../../components/BuyBox";
 import { SITE_URL, SITE_NAME } from "../../lib/seo";
 import { KAUFBAR, istPreisOffen, PREIS_HINWEIS_KATALOG } from "../../lib/shop-mode";
@@ -92,6 +93,28 @@ export default async function ProductPage({ params }: { params: Params }) {
   }
 
   const variant = product.variants?.[0];
+
+  // Zeilen, die bereits in der Produktdaten-Box stehen. Nur diese drei —
+  // Gebinde, Produktart, Masse usw. bleiben in der Herstellertabelle.
+  const DUBLETTEN = ["Hersteller", "Artikelnummer", "EAN"];
+
+  /** Entfernt <tr>-Zeilen, deren <th> eine der Dubletten ist. */
+  function ohneDubletten(html: string): string {
+    const bereinigt = html.replace(
+      /<tr>\s*<th[^>]*>([^<]*)<\/th>[\s\S]*?<\/tr>\s*/g,
+      (treffer, feld: string) =>
+        DUBLETTEN.includes(feld.trim()) ? "" : treffer,
+    );
+    // Leer gewordene Tabelle samt Ueberschrift ganz weglassen.
+    return /<td>/.test(bereinigt) ? bereinigt : "";
+  }
+
+  const hatBox = Boolean(variant?.sku && PRODUKTINHALTE[variant.sku]);
+  const technikHtml = product.descriptionHtml
+    ? hatBox
+      ? ohneDubletten(product.descriptionHtml)
+      : product.descriptionHtml
+    : "";
   const url = `${SITE_URL}/produkt/${product.handle}`;
 
   const min = product.priceRange?.minVariantPrice;
@@ -232,12 +255,15 @@ export default async function ProductPage({ params }: { params: Params }) {
           />
 
           {/* 5. Technische Datentabelle des Herstellers.
-                 Bleibt fuer Produkte OHNE gepflegte Abschnitte die einzige
-                 Datenquelle; bei gepflegten Produkten ergaenzt sie die Box. */}
-          {product.descriptionHtml && (
+                 Bei Produkten MIT Produktdaten-Box werden die dort schon
+                 gezeigten Zeilen herausgefiltert, damit Hersteller,
+                 Artikelnummer und EAN nicht doppelt stehen. Bei Produkten
+                 OHNE Box bleibt die Tabelle unveraendert — dort ist sie die
+                 einzige Datenquelle. */}
+          {technikHtml && (
             <div
               className="techdata mt-10"
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+              dangerouslySetInnerHTML={{ __html: technikHtml }}
             />
           )}
         </div>

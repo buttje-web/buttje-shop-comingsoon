@@ -317,3 +317,41 @@ body {
   color: var(--muted);
   font-size: 0.8rem;
 }
+
+/* ---------------------------------------------------------------------------
+   News-Ticker der Kopfleiste.
+   BEWUSST UNGELAYERTES CSS (kein @layer, keine Tailwind-Utility): Dieselbe
+   Vorsichtsmassnahme wie bei der Navigation — aeltere Safari ignorieren
+   @layer teilweise, und eine nicht laufende oder falsch positionierte
+   Kopfleiste faellt sofort auf.
+   --------------------------------------------------------------------------- */
+@keyframes ticker-lauf {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-spur {
+  display: inline-flex;
+  white-space: nowrap;
+  min-width: 200%;
+  animation: ticker-lauf 60s linear infinite;
+  will-change: transform;
+}
+
+/* Pause bei Hover und bei Tastaturfokus innerhalb der Leiste. */
+.ticker-rahmen:hover .ticker-spur,
+.ticker-rahmen:focus-within .ticker-spur {
+  animation-play-state: paused;
+}
+
+.ticker-satz {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Sicherheitsnetz: Selbst wenn die Komponente die Kennung nicht auswertet,
+   laeuft bei reduzierter Bewegung nichts. */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-spur { animation: none; }
+}

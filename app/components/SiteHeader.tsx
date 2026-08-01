@@ -3,6 +3,7 @@ import ProductsNav from "./ProductsNav";
 import MobileNav from "./MobileNav";
 import Suche from "./Suche";
 import CartLink from "./CartLink";
+import NewsTicker from "./NewsTicker";
 import { KAUFBAR } from "../lib/shop-mode";
 
 // Sticky Nav im dunklen buttje-Look.
@@ -11,12 +12,9 @@ import { KAUFBAR } from "../lib/shop-mode";
 export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-[rgba(14,14,18,0.92)]">
-      {/* Topbar - rechtlich erforderlicher, prominenter B2B-Hinweis (auf jeder Seite).
-          Mobil kleiner + engere Sperrung, bricht sauber um, ueberlappt nicht. */}
-      <div className="border-b border-line px-3 py-[8px] text-center text-[0.56rem] font-semibold uppercase leading-[1.5] tracking-[0.1em] sm:text-[0.64rem] sm:tracking-[0.18em]">
-        Verkauf ausschließlich an Gewerbetreibende, Vereine und öffentliche
-        Einrichtungen
-      </div>
+      {/* Topbar als News-Ticker. Die erste Meldung ist weiterhin der
+          rechtlich erforderliche B2B-Hinweis; Inhalte in app/config/ticker.ts. */}
+      <NewsTicker />
 
       <nav className="mx-auto flex h-[62px] w-full max-w-[1320px] items-center justify-between gap-3 px-[clamp(16px,5vw,64px)]">
         <Link

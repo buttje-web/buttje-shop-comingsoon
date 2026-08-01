@@ -39,7 +39,7 @@ export default function HomePage() {
             Der Shop.
           </h1>
           <p className="mt-6 max-w-[46ch] text-[clamp(0.85rem,1.4vw,1.05rem)] font-semibold text-[rgba(14,14,18,0.74)]">
-            Verbrauchsgüter mit Haltung: handgefüllt, nummeriert, ernst gemeint.
+            Verbrauchsgüter mit Haltung: ausgewählt, geliefert, ernst gemeint.
             {KAUFBAR
               ? " Jetzt für Geschäftskunden bestellbar."
               : " Das Sortiment wird gerade vorbereitet."}
@@ -80,32 +80,6 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-        </Container>
-      </section>
-
-      {/* Platzhalter-Wertversprechen (dunkler Abschnitt unter dem Hero) */}
-      <section className="border-t border-line">
-        <Container>
-          <div className="grid grid-cols-1 gap-0 md:grid-cols-3">
-            {[
-              ["Ausgewählt", "Kein Katalog mit 10.000 Artikeln. Nur was im Objekt wirklich gebraucht wird."],
-              ["Netto", "Preise für Gewerbe, ohne Theater. Was dasteht, gilt."],
-              ["Ernst gemeint", "Verbrauchsgüter, die ihren Zweck erfüllen."],
-            ].map(([title, desc], i) => (
-              <div
-                key={title}
-                className={`flex flex-col gap-2 py-[clamp(28px,5vw,48px)] md:pr-10 ${
-                  i < 2 ? "md:border-r md:border-line" : ""
-                } border-t border-line md:border-t-0`}
-              >
-                <span className="eyebrow">{`0${i + 1}`}</span>
-                <h2 className="text-[clamp(1.1rem,2.4vw,1.5rem)] font-extrabold uppercase tracking-[-0.01em]">
-                  {title}
-                </h2>
-                <p className="max-w-[40ch] text-[0.92rem] text-muted">{desc}</p>
-              </div>
-            ))}
-          </div>
         </Container>
       </section>
 
