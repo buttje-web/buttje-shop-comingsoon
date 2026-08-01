@@ -177,13 +177,20 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
  * buttje-shop/datenblaetter/sdb/ liegen (Herkunft geprüft 2026-08-01:
  * keine Altruan-Spuren in Text oder Metadaten).
  *
- * NOCH NICHT VERÖFFENTLICHT: Die PDFs liegen bewusst NICHT unter public/,
- * sind also über keine URL erreichbar. Der Download-Block auf der
- * Produktseite ist gebaut, bleibt aber ausgeblendet, bis Rami die
- * Veröffentlichung freigibt. Zum Scharfschalten: PDFs nach
- * public/datenblaetter/ kopieren und SDB_DOWNLOADS_AKTIV auf true setzen.
+ * VERÖFFENTLICHT seit 2026-08-01 (Freigabe Rami nach sauberer
+ * Herkunftsprüfung). Die Dateien liegen als Kopie unter
+ * public/datenblaetter/<SKU>.pdf und sind damit öffentlich abrufbar;
+ * die Originale bleiben zusätzlich in buttje-shop/datenblaetter/sdb/.
+ *
+ * Zurückdrehen: SDB_DOWNLOADS_AKTIV auf false setzen UND die Kopien aus
+ * public/datenblaetter/ entfernen — der Schalter allein blendet nur den
+ * Block aus, die URLs blieben sonst erreichbar.
+ *
+ * Neues SDB aufnehmen: PDF unter dem SKU-Namen in beide Ordner legen und
+ * die SKU unten ergänzen. Vorher Herkunft prüfen (Herstelleroriginal,
+ * keine Händlerspuren in Text oder Metadaten).
  */
-export const SDB_DOWNLOADS_AKTIV = false;
+export const SDB_DOWNLOADS_AKTIV = true;
 
 export const SDB_VERFUEGBAR = new Set([
   "AC-01008", "BU-G440-0001RA", "BU-G502-0200VL", "BU-S780-0001RA",
