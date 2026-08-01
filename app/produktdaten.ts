@@ -305,6 +305,170 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
       ],
     },
   },
+  // ---- Batch 3: Entsorgung -------------------------------------------------
+  // Bewusst OHNE Foliendicke bei AL-12060, 12070 und 10010: bei den beiden
+  // Altruan-Saecken ist sie nur rechnerisch abgeleitet, bei 10010 nennt die
+  // Herstellertabelle keinen Wert. Nur 56941 hat eine belegte Folienstaerke.
+  "AL-12060": {
+    aufmacher:
+      "Typ 60 ist eine Tragfähigkeitsklasse, kein Schätzwert. Für den täglichen Büro- und Objektmüll die wirtschaftliche Wahl.",
+    anwendung:
+      "Standardabfallsack für 120-Liter-Behälter in Büro, Objekt und Gastronomie. Für trockenen bis normalen Mischmüll.",
+    technik: { weitere: [["Material", "Recycling-LDPE"], ["Maße", "700 x 1100 mm"], ["Fassungsvermögen", "120 Liter"], ["Tragfähigkeit", "Typ 60"]] },
+  },
+  "12070": {
+    aufmacher:
+      "Die stärkere Klasse. Wenn der Inhalt Kanten hat oder das Gewicht keiner vorher wiegt.",
+    anwendung:
+      "Verstärkter Abfallsack für 120-Liter-Behälter bei schwerem oder kantigem Abfall.",
+    technik: { weitere: [["Material", "Recycling-LDPE"], ["Maße", "700 x 1100 mm"], ["Fassungsvermögen", "120 Liter"], ["Tragfähigkeit", "Typ 70"]] },
+  },
+  "20010": {
+    aufmacher:
+      "DEISS aus Hamburg, seit Jahrzehnten der Name für Abfallsäcke im Objektgeschäft. Der Standard, auf den sich Profis einigen.",
+    anwendung: "Abfallsack für 120-Liter-Behälter im täglichen Objekteinsatz.",
+    technik: { weitere: [["Material", "Recycling-LDPE, EU-Herkunft"], ["Maße", "700 x 1100 mm"], ["Fassungsvermögen", "120 Liter"], ["Tragfähigkeit", "Typ 60"]] },
+  },
+  "54928": {
+    aufmacher:
+      "Der Beutel für den kleinen Korb unterm Schreibtisch. Unauffällig, bis er fehlt.",
+    anwendung:
+      "Müllbeutel für kleine Papierkörbe und Kosmetikeimer, Büro und Sanitärraum.",
+    technik: { weitere: [["Material", "HDPE, 10–20 % Regenerat"], ["Maße", "310 x 370 mm"], ["Fassungsvermögen", "6 Liter"], ["Farbe", "grau"]] },
+  },
+  "59984": {
+    aufmacher:
+      "Transparent heißt kontrollierbar. In sensiblen Bereichen ist Durchsicht kein Design, sondern Vorschrift.",
+    anwendung:
+      "Müllbeutel für 60-Liter-Behälter, transparent für Bereiche mit Sichtkontrolle.",
+    technik: { weitere: [["Material", "HDPE, 10–20 % Regenerat"], ["Maße", "600 x 720 mm"], ["Fassungsvermögen", "60 Liter"], ["Farbe", "transparent"]] },
+  },
+  "10010": {
+    aufmacher:
+      "Die oberste Klasse im Programm. Für Abfall, bei dem ein gerissener Sack keine Anekdote wäre, sondern ein Einsatz.",
+    anwendung:
+      "Schwerlast-Abfallsack für Bauschutt-nahen Abfall, Werkstatt und Außenbereich.",
+    technik: { weitere: [["Länge", "ca. 99 cm"], ["Tragfähigkeit", "Typ 100"], ["Behälter rund", "bis Ø 44,5 cm"], ["Behälter eckig", "bis 70 cm Kantensumme"]] },
+  },
+  "44904": {
+    aufmacher:
+      "Easy-Opener heißt: der Beutel öffnet ohne Fingerspitzengefühl und Flüche. Klingt klein, spart täglich Zeit.",
+    anwendung:
+      "Müllbeutel für 30-Liter-Behälter, auch für feuchten Abfall geeignet.",
+    technik: { weitere: [["Material", "HDPE-Spezialfolie, Easy-Opener"], ["Maße", "500 x 600 mm"], ["Fassungsvermögen", "30 Liter"], ["Farbe", "grau"]] },
+  },
+  "49908": {
+    aufmacher:
+      "Die verstärkte Ausführung in 60 Litern. Für alle, die den Beutel nur einmal anfassen wollen.",
+    anwendung:
+      "Müllbeutel für 60-Liter-Behälter im täglichen Einsatz, auch für feuchten Abfall.",
+    technik: { weitere: [["Material", "HDPE"], ["Maße", "620 x 720 mm"], ["Fassungsvermögen", "60 Liter"], ["Farbe", "transparent"]] },
+  },
+  "56941": {
+    aufmacher:
+      "750 Stück im Karton, in Spenderboxen à 30. Ein Thema, das man genau einmal pro Quartal anfasst.",
+    anwendung:
+      "Hygienebeutel für Damen-Sanitärräume, Spenderboxen zum Aufstellen oder für Halterungen.",
+    technik: {
+      inhalt: "25 Boxen à 30 Beutel = 750 Stück",
+      weitere: [["Material", "HDPE"], ["Maße", "80+70 x 230 mm"], ["Folienstärke", "11 my"]],
+    },
+  },
+
+  // ---- Batch 4: Zubehör ----------------------------------------------------
+  // Bei ENA Soft und dem Vileda-Schwammtuch stehen bewusst KEINE
+  // Materialprozente, kein Flaechengewicht und keine Waschtemperatur:
+  // diese Zahlen kursieren nur in Haendlershops, der Hersteller belegt sie nicht.
+  "AC-APOL4040BL": {
+    aufmacher:
+      "Randlos heißt: keine Naht, die Schlieren zieht. Für Flächen, auf denen man jeden Wischer sieht.",
+    anwendung:
+      "Hochflor-Mikrofasertuch für Glas, Lack und Chrom, auch für Politur-Abtrag und Fahrzeugaufbereitung.",
+    gutZuWissen:
+      "Waschbar bei 60 °C, kein Weichspüler, kein Bleichmittel, sortenrein waschen.",
+    technik: { weitere: [["Material", "85 % Polyester, 15 % Polyamid"], ["Maße", "40 x 40 cm"], ["Ausführung", "randlos, blau"], ["Gewicht je Tuch", "ca. 62 g"], ["Pflege", "60 °C, ohne Weichspüler"]] },
+  },
+  "DS-00883": {
+    aufmacher: "Die Flasche zum System. Konzentrat ansetzen, aufsprühen, fertig.",
+    anwendung:
+      "Leerflasche mit Sprühkopf zum Ansetzen von Gebrauchslösungen, passend zum Dr.-Schnell-Programm (z. B. Forol).",
+    technik: { inhalt: "600 ml Füllvolumen" },
+  },
+  "AB-1000003318": {
+    aufmacher: "Das Arbeitstuch für jeden Tag. Waschen, wieder einsetzen, wiederholen.",
+    anwendung:
+      "Mikrofasertuch für die Unterhaltsreinigung von Oberflächen, feucht und trocken einsetzbar.",
+    technik: { weitere: [["Maße", "40 x 40 cm"]] },
+  },
+  "DI-7515482": {
+    aufmacher: "Für die Stellen, an denen das Tuch aufgibt. Angetrocknetes braucht Struktur.",
+    anwendung:
+      "Reinigungsschwamm mit Padseite für angetrocknete Verschmutzungen auf unempfindlichen Oberflächen.",
+    gutZuWissen:
+      "Padseite vor Einsatz auf kratzempfindlichen Flächen an unauffälliger Stelle testen.",
+  },
+  "VP-500209": {
+    aufmacher: "Ein Zug von oben nach unten. Alles andere ist Nacharbeit.",
+    anwendung:
+      "Fensterabzieher für Glasflächen und glatte Oberflächen in der Gebäudereinigung.",
+    technik: { weitere: [["Arbeitsbreite", "35 cm"]] },
+  },
+  "VP-133920": {
+    aufmacher: "Staub gehört ins Tuch, nicht in die Luft. Trocken drüber, fertig.",
+    anwendung:
+      "Einweg-Staubbindetuch für die trockene Bodenreinigung auf glatten Belägen, vor dem Nasswischen.",
+    technik: { weitere: [["Maße", "60 x 24 cm"]] },
+  },
+  "VP-142290": {
+    aufmacher:
+      "Das Schwammtuch, das in jeder Teeküche liegt. Hier in der Ausführung, die Profis nachkaufen.",
+    anwendung:
+      "Saugstarkes Schwammtuch für Küche, Theke und Oberflächen im täglichen Einsatz.",
+    technik: { weitere: [["Größe", "Gr. 1"]] },
+  },
+
+  // ---- Batch 5: Seifen -----------------------------------------------------
+  // CWS-C490000 traegt bewusst KEINE "neutral"-Auslobung ueber den Titel
+  // hinaus — der Hersteller bestaetigt die Rezeptur fuer diese Artikelnummer
+  // nicht (offener Alex-Punkt). STE-106672 behaelt die VE 20 Stueck/Karton,
+  // obwohl der Hersteller 22 nennt; auch das ist ein Alex-Punkt.
+  "STE-106123": {
+    aufmacher:
+      "Hautneutraler pH, dermatologisch bestätigt, ohne tierische Bestandteile. Der Kanister, der jeden Waschraum versorgt.",
+    anwendung:
+      "Handseife für nachfüllbare Druckspender in Waschräumen: Verwaltung, Schulen, Industrie, Hotel und Gastronomie, Pflege. Nur für den gewerblichen Gebrauch.",
+    dosierung: "2 bis 3 ml auf angefeuchtete Hände, aufschäumen, abspülen.",
+    gutZuWissen: "Vor Frost schützen, Lagerung 5 bis 30 °C.",
+    zertifikate:
+      "Hautverträglichkeit dermatologisch bestätigt, hautneutraler pH-Wert (4,1–5,8), ohne tierische Bestandteile, HACCP-geeignet, frei von Mikroplastik nach EU-Verordnung 2023/2055.",
+    technik: { inhalt: "5 l", ph: "4,1–5,8 (hautneutral)" },
+  },
+  "STE-106672": {
+    aufmacher: "Die Pumpflasche für Stellen ohne Spender. Hinstellen, fertig.",
+    anwendung:
+      "Cremeseife in der Pumpflasche für Teeküche, Gäste-WC und Einzelwaschplätze. Nur für den gewerblichen Gebrauch.",
+    dosierung: "2 bis 3 ml auf angefeuchtete Hände, aufschäumen, abspülen.",
+    zertifikate:
+      "Hautverträglichkeit dermatologisch bestätigt, hautneutraler pH-Wert, ohne tierische Bestandteile.",
+    technik: { inhalt: "500 ml", ph: "4,1–5,8 (hautneutral)" },
+  },
+  "CWS-C490000": {
+    aufmacher: "Der Nachfüllkanister für CWS-Spendersysteme. Fünf Liter Ruhe.",
+    anwendung:
+      "Seifencreme zum Nachfüllen von Seifenspendern im Objektbereich.",
+    technik: { inhalt: "5 l" },
+  },
+  "DI-101108340": {
+    aufmacher:
+      "Für Hände, die zwanzigmal am Tag gewaschen werden. Mild ist hier keine Geschmacksfrage, sondern Arbeitsschutz.",
+    anwendung:
+      "Milde Waschlotion für häufiges Händewaschen: Krankenhäuser, Küchen, lebensmittelverarbeitende Betriebe. Für die Dosierplattform W1 / Soft Care Line.",
+    technik: {
+      inhalt: "800 ml",
+      ph: "ca. 5",
+      weitere: [["Gebinde", "Kartusche"], ["Einstufung", "kosmetisches Mittel, kein Gefahrstoff"]],
+    },
+  },
 };
 
 /**
