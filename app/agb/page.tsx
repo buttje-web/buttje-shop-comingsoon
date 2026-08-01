@@ -8,7 +8,7 @@ export default function AgbPage() {
     <LegalArticle
       eyebrow="Rechtliches"
       title="AGB"
-      updated="27.06.2026"
+      updated="01.08.2026"
     >
       <p>
         <strong>
@@ -50,11 +50,7 @@ export default function AgbPage() {
       <h2>3. Preise</h2>
       <p>
         3.1 Alle Preise verstehen sich netto zuzüglich der jeweils geltenden
-        gesetzlichen Umsatzsteuer. Für Lieferungen an österreichische Kunden
-        wird die österreichische Umsatzsteuer berechnet. Für Lieferungen an
-        Unternehmer in Deutschland mit gültiger UID-Nummer erfolgt die
-        Abrechnung im Reverse-Charge-Verfahren ohne Umsatzsteuerausweis; die
-        Steuerschuld geht auf den Leistungsempfänger über.
+        gesetzlichen österreichischen Umsatzsteuer.
       </p>
       <p>
         3.2 Versandkosten werden im Bestellprozess gesondert ausgewiesen und sind
@@ -73,18 +69,26 @@ export default function AgbPage() {
       </p>
 
       <h2>5. Lieferung</h2>
-      <p>5.1 Die Lieferung erfolgt nach Österreich und Deutschland.</p>
+      <p>5.1 Die Lieferung erfolgt ausschließlich innerhalb Österreichs.</p>
       <p>
-        5.2 Die Lieferzeit beträgt in der Regel 5 bis 7 Werktage ab
-        Zahlungseingang, abhängig von der Verfügbarkeit.
+        5.2 Die Lieferzeit beträgt bei lagernder Ware in der Regel 3 bis 7
+        Werktage ab Zahlungseingang. Bei nicht lagernder Ware verlängert sich die
+        Lieferzeit um die Beschaffungszeit; der Kunde wird in diesem Fall über
+        den voraussichtlichen Liefertermin informiert.
       </p>
       <p>
         5.3 Angegebene Lieferzeiten sind unverbindliche Richtwerte, sofern nicht
         ausdrücklich ein verbindlicher Liefertermin vereinbart wurde.
       </p>
+      {/* Betraege hier BEWUSST ausgeschrieben und nicht aus app/lib/versand.ts
+          interpoliert: Rechtstext soll sich nie stillschweigend mitaendern,
+          wenn jemand die Versandkonstanten anfasst. Wer VERSAND aendert, muss
+          diesen Absatz und /versand-zahlung bewusst mitziehen. */}
       <p>
-        5.4 Versandkosten richten sich nach Gewicht und Lieferort und werden im
-        Warenkorb berechnet. Lieferungen in Palettengröße erfolgen auf Anfrage zu
+        5.4 Die Versandkosten betragen pauschal 10,00 EUR netto je Bestellung. Ab
+        einem Warenwert von 150,00 EUR netto erfolgt die Lieferung
+        versandkostenfrei. Bei sperriger oder schwerer Ware sowie bei
+        Lieferungen in Palettengröße erfolgt der Versand auf Anfrage zu
         gesondertem Versandtarif.
       </p>
 

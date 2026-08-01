@@ -11,16 +11,20 @@ export default function VersandZahlungPage() {
 
       <h2>Lieferzeit</h2>
       <p>
-        In der Regel 5 bis 7 Werktage ab Zahlungseingang, abhängig von der
-        Verfügbarkeit.
+        Bei lagernder Ware in der Regel 3 bis 7 Werktage ab Zahlungseingang. Bei
+        nicht lagernder Ware verlängert sich die Lieferzeit um die
+        Beschaffungszeit; wir informieren Sie in diesem Fall über den
+        voraussichtlichen Liefertermin.
       </p>
 
+      {/* Betraege bewusst ausgeschrieben, nicht aus app/lib/versand.ts
+          interpoliert — siehe Begruendung in app/agb/page.tsx (Punkt 5.4). */}
       <h2>Versandkosten</h2>
       <p>
-        Die Versandkosten richten sich nach Gewicht und Lieferort und werden im
-        Warenkorb automatisch berechnet und vor Abschluss der Bestellung
-        angezeigt. Bei sperriger oder schwerer Ware sowie bei Lieferungen in
-        Palettengröße erstellen wir auf Anfrage ein gesondertes Versandangebot.
+        Pauschal 10,00 EUR netto je Bestellung. Ab einem Warenwert von 150,00 EUR
+        netto liefern wir versandkostenfrei. Bei sperriger oder schwerer Ware
+        sowie bei Lieferungen in Palettengröße erstellen wir auf Anfrage ein
+        gesondertes Versandangebot.
       </p>
 
       <h2>Zahlungsarten</h2>

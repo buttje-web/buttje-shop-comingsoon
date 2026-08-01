@@ -8,7 +8,7 @@ export default function DatenschutzPage() {
     <LegalArticle
       eyebrow="Rechtliches"
       title="Datenschutzerklärung"
-      updated="27.06.2026"
+      updated="01.08.2026"
     >
       <h2>1. Verantwortlicher</h2>
       <p>
@@ -61,9 +61,10 @@ export default function DatenschutzPage() {
 
       <h2>7. Cookies</h2>
       <p>
-        Wir verwenden technisch notwendige Cookies für den Warenkorb und den
-        Bestellprozess. Für nicht notwendige Cookies (z. B. Analyse) holen wir Ihre
-        Einwilligung ein.
+        Wir verwenden ausschließlich technisch notwendige Cookies, etwa für
+        den Warenkorb und den Bestellprozess. Cookies zu Analyse- oder
+        Werbezwecken setzen wir nicht ein; ein Cookie-Banner ist daher nicht
+        erforderlich.
       </p>
 
       <h2>8. Webanalyse (Plausible Analytics)</h2>
