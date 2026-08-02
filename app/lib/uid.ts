@@ -46,3 +46,6 @@ export function uidGueltig(eingabe: string): boolean {
 
 export const UID_FEHLER =
   "Bitte prüfen Sie das Format Ihrer UID-Nummer (z. B. ATU12345678).";
+
+/** Name des Bestell-Attributs, unter dem die UID an der Bestellung haengt. */
+export const UID_ATTRIBUT = "UID-Nummer";

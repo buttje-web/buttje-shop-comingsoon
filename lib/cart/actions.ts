@@ -7,9 +7,11 @@ import {
   getCart,
   updateCartLines,
   removeCartLines,
+  updateCartAttributes,
 } from "@/lib/shopify";
 import type { Cart } from "@/lib/shopify/types";
 import { getCartId, setCartId } from "./cookies";
+import { UID_ATTRIBUT } from "@/app/lib/uid";
 
 /**
  * Legt eine Variante in den Warenkorb. Erstellt bei Bedarf einen neuen Cart
@@ -58,4 +60,29 @@ export async function loadCart(): Promise<Cart | null> {
   const id = await getCartId();
   if (!id) return null;
   return getCart(id);
+}
+
+// Der Attributname steht in app/lib/uid.ts — eine "use server"-Datei darf
+// nur async-Funktionen exportieren.
+
+/**
+ * Setzt oder entfernt die UID als Bestell-Attribut am Warenkorb.
+ *
+ * Leerer Wert => Attribut faellt weg. cartAttributesUpdate ersetzt immer die
+ * komplette Attributliste, deshalb wird hier bewusst nur dieses eine Attribut
+ * gesetzt: der Warenkorb fuehrt sonst keine.
+ *
+ * Fehler werden geschluckt. Das Attribut ist eine Beigabe — es darf den Weg
+ * zur Kassa niemals blockieren, wenn Shopify gerade zickt.
+ */
+export async function setUidAttribut(uid: string): Promise<boolean> {
+  try {
+    const id = await getCartId();
+    if (!id) return false;
+    const wert = uid.trim();
+    await updateCartAttributes(id, wert ? [{ key: UID_ATTRIBUT, value: wert }] : []);
+    return true;
+  } catch {
+    return false;
+  }
 }

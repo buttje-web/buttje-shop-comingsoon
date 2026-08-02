@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { trackEvent } from "../lib/analytics";
 import { uidGueltig, uidNormalisieren, UID_FEHLER } from "../lib/uid";
+import { setUidAttribut } from "@/lib/cart/actions";
 
 /*
   B2B-Checkout-Gate (vorgelagert vor dem Shopify-Checkout).
@@ -31,6 +32,22 @@ export default function CheckoutGate({ checkoutUrl }: { checkoutUrl: string }) {
   const uidOk = uidGueltig(uid);
   const uidFehler = uidBeruehrt && !uidOk;
   const frei = confirmed && uidOk;
+
+  /*
+    Die UID kann im Checkout nicht vorbefuellt werden — Shopify bietet dafuer
+    keinen Weg. Damit sie trotzdem an der Bestellung ankommt, haengt sie als
+    Bestell-Attribut am Warenkorb und ist spaeter im Admin sichtbar.
+
+    Geschrieben wird beim Verlassen des Felds, nicht bei jedem Tastendruck:
+    das spart Requests und schreibt nur fertige Eingaben. Ungueltige Eingaben
+    werden gar nicht erst uebertragen. Schlaegt das Setzen fehl, passiert
+    nichts weiter — der Weg zur Kassa bleibt davon unberuehrt.
+  */
+  async function uidSichern(wert: string) {
+    setUidBeruehrt(true);
+    if (!uidGueltig(wert)) return;
+    await setUidAttribut(wert.trim() ? uidNormalisieren(wert) : "");
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,7 +85,7 @@ export default function CheckoutGate({ checkoutUrl }: { checkoutUrl: string }) {
           spellCheck={false}
           value={uid}
           onChange={(e) => setUid(e.target.value)}
-          onBlur={() => setUidBeruehrt(true)}
+          onBlur={(e) => void uidSichern(e.target.value)}
           placeholder="ATU12345678"
           aria-invalid={uidFehler}
           aria-describedby={uidFehler ? "uid-fehler" : undefined}

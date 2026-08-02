@@ -148,6 +148,16 @@ export const CART_LINES_ADD_MUTATION = `
   ${CART_FRAGMENT}
 `;
 
+export const CART_ATTRIBUTES_UPDATE_MUTATION = `
+  mutation CartAttributesUpdate($cartId: ID!, $attributes: [AttributeInput!]!) {
+    cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+      cart { ...Cart }
+      userErrors { field message }
+    }
+  }
+  ${CART_FRAGMENT}
+`;
+
 export const CART_LINES_UPDATE_MUTATION = `
   mutation CartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
     cartLinesUpdate(cartId: $cartId, lines: $lines) {

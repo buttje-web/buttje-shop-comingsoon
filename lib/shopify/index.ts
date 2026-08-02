@@ -6,6 +6,7 @@ import {
   PRODUCT_BY_HANDLE_QUERY,
   CART_CREATE_MUTATION,
   CART_LINES_ADD_MUTATION,
+  CART_ATTRIBUTES_UPDATE_MUTATION,
   CART_LINES_UPDATE_MUTATION,
   CART_LINES_REMOVE_MUTATION,
   CART_QUERY,
@@ -183,6 +184,28 @@ export async function removeCartLines(
   if (userErrors.length) throw new Error(`cartLinesRemove: ${JSON.stringify(userErrors)}`);
   const normalized = normalizeCart(cart as never);
   if (!normalized) throw new Error("cartLinesRemove lieferte keinen Warenkorb.");
+  return normalized;
+}
+
+/**
+ * Bestell-Attribute des Warenkorbs setzen (ersetzt die bestehenden).
+ *
+ * Genutzt fuer die UID-Nummer aus dem Sackerl-Gate. Sie laesst sich im
+ * Checkout nicht vorbefuellen, kommt so aber als Attribut an der Bestellung
+ * an und ist im Admin sichtbar.
+ */
+export async function updateCartAttributes(
+  cartId: string,
+  attributes: { key: string; value: string }[],
+): Promise<Cart> {
+  const data = await storefront<{ cartAttributesUpdate: CartMutationResult }>({
+    query: CART_ATTRIBUTES_UPDATE_MUTATION,
+    variables: { cartId, attributes },
+  });
+  const { cart, userErrors } = data.cartAttributesUpdate;
+  if (userErrors.length) throw new Error(`cartAttributesUpdate: ${JSON.stringify(userErrors)}`);
+  const normalized = normalizeCart(cart as never);
+  if (!normalized) throw new Error("cartAttributesUpdate lieferte keinen Warenkorb.");
   return normalized;
 }
 
