@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { trackEvent } from "../lib/analytics";
+import { uidGueltig, uidNormalisieren, UID_FEHLER } from "../lib/uid";
 
 /*
   B2B-Checkout-Gate (vorgelagert vor dem Shopify-Checkout).
@@ -13,10 +14,23 @@ import { trackEvent } from "../lib/analytics";
   Pflicht-Checkbox erlaubt, sitzt die Bestaetigung hier im Frontend:
   Der Weg zur Kasse ist erst frei, wenn der Kunde bestaetigt, als
   Unternehmer zu handeln und die AGB zur Kenntnis genommen zu haben.
+
+  Stufe 2: optionales UID-Feld mit reiner FORMATpruefung. Die UID bleibt
+  freiwillig — ein leeres Feld sperrt nichts. Ist etwas eingetragen, muss
+  es formal passen, sonst bleibt der Kassa-Knopf zu. Keine VIES-Abfrage:
+  eine formal gueltige Nummer kann trotzdem erfunden sein.
 */
 
 export default function CheckoutGate({ checkoutUrl }: { checkoutUrl: string }) {
   const [confirmed, setConfirmed] = useState(false);
+  const [uid, setUid] = useState("");
+  // Fehler erst zeigen, wenn das Feld einmal verlassen wurde — nicht
+  // schon beim ersten getippten Zeichen.
+  const [uidBeruehrt, setUidBeruehrt] = useState(false);
+
+  const uidOk = uidGueltig(uid);
+  const uidFehler = uidBeruehrt && !uidOk;
+  const frei = confirmed && uidOk;
 
   return (
     <div className="flex flex-col gap-4">
@@ -38,10 +52,43 @@ export default function CheckoutGate({ checkoutUrl }: { checkoutUrl: string }) {
         </span>
       </label>
 
-      {confirmed ? (
+      <div>
+        <label
+          htmlFor="uid"
+          className="mb-1 block text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-muted"
+        >
+          UID-Nummer (optional)
+        </label>
+        <input
+          id="uid"
+          name="uid"
+          type="text"
+          inputMode="text"
+          autoComplete="off"
+          spellCheck={false}
+          value={uid}
+          onChange={(e) => setUid(e.target.value)}
+          onBlur={() => setUidBeruehrt(true)}
+          placeholder="ATU12345678"
+          aria-invalid={uidFehler}
+          aria-describedby={uidFehler ? "uid-fehler" : undefined}
+          className={`w-full border bg-transparent px-3 py-2 text-[0.9rem] text-text placeholder:text-muted focus:outline-none focus:ring-1 ${
+            uidFehler
+              ? "border-[#ff6b6b] focus:ring-[#ff6b6b]"
+              : "border-line-strong focus:border-accent focus:ring-accent"
+          }`}
+        />
+        {uidFehler && (
+          <p id="uid-fehler" role="alert" className="mt-1.5 text-[0.72rem] leading-relaxed text-[#ff6b6b]">
+            {UID_FEHLER}
+          </p>
+        )}
+      </div>
+
+      {frei ? (
         <a
           href={checkoutUrl}
-          onClick={() => trackEvent("checkout_started")}
+          onClick={() => trackEvent("checkout_started", uid ? { uid_angegeben: "ja" } : undefined)}
           className="block border border-line-strong px-6 py-3 text-center text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
         >
           Weiter zur Kasse →
