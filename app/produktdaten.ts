@@ -246,16 +246,17 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
       ],
     },
   },
+  // Laengenangaben bewusst ENTFERNT (02.08.2026, Entscheidung Rami):
+  // Die Quelle nennt "Blatt/Rolle 380", daraus wurde am 01.08. "380 m".
+  // Solange der Lieferant nicht bestaetigt, ob CU-3380CN die 270- oder die
+  // 380-m-Rolle ist, steht hier gar keine Laenge — lieber keine Angabe als
+  // eine falsche. Wieder eintragen erst nach Bestaetigung.
   "CU-3380CN": {
-    aufmacher: "Eine Rolle, 380 Meter. Manche Probleme löst man mit Größe.",
+    aufmacher: "Manche Probleme löst man mit Größe.",
     anwendung:
       "Maxi-Jumbo-Rollen für Großrollenspender in stark genutzten Sanitärräumen.",
     technik: {
-      inhalt: "6 Rollen = 2.280 m",
-      weitere: [
-        ["Lagen", "2-lagig"],
-        ["Länge je Rolle", "380 m"],
-      ],
+      weitere: [["Lagen", "2-lagig"]],
     },
   },
   "402292": {
