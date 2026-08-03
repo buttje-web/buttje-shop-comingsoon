@@ -1,0 +1,22 @@
+Pos;Lieferanten-Artikelnummer;Bezeichnung;Basisgebinde;Stück je Basisgebinde;Basisgebinde je Karton;Kartons je Palette;Angebotspreis netto;Shop-SKU;Anmerkung
+1;DE-54928-6;DEISS Müllbeutel 6 Liter reißfest mit 10-20% Regeneratanteil;Rolle;50 Stück;40;204;0,25 € je Rolle;54928;belegt
+2;DE-59984-60;DEISS HDPE Müllbeutel 60 Liter, 59984, transparent;Rolle;50 Stück;40;60;0,78 € je Rolle;59984;belegt - Artikel identisch mit Pos 4
+3;DE-44904-30;DEISS Universal Plus Müllbeutel 30 Liter, 44904;Rolle;50 Stück;40;OFFEN;OFFEN;44904;OFFEN: Paar (0,67 € / 110) oder (1,02 € / 60) - welches zu Pos 3 und welches zu Pos 5 gehört, geht aus dem Angebot nicht hervor
+4;DE-59984-60;DEISS HDPE Müllbeutel 60 Liter, 59984, transparent;Rolle;50 Stück;40;60;0,78 € je Rolle;59984;Dublette zu Pos 2 - derselbe Artikel steht zweimal im Angebot
+5;DE-49908-60;DEISS Universal Plus Müllbeutel 60 Liter, 49908;Rolle;50 Stück;40;OFFEN;OFFEN;49908;OFFEN: siehe Pos 3
+6;AL-12060;Altruan Müllsack 120 Liter Typ 60, 12060, Basic, blau;Rolle;25 Stück;10;36;1,78 € je Rolle;AL-12060;belegt, über den Seitenumbruch rekonstruiert
+7;DE-20010-120;DEISS Abfallsäcke 120 Liter Typ 60, 20010, blau;Rolle;25 Stück;10;OFFEN;OFFEN;20010;OFFEN: Paar (2,25 € / 40) oder (6,67 € / 30) - Zuordnung zu Pos 7 bzw. Pos 9 nicht belegbar
+8;AL-12070;Altruan Müllsack 120 Liter Typ 70, 12070, Premium, blau;Rolle;25 Beutel;10;36;2,31 € je Rolle;12070;belegt
+9;DE-10010-120;DEISS Premium Plus Typ-100 Abfallsäcke 10010, 120 Liter, Der Allrounder;Rolle;25 Stück;10;OFFEN;OFFEN;10010;OFFEN: siehe Pos 7
+10;DE-56941-P;DEISS Universal Hygienebeutel, 56941, 30 Beutel;Packung;30 Beutel;25;180;4,29 € je Karton;56941;belegt
+11;PA-401977-P;Papernet Toilettenpapier 401977, 8 Rollen, 3-lagig;Packung;8 Rollen;9;21;3,09 € je Packung;401977;belegt
+12;PA-404578-P;Papernet Toilettenpapier 404578, 8 Rollen, 4-lagig;Packung;8 Stück;9;21;3,22 € je Packung;404578;belegt
+13;TO-110255;Tork 110255 extra weiches Mini Jumbo Toilettenpapier Premium T2 3-lagig;Rolle;120 Meter;12;36;44,92 € je Karton;110255;belegt - Basisgebinde in Metern statt Stück
+14;CU-3380CN;NORD Toilettenpapier MAXI JUMBO, 2-lagig, 380 Blatt, 6 Rollen;Packung;6 Rollen;1;49;15,87 € je Karton;CU-3380CN;belegt
+15;PA-402292-K;Papernet Falthandtuch 402292, V-Falz, 2-lagig, Zellstoff (Alternative 421567);Packung;1 Blatt;15;36;26,93 € je Karton;402292;ACHTUNG: "1 Blatt pro Packung" steht so im Angebot und ist offensichtlich falsch. Nicht korrigiert, beim Lieferanten nachfragen
+16;PA-416602;Papernet Papierhandtücher 416602, 3000 Blatt, 2-lagig, W-Falz;Packung;1 Blatt;20;40;25,42 € je Karton;416602;ACHTUNG: "1 Blatt pro Packung" steht so im Angebot, widerspricht den 3000 Blatt der Bezeichnung. Nicht korrigiert, nachfragen
+17;PA-416596-P;Papernet Küchenrolle 416596, 4 Rollen, 3-lagig;Packung;4 Rollen;8;24;2,86 € je Packung;416596;belegt
+18;CWS-C490000;CWS Seifencreme, Kanister, 5 Liter;Kanister;5 Liter;1;OFFEN;12,93 € je Kanister;CWS-C490000;OFFEN: Das Angebot nennt für diese Position keine Palettenmenge
+19;STE-106123;Velvet Handseife rosa, 5 Liter;Kanister;5 Liter;1;96;8,70 € je Kanister;STE-106123;belegt
+20;STE-106672;STERN Cremeseife rosa, Pumpflasche;Flasche;500 ml;20;54;1,77 € je Flasche;STE-106672;belegt
+21;DI-101108340;Soft Care Mild, Milde Seifenlotion zur Händereinigung;Kartusche;800 ml;6;112;12,12 € je Kartusche;DI-101108340;belegt
