@@ -108,12 +108,17 @@ export default function BuyBox({
           disabled={disabled}
           onClick={() => {
             if (!merchandiseId) return;
-            trackEvent("add_to_cart", { handle: productHandle });
             setError(null);
+            // Erst legen, dann zaehlen. Das Zaehlen stand frueher VOR dem
+            // Warenkorb-Aufruf und damit im Weg: Wirft das Analytics-Script,
+            // bricht der Handler ab, bevor addItem ueberhaupt laeuft.
+            // Nebeneffekt der neuen Reihenfolge: gezaehlt wird nur noch, was
+            // auch wirklich im Sackerl gelandet ist.
             startTransition(async () => {
               try {
                 const total = await addItem(merchandiseId, qty);
                 setCount(total);
+                trackEvent("add_to_cart", { handle: productHandle });
               } catch (e) {
                 setError(e instanceof Error ? e.message : "Fehler");
               }
