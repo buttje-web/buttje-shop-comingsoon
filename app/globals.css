@@ -89,13 +89,14 @@ body {
   Enge Laufweite + Uppercase laesst Woerter zusammenkleben; ein kleiner Tick
   word-spacing macht sie fuers Auge trennbar, ohne den Stil zu brechen.
   Gilt fuer alle Elemente mit Tailwinds .uppercase.
-  AUSNAHME: der Start-Hero (.hero-title) bleibt exakt wie er ist.
+
+  Die fruehere Ausnahme fuer .hero-title ist entfallen: Der alte
+  Riesen-Hero ("Der Shop.") gibt es nicht mehr, die neue Hero-Headline
+  ist eine normale Versalien-Ueberschrift und nimmt den Wortabstand
+  wie jede andere.
 */
 .uppercase {
   word-spacing: 0.14em;
-}
-.hero-title {
-  word-spacing: normal;
 }
 
 @keyframes holo {
@@ -112,57 +113,6 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .grad-text {
-    animation: none;
-  }
-}
-
-/* --- Hero im bewegten Platzhalter-Look (1:1 aus der Coming-Soon-Seite) --- */
-.hero-grad {
-  position: relative;
-  background: var(--grad);
-  background-size: 240% 240%;
-  animation: holo 12s ease-in-out infinite;
-}
-.hero-grad::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    120% 90% at 50% 120%,
-    rgba(14, 14, 18, 0.55),
-    transparent 62%
-  );
-  pointer-events: none;
-}
-.hero-title {
-  color: var(--near-black);
-  animation: glitch 6s infinite;
-  /* Innenabstand rechts: verhindert, dass Glitch-Versatz das letzte Zeichen (P.) anschneidet */
-  padding-right: 0.14em;
-}
-@keyframes glitch {
-  0%,
-  90%,
-  100% {
-    text-shadow: 2px 0 rgba(92, 200, 255, 0.55), -2px 0 rgba(255, 95, 168, 0.55);
-    transform: translate(0);
-  }
-  92% {
-    text-shadow: 6px 0 rgba(92, 200, 255, 0.75), -6px 0 rgba(255, 95, 168, 0.75);
-    transform: translate(-2px, 1px);
-  }
-  94% {
-    text-shadow: -5px 0 rgba(92, 200, 255, 0.75), 5px 0 rgba(255, 95, 168, 0.75);
-    transform: translate(2px, -1px);
-  }
-  96% {
-    text-shadow: 2px 0 rgba(92, 200, 255, 0.55), -2px 0 rgba(255, 95, 168, 0.55);
-    transform: translate(0);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-grad,
-  .hero-title {
     animation: none;
   }
 }
@@ -370,8 +320,7 @@ body {
   hyphens: none;
 }
 
-h1, h2, h3, h4, h5, h6,
-.hero-title {
+h1, h2, h3, h4, h5, h6 {
   -webkit-hyphens: none;
   hyphens: none;
   overflow-wrap: normal;

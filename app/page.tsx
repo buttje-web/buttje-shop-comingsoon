@@ -37,26 +37,74 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* Hero: bewegter Holo-Verlauf, dunkle Schrift mit leichtem Glitch/Pink-Blitzen */}
-      <section className="hero-grad relative flex min-h-[70vh] items-center">
-        <Container className="relative z-[2] py-[clamp(80px,12vw,140px)]">
-          <p className="mb-[18px] text-[0.68rem] font-extrabold uppercase tracking-[0.3em] text-near-black">
-            buttje · Wien
-          </p>
-          <h1 className="hero-title text-[clamp(2.6rem,11vw,8.5rem)] font-black uppercase leading-[0.9] tracking-[-0.035em]">
-            Der Shop.
-          </h1>
-          <p className="mt-6 max-w-[46ch] text-[clamp(0.85rem,1.4vw,1.05rem)] font-semibold text-[rgba(14,14,18,0.74)]">
-            Verbrauchsgüter mit Haltung: ausgewählt, geliefert, ernst gemeint.
-            {" "}Jetzt für Geschäftskunden bestellbar.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link
-              href="/produkte"
-              className="border border-[rgba(14,14,18,0.34)] px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-near-black transition-colors hover:border-near-black"
-            >
-              Zum Sortiment →
-            </Link>
+      {/* Hero, zweispaltig: links die Ansage, rechts die Buehnenaufnahme.
+          Der Grund ist derselbe dunkle Ton wie der Rest der Seite — kein
+          Verlauf, keine Farbflaeche. Cyan kommt nur als Akzent vor.
+          overflow-hidden ist Pflicht: das Bild ragt rechts bewusst ueber
+          den Container hinaus und wuerde sonst die Seite scrollbar machen. */}
+      <section className="overflow-hidden border-b border-line">
+        <Container className="grid items-center gap-[clamp(32px,5vw,56px)] py-[clamp(48px,6vw,88px)] lg:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)]">
+          {/* Textspalte */}
+          <div>
+            <p className="eyebrow">buttje · Wien</p>
+
+            {/* Umbruch nach "jemand" ist gesetzt, nicht zufaellig: die Pointe
+                steht in der zweiten Zeile und soll dort auch anfangen. */}
+            <h1 className="mt-5 text-[clamp(1.85rem,4.3vw,3.15rem)] font-black uppercase leading-[1.02] tracking-[-0.035em]">
+              Läuft, bis jemand
+              <br />
+              vergisst zu bestellen.
+            </h1>
+
+            {/* Zweite Zeile: klar kleiner als die H1, klar groesser als
+                Fliesstext, volle Textfarbe statt Grau — sie wird im selben
+                Blick mitgelesen. */}
+            <p className="mt-6 max-w-[30ch] text-[clamp(1.1rem,2vw,1.7rem)] font-semibold leading-[1.25] tracking-[-0.01em] text-text">
+              Müllsäcke, Papier, Chemie. Bevor jemand fragt, wo es ist.
+            </p>
+
+            <p className="mt-5 max-w-[44ch] text-[0.95rem] leading-relaxed text-text-soft">
+              Verbrauchsgüter für Gewerbe. Nettopreise, Lieferung in ganz
+              Österreich.
+            </p>
+
+            <div className="mt-9">
+              <Link
+                href="/produkte"
+                className="inline-flex min-h-[48px] items-center border border-line-strong px-7 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-text transition-colors hover:border-accent hover:text-accent"
+              >
+                Zum Sortiment →
+              </Link>
+            </div>
+          </div>
+
+          {/* Bildspalte. Kein Rahmen, kein Kasten — die Aufnahme steht frei
+              auf dem Grund. Auf Desktop laeuft sie rechts aus dem Container
+              heraus und ist breiter als ihre Spalte; auf Mobil steht sie
+              unter dem Text und deutlich kleiner. */}
+          {/* KEIN w-full: Bei fester Breite 100 % wuerde der negative
+              Aussenabstand die Spalte nicht mehr verbreitern, und das Bild
+              bliebe brav im Raster stehen statt rechts anzuschneiden. */}
+          <div className="order-last lg:-mr-[clamp(24px,7vw,130px)]">
+            {/* Ausschnitt statt ganzem Hochformat: Die Buehnenaufnahme ist
+                9:16 und haette den Hero sonst auf ueber 1200 px Hoehe
+                getrieben. Der Ausschnitt sitzt eng auf der Rolle — das
+                leere obere Drittel faellt weg, und die Beschriftung des
+                Kartons rutscht so weit an den unteren Rand, dass sie nicht
+                mehr mitgelesen wird. Der Hero zeigt das Produkt, nicht das
+                Etikett. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/kategorie/entsorgung.webp"
+              alt="Blauer Abfallsack, 120 Liter, aus dem buttje-Sortiment"
+              width={720}
+              height={1280}
+              /* Erstes Bild im Sichtfeld: bewusst NICHT lazy, sonst
+                 flackert der Hero beim Laden nach. */
+              fetchPriority="high"
+              decoding="async"
+              className="h-[clamp(230px,56vw,290px)] w-full object-cover object-[50%_62%] lg:h-[clamp(400px,40vw,520px)] lg:w-[152%] lg:max-w-none lg:object-[64%_52%]"
+            />
           </div>
         </Container>
       </section>

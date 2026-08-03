@@ -17,9 +17,13 @@ export default function SiteHeader() {
       <NewsTicker />
 
       <nav className="mx-auto flex h-[62px] w-full max-w-[1320px] items-center justify-between gap-3 px-[clamp(16px,5vw,64px)]">
+        {/* Wortmarke bewusst OHNE .grad-text: Die Klasse ist ein animierter
+            Verlauf, die Marke haette damit je nach Moment eine andere Farbe.
+            Ein Logo, das seine Farbe wechselt, ist kein Logo. Jetzt eine
+            feste Farbe, auf jeder Seite und in jedem Zustand dieselbe. */}
         <Link
           href="/"
-          className="grad-text text-[1.4rem] font-extrabold lowercase tracking-[-0.04em]"
+          className="text-[1.4rem] font-extrabold lowercase tracking-[-0.04em] text-text transition-colors hover:text-accent"
         >
           buttje
         </Link>
