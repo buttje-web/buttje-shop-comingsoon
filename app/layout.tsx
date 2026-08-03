@@ -61,6 +61,27 @@ export default async function RootLayout({
             Der Stub puffert Custom Events, bis das Script geladen ist. */}
         {process.env.NODE_ENV === "production" && (
           <>
+            {/* Eigene Zugriffe ausschliessen.
+
+                Das Plausible-Script PRUEFT localStorage.plausible_ignore
+                bereits von sich aus und sendet dann nichts. Was ihm fehlt:
+                Es SETZT den Marker nirgends — im Script kommen weder
+                location.search noch setItem vor. Der Aufruf mit
+                ?plausible_ignore=true blieb deshalb wirkungslos.
+                Diese Zeilen schliessen genau diese Luecke.
+
+                beforeInteractive ist Pflicht, nicht Geschmack: Der Marker
+                muss stehen, BEVOR der Tracker den ersten Seitenaufruf
+                meldet — sonst zaehlt der erste Aufruf trotzdem.
+
+                ?plausible_ignore=false raeumt den Marker wieder weg, sonst
+                kaeme man ohne Entwicklerkonsole nicht mehr aus dem
+                Ausschluss heraus. */}
+            <Script id="plausible-ignore" strategy="beforeInteractive">
+              {`try{var v=new URLSearchParams(location.search).get('plausible_ignore');
+if(v==='true'){localStorage.plausible_ignore='true'}
+else if(v==='false'){localStorage.removeItem('plausible_ignore')}}catch(e){}`}
+            </Script>
             <Script
               async
               src="https://plausible.io/js/pa-3m0ddr1EURbtPlkQ6msfD.js"
