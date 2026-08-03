@@ -1,13 +1,13 @@
 Pos;Lieferanten-Artikelnummer;Bezeichnung;Basisgebinde;Stück je Basisgebinde;Basisgebinde je Karton;Kartons je Palette;Angebotspreis netto;Shop-SKU;Anmerkung
 1;DE-54928-6;DEISS Müllbeutel 6 Liter reißfest mit 10-20% Regeneratanteil;Rolle;50 Stück;40;204;0,25 € je Rolle;54928;belegt
 2;DE-59984-60;DEISS HDPE Müllbeutel 60 Liter, 59984, transparent;Rolle;50 Stück;40;60;0,78 € je Rolle;59984;belegt - Artikel identisch mit Pos 4
-3;DE-44904-30;DEISS Universal Plus Müllbeutel 30 Liter, 44904;Rolle;50 Stück;40;OFFEN;OFFEN;44904;OFFEN: Paar (0,67 € / 110) oder (1,02 € / 60) - welches zu Pos 3 und welches zu Pos 5 gehört, geht aus dem Angebot nicht hervor
+3;DE-44904-30;DEISS Universal Plus Müllbeutel 30 Liter, 44904;Rolle;50 Stück;40;110;0,67 € je Rolle;44904;belegt - aufgelöst 03.08.2026 aus der Textfassung der PDF, gegengeprüft an der Altruan-Sortimentsliste
 4;DE-59984-60;DEISS HDPE Müllbeutel 60 Liter, 59984, transparent;Rolle;50 Stück;40;60;0,78 € je Rolle;59984;Dublette zu Pos 2 - derselbe Artikel steht zweimal im Angebot
-5;DE-49908-60;DEISS Universal Plus Müllbeutel 60 Liter, 49908;Rolle;50 Stück;40;OFFEN;OFFEN;49908;OFFEN: siehe Pos 3
+5;DE-49908-60;DEISS Universal Plus Müllbeutel 60 Liter, 49908;Rolle;50 Stück;40;60;1,02 € je Rolle;49908;belegt - aufgelöst 03.08.2026 aus der Textfassung der PDF, gegengeprüft an der Altruan-Sortimentsliste
 6;AL-12060;Altruan Müllsack 120 Liter Typ 60, 12060, Basic, blau;Rolle;25 Stück;10;36;1,78 € je Rolle;AL-12060;belegt, über den Seitenumbruch rekonstruiert
-7;DE-20010-120;DEISS Abfallsäcke 120 Liter Typ 60, 20010, blau;Rolle;25 Stück;10;OFFEN;OFFEN;20010;OFFEN: Paar (2,25 € / 40) oder (6,67 € / 30) - Zuordnung zu Pos 7 bzw. Pos 9 nicht belegbar
+7;DE-20010-120;DEISS Abfallsäcke 120 Liter Typ 60, 20010, blau;Rolle;25 Stück;10;40;2,25 € je Rolle;20010;belegt - aufgelöst 03.08.2026 aus der Textfassung der PDF, gegengeprüft an der Altruan-Sortimentsliste
 8;AL-12070;Altruan Müllsack 120 Liter Typ 70, 12070, Premium, blau;Rolle;25 Beutel;10;36;2,31 € je Rolle;12070;belegt
-9;DE-10010-120;DEISS Premium Plus Typ-100 Abfallsäcke 10010, 120 Liter, Der Allrounder;Rolle;25 Stück;10;OFFEN;OFFEN;10010;OFFEN: siehe Pos 7
+9;DE-10010-120;DEISS Premium Plus Typ-100 Abfallsäcke 10010, 120 Liter, Der Allrounder;Rolle;25 Stück;10;30;6,67 € je Rolle;10010;belegt - aufgelöst 03.08.2026 aus der Textfassung der PDF, gegengeprüft an der Altruan-Sortimentsliste
 10;DE-56941-P;DEISS Universal Hygienebeutel, 56941, 30 Beutel;Packung;30 Beutel;25;180;4,29 € je Karton;56941;belegt
 11;PA-401977-P;Papernet Toilettenpapier 401977, 8 Rollen, 3-lagig;Packung;8 Rollen;9;21;3,09 € je Packung;401977;belegt
 12;PA-404578-P;Papernet Toilettenpapier 404578, 8 Rollen, 4-lagig;Packung;8 Stück;9;21;3,22 € je Packung;404578;belegt
