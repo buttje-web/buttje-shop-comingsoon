@@ -73,8 +73,9 @@ export default function AgbPage() {
       <p>
         5.2 Die Lieferzeit beträgt bei lagernder Ware in der Regel 3 bis 7
         Werktage ab Zahlungseingang. Bei nicht lagernder Ware verlängert sich die
-        Lieferzeit um die Beschaffungszeit; der Kunde wird in diesem Fall über
-        den voraussichtlichen Liefertermin informiert.
+        Lieferzeit um die Beschaffungszeit; diese beträgt in der Regel etwa eine
+        Woche. Der Kunde wird in diesem Fall über den voraussichtlichen
+        Liefertermin informiert.
       </p>
       <p>
         5.3 Angegebene Lieferzeiten sind unverbindliche Richtwerte, sofern nicht

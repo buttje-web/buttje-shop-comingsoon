@@ -33,7 +33,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Wie lange dauert die Lieferung?",
-    a: "Die Lieferung erfolgt in der Regel innerhalb weniger Werktage ab Zahlungseingang, abhängig von der Verfügbarkeit. Konkrete Lieferzeiten werden ergänzt.",
+    a: "Lagernde Ware erreicht Sie in der Regel innerhalb von 3 bis 7 Werktagen ab Zahlungseingang. Nicht lagernde Ware beschaffen wir zunächst; die Beschaffung dauert in der Regel etwa eine Woche, danach kommen 3 bis 7 Werktage bis zur Zustellung hinzu. Über den voraussichtlichen Liefertermin informieren wir Sie in diesem Fall gesondert. Alle Angaben sind unverbindliche Richtwerte.",
   },
 ];
 

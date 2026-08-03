@@ -9,13 +9,24 @@ export default function VersandZahlungPage() {
       <h2>Liefergebiet</h2>
       <p>Wir liefern innerhalb Österreichs.</p>
 
+      {/* Zwei Faelle getrennt ausgewiesen, damit die Zusage aus dem Ticker
+          ("3 bis 7 Werktage bei Lagerware") bei Beschaffungsware nicht bricht.
+          Quelle: schriftliche Praezisierung des Lieferanten vom 31.07.2026
+          (dort 3 bis 5 Werktage). Die 7 Werktage sind der bewusst behaltene
+          Puffer, Entscheidung Rami vom 03.08.2026 — der Lieferant stellt
+          gerade sein Logistikzentrum um. */}
       <h2>Lieferzeit</h2>
       <p>
-        Bei lagernder Ware in der Regel 3 bis 7 Werktage ab Zahlungseingang. Bei
-        nicht lagernder Ware verlängert sich die Lieferzeit um die
-        Beschaffungszeit; wir informieren Sie in diesem Fall über den
-        voraussichtlichen Liefertermin.
+        Lagernde Ware erreicht Sie in der Regel innerhalb von 3 bis 7 Werktagen
+        ab Zahlungseingang.
       </p>
+      <p>
+        Nicht lagernde Ware beschaffen wir zunächst. Die Beschaffung dauert in
+        der Regel etwa eine Woche, danach kommen 3 bis 7 Werktage bis zur
+        Zustellung hinzu. Über den voraussichtlichen Liefertermin informieren wir
+        Sie in diesem Fall gesondert.
+      </p>
+      <p>Alle Angaben sind unverbindliche Richtwerte.</p>
 
       {/* Betraege bewusst ausgeschrieben, nicht aus app/lib/versand.ts
           interpoliert — siehe Begruendung in app/agb/page.tsx (Punkt 5.4). */}
