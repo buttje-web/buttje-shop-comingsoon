@@ -35,17 +35,47 @@ export type StorefrontFetchOptions = {
   revalidate?: number | false;
   /** IP des Buyers fuer buyer-getriebene Server-Requests (optional). */
   buyerIp?: string;
+  /**
+   * Bei Transportfehlern ein zweites Mal versuchen.
+   *
+   * NUR fuer LESENDE Abfragen setzen. Bei Mutationen ist ein zweiter
+   * Versuch gefaehrlich: Bricht die Verbindung NACH dem Absenden ab, ist
+   * unbekannt, ob die Gegenstelle den Auftrag schon ausgefuehrt hat — eine
+   * Wiederholung koennte dieselbe Position ein zweites Mal anlegen.
+   * Deshalb ist der Standard "nicht wiederholen".
+   */
+  wiederholen?: boolean;
 };
 
 /**
+ * Verbindung zur Storefront-API fehlgeschlagen: abgebrochene Verbindung,
+ * TLS-Abbruch oder Zeitlimit. KEINE Aussage darueber, ob die Gegenstelle
+ * den Auftrag ausgefuehrt hat — bei Mutationen ist der Ausgang offen.
+ */
+export class StorefrontNetzError extends Error {}
+
+/**
+ * Zeitbudget je Versuch. Bewusst knapp: Zwei Versuche plus Pause muessen
+ * zusammen unter dem Laufzeitlimit der Vercel-Funktion bleiben
+ * (4000 + 250 + 4000 = 8,25 s). Die Gegenstelle antwortet normal in
+ * deutlich unter einer Sekunde — wer laenger braucht, ist gestoert.
+ */
+const ZEITLIMIT_MS = 4000;
+const PAUSE_MS = 250;
+
+const schlafen = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/**
  * Fuehrt eine Storefront-GraphQL-Abfrage serverseitig aus.
- * @throws bei fehlendem Token, Transport- oder GraphQL-Fehlern.
+ * @throws StorefrontNetzError bei Transportfehlern und Zeitlimit,
+ *         Error bei fehlendem Token, HTTP- oder GraphQL-Fehlern.
  */
 export async function storefront<T>({
   query,
   variables = {},
   revalidate,
   buyerIp,
+  wiederholen = false,
 }: StorefrontFetchOptions): Promise<T> {
   if (!PRIVATE_TOKEN) {
     throw new Error(
@@ -60,17 +90,41 @@ export async function storefront<T>({
   };
   if (buyerIp) headers["Shopify-Storefront-Buyer-IP"] = buyerIp;
 
-  const res = await fetch(endpoint(), {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ query, variables }),
-    // Next 16: explizite Cache-Strategie. Default = kein Cache (immer frisch).
-    ...(revalidate === undefined
-      ? { cache: "no-store" as const }
-      : revalidate === false
-        ? { cache: "no-store" as const }
-        : { next: { revalidate } }),
-  });
+  const versuche = wiederholen ? 2 : 1;
+  let res: Response | undefined;
+  let letzterNetzfehler: unknown;
+
+  for (let versuch = 1; versuch <= versuche; versuch++) {
+    try {
+      res = await fetch(endpoint(), {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ query, variables }),
+        // Ohne Zeitlimit haengt die Funktion bis zum Plattform-Limit, wenn
+        // die Gegenstelle die Verbindung offen laesst und nicht antwortet.
+        signal: AbortSignal.timeout(ZEITLIMIT_MS),
+        // Next 16: explizite Cache-Strategie. Default = kein Cache (immer frisch).
+        ...(revalidate === undefined
+          ? { cache: "no-store" as const }
+          : revalidate === false
+            ? { cache: "no-store" as const }
+            : { next: { revalidate } }),
+      });
+      break;
+    } catch (e) {
+      // Hier landen ausschliesslich Transportfehler und das Zeitlimit.
+      // HTTP-Fehlercodes werfen nicht, die stehen unten in res.
+      letzterNetzfehler = e;
+      if (versuch < versuche) await schlafen(PAUSE_MS);
+    }
+  }
+
+  if (!res) {
+    const grund = letzterNetzfehler instanceof Error ? letzterNetzfehler.message : "unbekannt";
+    throw new StorefrontNetzError(
+      `Storefront nicht erreichbar nach ${versuche} Versuch(en): ${grund}`,
+    );
+  }
 
   const text = await res.text();
   let payload: StorefrontResponse<T>;

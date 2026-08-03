@@ -47,6 +47,7 @@ export async function getProducts(first = 48, query?: string): Promise<Product[]
     query: PRODUCTS_QUERY,
     variables: { first, query },
     revalidate: 60,
+    wiederholen: true,
   });
   return unwrap(data.products).map(normalizeProduct);
 }
@@ -83,6 +84,7 @@ export async function getSearchIndex(): Promise<
     query: SEARCH_INDEX_QUERY,
     variables: { first: 100 },
     revalidate: 300,
+    wiederholen: true,
   });
   return unwrap(data.products).map((p) => ({
     handle: p.handle,
@@ -110,6 +112,7 @@ export async function getProductByHandle(handle: string): Promise<Product | null
     query: PRODUCT_BY_HANDLE_QUERY,
     variables: { handle },
     revalidate: 60,
+    wiederholen: true,
   });
   return data.product ? normalizeProduct(data.product) : null;
 }
@@ -242,6 +245,7 @@ export async function getCart(id: string): Promise<Cart | null> {
   const data = await storefront<{ cart: (Cart & { lines: Edges<Cart["lines"][number]> }) | null }>({
     query: CART_QUERY,
     variables: { id },
+    wiederholen: true,
   });
   return normalizeCart(data.cart);
 }

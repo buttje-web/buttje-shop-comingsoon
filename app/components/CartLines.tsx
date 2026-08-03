@@ -12,6 +12,7 @@ import PriceTag from "./PriceTag";
 function CartLineRow({ line }: { line: CartLine }) {
   const [qty, setQty] = useState(line.quantity);
   const [pending, startTransition] = useTransition();
+  const [fehler, setFehler] = useState<string | null>(null);
   const { setCount } = useCart();
   const router = useRouter();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -21,8 +22,16 @@ function CartLineRow({ line }: { line: CartLine }) {
 
   function commit(next: number) {
     startTransition(async () => {
-      const total = await updateItem(line.id, next);
-      setCount(total);
+      setFehler(null);
+      const ergebnis = await updateItem(line.id, next);
+      if (!ergebnis.ok) {
+        // Auf den Serverstand zuruecksetzen: Die Zeile zeigte optimistisch
+        // eine Menge an, die nie angekommen ist.
+        setQty(line.quantity);
+        setFehler(ergebnis.meldung);
+        return;
+      }
+      setCount(ergebnis.anzahl);
       router.refresh();
     });
   }
@@ -36,8 +45,13 @@ function CartLineRow({ line }: { line: CartLine }) {
   function remove() {
     if (timer.current) clearTimeout(timer.current);
     startTransition(async () => {
-      const total = await removeItem(line.id);
-      setCount(total);
+      setFehler(null);
+      const ergebnis = await removeItem(line.id);
+      if (!ergebnis.ok) {
+        setFehler(ergebnis.meldung);
+        return;
+      }
+      setCount(ergebnis.anzahl);
       router.refresh();
     });
   }
@@ -72,6 +86,11 @@ function CartLineRow({ line }: { line: CartLine }) {
             Entfernen
           </button>
         </div>
+        {fehler && (
+          <p role="alert" className="mt-2 max-w-[52ch] text-[0.72rem] leading-relaxed text-muted">
+            {fehler}
+          </p>
+        )}
       </div>
 
       <div className="ml-auto text-right text-sm">

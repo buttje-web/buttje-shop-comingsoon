@@ -116,11 +116,20 @@ export default function BuyBox({
             // auch wirklich im Sackerl gelandet ist.
             startTransition(async () => {
               try {
-                const total = await addItem(merchandiseId, qty);
-                setCount(total);
+                const ergebnis = await addItem(merchandiseId, qty);
+                if (!ergebnis.ok) {
+                  // Verstaendliche Meldung aus der Server-Action. Geworfene
+                  // Fehler werden im Produktionsbuild redigiert und kaemen
+                  // hier nie lesbar an — deshalb ein Rueckgabewert.
+                  setError(ergebnis.meldung);
+                  return;
+                }
+                setCount(ergebnis.anzahl);
                 trackEvent("add_to_cart", { handle: productHandle });
-              } catch (e) {
-                setError(e instanceof Error ? e.message : "Fehler");
+              } catch {
+                setError(
+                  "Das hat gerade nicht geklappt. Bitte versuchen Sie es in einem Moment noch einmal.",
+                );
               }
             });
           }}
