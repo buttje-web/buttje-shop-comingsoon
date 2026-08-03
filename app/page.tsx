@@ -4,7 +4,6 @@ import Container from "./components/Container";
 import OptInForm from "./components/OptInForm";
 import FilmSektion from "./components/FilmSektion";
 import { CATEGORIES } from "./categories";
-import { KAUFBAR } from "./lib/shop-mode";
 
 // Kachel-Halbsaetze im buttje-Ton (kompakter als die Kategorie-Headlines).
 const KACHEL_TEASER: Record<string, string> = {
@@ -24,7 +23,16 @@ export const metadata: Metadata = {
 };
 
 // Startseite. Hero im bewegten buttje-Look (animierter Verlauf + Glitch),
-// uebernommen aus der Coming-Soon-Platzhalterseite. Neutrale Platzhaltertexte.
+// uebernommen aus der Coming-Soon-Platzhalterseite.
+//
+// BEWUSST OHNE KAUFBAR-Verzweigung: Hero-Unterzeile und Newsletter-Block
+// standen frueher in zwei Fassungen ("Das Sortiment wird gerade vorbereitet",
+// "Wir eroeffnen bald"). Ohne gesetztes SHOP_KAUFBAR zieht das Layout keinen
+// Warenkorb und damit kein cookies() — die Startseite wird dann statisch
+// vorgerendert und friert diese Texte im ausgelieferten HTML ein. Genau so
+// kam die Vor-Livegang-Fassung zu Crawlern. Der Shop ist offen, die Texte
+// sind jetzt zustandsunabhaengig und koennen nicht mehr falsch einfrieren.
+// Preise, Sackerl und Kassa haengen weiterhin am Schalter (fail closed).
 
 export default function HomePage() {
   return (
@@ -40,9 +48,7 @@ export default function HomePage() {
           </h1>
           <p className="mt-6 max-w-[46ch] text-[clamp(0.85rem,1.4vw,1.05rem)] font-semibold text-[rgba(14,14,18,0.74)]">
             Verbrauchsgüter mit Haltung: ausgewählt, geliefert, ernst gemeint.
-            {KAUFBAR
-              ? " Jetzt für Geschäftskunden bestellbar."
-              : " Das Sortiment wird gerade vorbereitet."}
+            {" "}Jetzt für Geschäftskunden bestellbar.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
@@ -104,27 +110,17 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter-Opt-in (Anker fuer "Neu eintragen" auf /bestaetigen).
-          Zwei Zustaende: vor der Eroeffnung wird die Eroeffnung angekuendigt,
-          danach geht es um neue Produkte und Angebote. Formular, Checkbox und
-          Datenschutz-Zeile sind in beiden Zustaenden identisch. */}
+          Der Shop ist offen — die Ankuendigung der Eroeffnung ist entfernt,
+          es geht hier nur noch um neue Produkte und Angebote. */}
       <section id="newsletter" className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
           <p className="eyebrow mb-3">Newsletter</p>
           <h2 className="text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase tracking-[-0.02em]">
-            {KAUFBAR ? (
-              <>
-                Neues zuerst. <span className="grad-text">Direkt ins Postfach.</span>
-              </>
-            ) : (
-              <>
-                Wir eröffnen bald. <span className="grad-text">Zuerst erfahren.</span>
-              </>
-            )}
+            Neues zuerst. <span className="grad-text">Direkt ins Postfach.</span>
           </h2>
           <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
-            {KAUFBAR
-              ? "Tragen Sie sich ein und erfahren Sie als Erste von neuen Produkten und Angeboten für Geschäftskunden."
-              : "Tragen Sie sich ein und erfahren Sie als Erste, wenn der Shop für Geschäftskunden öffnet."}
+            Tragen Sie sich ein und erfahren Sie als Erste von neuen Produkten und
+            Angeboten für Geschäftskunden.
           </p>
           <div className="mt-7">
             <OptInForm variant="full" />
