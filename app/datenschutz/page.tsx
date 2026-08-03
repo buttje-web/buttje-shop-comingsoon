@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LegalArticle from "../components/LegalArticle";
+import EMailLink from "../components/EMailLink";
 
 export const metadata: Metadata = { title: "Datenschutz" };
 
@@ -13,7 +14,7 @@ export default function DatenschutzPage() {
       <h2>1. Verantwortlicher</h2>
       <p>
         buttje e.U., Rami Ibraimi, Graben 28/1/12, 1010 Wien,{" "}
-        <a href="mailto:shop@buttje.at">shop@buttje.at</a>
+        <EMailLink />
       </p>
 
       <h2>2. Welche Daten wir verarbeiten</h2>
@@ -89,7 +90,7 @@ export default function DatenschutzPage() {
         lit. a DSGVO). Die Anmeldung erfolgt im Double-Opt-in-Verfahren: Erst
         nach Bestätigung gilt Ihre Einwilligung als erteilt. Sie können sich
         jederzeit abmelden — per Abmeldelink in jeder E-Mail oder formlos an{" "}
-        <a href="mailto:shop@buttje.at">shop@buttje.at</a>. Die Daten werden in
+        <EMailLink />. Die Daten werden in
         unserem Shopsystem gespeichert und nach Widerruf für Werbezwecke nicht
         weiter verwendet.
       </p>

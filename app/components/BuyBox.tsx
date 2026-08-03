@@ -6,6 +6,7 @@ import { trackEvent } from "../lib/analytics";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
+import EMailLink from "./EMailLink";
 import { einheitenSchuetzen } from "../lib/titel";
 import { VERSAND, VERSAND_AB, GRATIS_BIS_KG, euro } from "../lib/versand";
 import type { ProductVariant, Money } from "@/lib/shopify/types";
@@ -90,12 +91,7 @@ export default function BuyBox({
             WhatsApp
           </a>{" "}
           oder{" "}
-          <a
-            href="mailto:shop@buttje.at"
-            className="text-accent underline underline-offset-2"
-          >
-            shop@buttje.at
-          </a>
+          <EMailLink className="text-accent underline underline-offset-2" />
           .
         </p>
       )}

@@ -16,7 +16,7 @@ const organizationLd = {
   name: ORG.name,
   legalName: ORG.legalName,
   url: ORG.url,
-  email: ORG.email,
+  // Kein "email" hier: siehe Begruendung in app/lib/seo.ts.
   telephone: ORG.telephone,
   vatID: ORG.vatID,
   address: {

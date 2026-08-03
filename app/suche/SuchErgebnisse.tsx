@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BildPlatzhalter from "../components/BildPlatzhalter";
 import PriceTag from "../components/PriceTag";
+import EMailLink from "../components/EMailLink";
 import { bereiteVor, suche, type SuchEintrag } from "@/lib/suche";
 import { einheitenSchuetzen } from "../lib/titel";
 
@@ -87,12 +88,10 @@ export default function SuchErgebnisse({ kaufbar }: { kaufbar: boolean }) {
             >
               Per WhatsApp anfragen →
             </a>
-            <a
-              href="mailto:shop@buttje.at"
+            <EMailLink
               className="border border-line px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-muted transition-colors hover:border-accent hover:text-accent"
-            >
-              shop@buttje.at →
-            </a>
+              nachtext=" →"
+            />
           </div>
         </div>
       ) : (
