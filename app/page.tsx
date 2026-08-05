@@ -195,11 +195,27 @@ export default function HomePage() {
           Bis zum Klick laedt nur das Posterbild (preload="none"). */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
+          {/* OHNE .grad-text, anders als in der Newsletter-Sektion.
+
+              Die Klasse ist ein dauerhaft laufender Verlauf (9 s, endlos).
+              Bei der alten Zeile sass er auf "zu verbergen." und trug die
+              Pointe. Die neue Ueberschrift hat ihre Pointe nicht im
+              Schlusswort, sondern im trockenen "Ja, wirklich." darunter —
+              die Ueberschrift selbst ist die gerade Feststellung, auf die
+              der Nachsatz antwortet.
+              Auf ein Wort gesetzt haette der Verlauf nur zwei Kandidaten:
+              "Film" oder "Verbrauchsgueter". Beides zieht den Blick auf ein
+              Wort, das nichts hervorzuheben hat, und laesst die Zeile
+              angestrengt wirken statt trocken. Zusammen mit dem bewegten
+              Bild im Hero und dem Verlauf in der Newsletter-Sektion waere
+              es zudem die dritte Bewegung auf derselben Seite.
+              Ruhiger ist deshalb: gar kein Verlauf. Als Stilmittel bleibt
+              er der Seite erhalten, nur eben einmal statt zweimal. */}
           <h2 className="max-w-[20ch] text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
-            Jeder hat etwas <span className="grad-text">zu verbergen.</span>
+            Ein Film über Verbrauchsgüter
           </h2>
           <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
-            Wir beraten gern. Und schweigen besser.
+            Ja, wirklich.
           </p>
           <div className="mt-8">
             <FilmSektion
