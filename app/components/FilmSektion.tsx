@@ -37,8 +37,9 @@ import KiLabel from "./KiLabel";
   keine sichtbaren Kindelemente aufnehmen, es laesst sich also nichts
   hineinschieben. Also geht der KASTEN ins Vollbild, mit Video und
   Kennzeichnung darin. Dazu:
-    - controlsList="nofullscreen" nimmt den nativen Vollbildknopf aus
-      der Bedienleiste,
+    - controlsList="nofullscreen" legt den nativen Vollbildknopf still;
+      weil Chromium ihn danach grau weiterzeichnet, nimmt ihn zusaetzlich
+      die Regel .film-bedienleiste in globals.css ganz heraus,
     - disablePictureInPicture verhindert das Bild-im-Bild-Fenster, das
       dieselbe Luecke aufreissen wuerde,
     - der eigene Knopf ruft kasten.requestFullscreen(),
@@ -131,7 +132,7 @@ export default function FilmSektion({
           controls={gestartet}
           controlsList="nofullscreen"
           disablePictureInPicture
-          className="absolute inset-0 h-full w-full object-cover"
+          className="film-bedienleiste absolute inset-0 h-full w-full object-cover"
           aria-label={`${titel}. KI-generiert.`}
         />
 

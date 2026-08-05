@@ -111,6 +111,26 @@ body {
   }
 }
 
+/* Nativen Vollbildknopf aus der Bedienleiste des Films nehmen.
+
+   VORGESCHICHTE: controlsList="nofullscreen" legt den Knopf still, aber
+   Chromium ENTFERNT ihn nicht - es zeichnet ihn grau weiter. Gemessen:
+   die Bedienleiste unterscheidet sich mit und ohne das Attribut auf
+   128 Bildpunkten, genau an dieser Stelle, das Symbol wechselt von Weiss
+   auf Grau. Ein Klick darauf loest dann gar nichts aus, auch kein
+   Ereignis am <video> - abgefangen und umgeleitet werden kann er also
+   nicht, die Bedienelemente liegen in einem geschlossenen Shadow-DOM.
+   Bliebe er stehen, saehe der Nutzer einen ausgegrauten Knopf neben
+   unserem eigenen.
+
+   Dieses Pseudoelement nimmt genau diesen einen Knopf heraus, sonst
+   nichts: die uebrige Leiste bleibt die native, der Lautstaerkeknopf
+   rueckt nach. Firefox kennt das Pseudoelement nicht und ignoriert die
+   Regel - dort greift der Waechter in FilmSektion. */
+.film-bedienleiste::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
+
 /* Sanftes Einblenden. Gebraucht von der KI-Kennzeichnung im Filmplayer:
    beim Start wechselt sie von unten rechts nach oben rechts, weil dort
    die Bedienleiste erscheint. Ohne Einblendung liest sich der Wechsel
