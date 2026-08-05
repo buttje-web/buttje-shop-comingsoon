@@ -271,37 +271,60 @@ export default function HomePage() {
       </section>
 
       {/* Film. Bewusst am Ende der Seite: schwerstes Element, rein optional.
-          Bis zum Klick laedt nur das Posterbild (preload="none"). */}
+          Bis zum Klick laedt nur das Posterbild (preload="none").
+
+          AB 1024 ZWEISPALTIG, Text links, Player rechts. Vorher stand die
+          Ueberschrift ueber dem Video und das Video mittig auf der vollen
+          Breite; weil der Film Hochformat ist, blieben links und rechts je
+          rund 300 px leerer Grund stehen, und das las sich wie ein
+          Platzhalter. Diesen Platz fuellt jetzt der Text.
+          Die Videospalte ist fest 380 px breit, genau das Mass des
+          Players - er behaelt seine Groesse unveraendert, ebenso alle
+          Kennzeichnungen.
+          items-center stellt den Text senkrecht mittig zur Bildhoehe.
+          Unter 1024 bleibt es beim Untereinander, siehe unten. */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
-          {/* OHNE .grad-text, anders als in der Newsletter-Sektion.
+          <div className="grid grid-cols-1 gap-[clamp(28px,5vw,64px)] lg:grid-cols-[1fr_380px] lg:items-center">
+            <div>
+              {/* OHNE .grad-text, anders als in der Newsletter-Sektion.
 
-              Die Klasse ist ein dauerhaft laufender Verlauf (9 s, endlos).
-              Bei der alten Zeile sass er auf "zu verbergen." und trug die
-              Pointe. Die neue Ueberschrift hat ihre Pointe nicht im
-              Schlusswort, sondern im trockenen "Ja, wirklich." darunter -
-              die Ueberschrift selbst ist die gerade Feststellung, auf die
-              der Nachsatz antwortet.
-              Auf ein Wort gesetzt haette der Verlauf nur zwei Kandidaten:
-              "Film" oder "Verbrauchsgueter". Beides zieht den Blick auf ein
-              Wort, das nichts hervorzuheben hat, und laesst die Zeile
-              angestrengt wirken statt trocken. Zusammen mit dem bewegten
-              Bild im Hero und dem Verlauf in der Newsletter-Sektion waere
-              es zudem die dritte Bewegung auf derselben Seite.
-              Ruhiger ist deshalb: gar kein Verlauf. Als Stilmittel bleibt
-              er der Seite erhalten, nur eben einmal statt zweimal. */}
-          <h2 className="max-w-[20ch] text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
-            Ein Film über Verbrauchsgüter
-          </h2>
-          <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
-            Ja, wirklich.
-          </p>
-          <div className="mt-8">
-            <FilmSektion
-              src="/video/entsorgung-full.mp4"
-              poster="/video/poster-entsorgung.webp"
-              titel="buttje Kurzfilm: Jeder hat etwas zu verbergen"
-            />
+                  Die Klasse ist ein dauerhaft laufender Verlauf (9 s,
+                  endlos). Bei der alten Zeile sass er auf "zu verbergen."
+                  und trug die Pointe. Die neue Ueberschrift hat ihre
+                  Pointe nicht im Schlusswort, sondern im trockenen "Ja,
+                  wirklich." darunter - die Ueberschrift selbst ist die
+                  gerade Feststellung, auf die der Nachsatz antwortet.
+                  Auf ein Wort gesetzt haette der Verlauf nur zwei
+                  Kandidaten: "Film" oder "Verbrauchsgueter". Beides zieht
+                  den Blick auf ein Wort, das nichts hervorzuheben hat, und
+                  laesst die Zeile angestrengt wirken statt trocken.
+                  Zusammen mit dem bewegten Bild im Hero und dem Verlauf in
+                  der Newsletter-Sektion waere es zudem die dritte Bewegung
+                  auf derselben Seite.
+                  Ruhiger ist deshalb: gar kein Verlauf. Als Stilmittel
+                  bleibt er der Seite erhalten, nur eben einmal statt
+                  zweimal. */}
+              <h2 className="max-w-[20ch] text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
+                Ein Film über Verbrauchsgüter
+              </h2>
+              <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
+                Ja, wirklich.
+              </p>
+              {/* Kleiner als der Absatz darueber, damit die Reihenfolge
+                  Ueberschrift, Pointe, Nachsatz auch ohne Lesen sichtbar
+                  ist. */}
+              <p className="mt-4 max-w-[52ch] text-[0.78rem] leading-relaxed text-muted">
+                48 Sekunden. Kein Produkt zu sehen.
+              </p>
+            </div>
+            <div>
+              <FilmSektion
+                src="/video/entsorgung-full.mp4"
+                poster="/video/poster-entsorgung.webp"
+                titel="buttje Kurzfilm: Jeder hat etwas zu verbergen"
+              />
+            </div>
           </div>
         </Container>
       </section>
