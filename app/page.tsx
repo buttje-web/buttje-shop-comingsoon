@@ -22,8 +22,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// Startseite. Hero im bewegten buttje-Look (animierter Verlauf + Glitch),
-// uebernommen aus der Coming-Soon-Platzhalterseite.
+// Startseite. Hero mit dem freigegebenen Motiv, uebernommen aus
+// /vorschau-hero. Der animierte Verlauf und die Riesen-H1 "DER SHOP." der
+// alten Coming-Soon-Platzhalterseite sind schon frueher entfallen; die
+// Vorgaengerfassung dieses Heros war zweispaltig mit einer Produktaufnahme.
 //
 // BEWUSST OHNE KAUFBAR-Verzweigung: Hero-Unterzeile und Newsletter-Block
 // standen frueher in zwei Fassungen ("Das Sortiment wird gerade vorbereitet",
@@ -37,30 +39,107 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* Hero, zweispaltig: links die Ansage, rechts die Buehnenaufnahme.
-          Der Grund ist derselbe dunkle Ton wie der Rest der Seite — kein
-          Verlauf, keine Farbflaeche. Cyan kommt nur als Akzent vor.
-          overflow-hidden ist Pflicht: das Bild ragt rechts bewusst ueber
-          den Container hinaus und wuerde sonst die Seite scrollbar machen. */}
-      <section className="overflow-hidden border-b border-line">
-        <Container className="grid items-center gap-[clamp(32px,5vw,56px)] py-[clamp(48px,6vw,88px)] lg:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)]">
-          {/* Textspalte */}
-          <div>
+      {/* HERO — uebernommen aus /vorschau-hero, dort freigegeben.
+          Bild, Verlauf, Texte, Ausschnitt und Verhalten in allen Breiten
+          sind mit der Vorschau identisch.
+
+          ZWEI ANORDNUNGEN, geteilt bei 768 px (Tailwind md):
+          - unter 768: Bild oben als eigener Block, Text darunter auf dem
+            Seitenhintergrund. Kein Text ueber dem Motiv.
+          - ab 768: Bild als Flaeche hinter dem Text, darueber ein
+            Verlauf, der die linke Haelfte beruhigt.
+          overflow-hidden verhindert, dass der Ueberstand des Bildes
+          waagrechtes Scrollen ausloest. */}
+      <section className="relative overflow-hidden border-b border-line">
+        {/* Bildebene. Mobil im Fluss mit eigener Hoehe, ab md absolut
+            hinter dem Text. Kein aria-hidden: Das Motiv traegt einen
+            Alt-Text mit KI-Kennzeichnung und gehoert in den Vorlesefluss.
+
+            AB 1280 (xl) ANDERE MASSGABE FUER DIE BILDGROESSE.
+            Bis 1024 fuellt das Bild die Sektion und wird von object-cover
+            beschnitten. Das geht auf, solange Sektionsbreite zu -hoehe
+            ungefaehr dem Seitenverhaeltnis des Motivs entspricht (1,79).
+            Die Hoehe kommt aber vom Text und waechst kaum mit, die Breite
+            schon: bei 1440 stand ein Kasten von 1440x625, also 2,30 —
+            object-cover hat das Motiv auf Breite gezogen und oben wie
+            unten je 90 px abgeschnitten. Genau daher fehlten die Fuesse,
+            und genau daher standen die Kartons vergroessert unter dem Text.
+
+            Ab xl haengt die Bildbreite deshalb nicht mehr an der
+            Fensterbreite, sondern an der Bildhoehe: aspect-[1678/937] bei
+            fester Ober- und Unterkante ergibt genau die Breite, bei der
+            nichts mehr beschnitten wird. Das Bild sitzt rechts, links
+            bleibt freier Seitengrund fuer die Textspalte — und weil der
+            Bildgrund exakt derselbe Ton ist (#0e0e12), ist die Kante
+            zwischen beiden nicht zu sehen.
+
+            bottom-8: Abstand unter den Fuessen.
+            right-[-8%]: Rechts im Motiv stehen rund 17 Prozent leerer
+            Grund. Den schiebt der negative Wert ueber die Fensterkante
+            hinaus. Die Warengruppe rueckt dadurch von der Textspalte weg,
+            OHNE dass das Bild kleiner wird und ohne dass von der Frau
+            etwas verloren geht — ihre rechte Kante liegt bei 81 Prozent
+            der Bildbreite und bleibt damit im Fenster. */}
+        <div className="relative h-[clamp(200px,44vw,290px)] md:absolute md:inset-0 md:h-auto xl:bottom-8 xl:left-auto xl:right-[-8%] xl:aspect-[1678/937]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero/hero-final-v2.png"
+            /* Drei WebP-Breiten, dazu die PNG-Fassung als Rueckfall fuer
+               Browser ohne WebP. 1920 und 2560 gibt es bewusst nicht: das
+               Motiv ist 1678 px breit, alles darueber waere hochgerechnet
+               und damit groesser UND schlechter als das Original. */
+            srcSet="/hero/hero-final-768.webp 768w, /hero/hero-final-1280.webp 1280w, /hero/hero-final-1678.webp 1678w"
+            sizes="100vw"
+            alt="Mit KI erzeugtes Bild: Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
+            width={1678}
+            height={937}
+            /* Erstes Bild im Sichtfeld: bewusst NICHT lazy, sonst
+               flackert der Hero beim Laden nach. */
+            fetchPriority="high"
+            decoding="async"
+            /* Auf breiten Schirmen sitzt das Motiv mittig. Je schmaler es
+               wird, desto weiter wandert der Ausschnitt nach rechts —
+               sonst bliebe nur der leere Hintergrund der linken
+               Bildhaelfte stehen und die Figur waere weg. */
+            className="h-full w-full object-cover object-[72%_50%] md:object-[62%_50%] lg:object-[50%_50%]"
+          />
+
+          {/* Verlauf NUR ab md, bewusst SCHWACH: 70 % Deckung am linken
+              Rand, 30 % bei 45 %, ab 60 % nichts mehr. Die Ware bleibt
+              damit klar erkennbar und wird nur gedaempft — ein staerkerer
+              Verlauf hatte sie ausgeloescht und dem Bild seinen Zweck
+              genommen. Die Lesbarkeit des Textes traegt der Textschatten,
+              nicht die Verdunkelung.
+              Der Haltepunkt bei 53 % ist kein Zierrat: ohne ihn setzt der
+              Verlauf am rechten Ende sichtbar ab. */}
+          <div
+            className="absolute inset-0 hidden md:block"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, rgba(14,14,18,0.70) 0%, rgba(14,14,18,0.30) 45%, rgba(14,14,18,0.12) 53%, rgba(14,14,18,0) 60%)",
+            }}
+          />
+        </div>
+
+        {/* Textebene. Liegt ueber dem Verlauf, nicht darunter.
+
+            Der Textschatten greift erst ab md, also nur dort, wo Text auf
+            dem Bild liegt. Unter 768 px steht der Text auf glattem Grund,
+            dort waere er wirkungslos.
+            Zwei Schatten statt einem: der enge, harte setzt die
+            Buchstabenkanten ab, der weite, weiche traegt sie auf hellem
+            Grund. Ein einzelner grosser Schatten wuerde die Schrift
+            weichgezeichnet wirken lassen. */}
+        <Container className="relative z-10 py-[clamp(40px,8vw,120px)]">
+          <div className="max-w-[min(100%,34rem)] md:[text-shadow:0_1px_2px_rgba(14,14,18,0.95),0_4px_14px_rgba(14,14,18,0.6)] lg:max-w-[46%]">
             <p className="eyebrow">buttje · Wien</p>
 
-            {/* Umbruch nach "jemand" ist gesetzt, nicht zufaellig: die Pointe
-                steht in der zweiten Zeile und soll dort auch anfangen. */}
-            <h1 className="mt-5 text-[clamp(1.85rem,4.3vw,3.15rem)] font-black uppercase leading-[1.02] tracking-[-0.035em]">
-              Läuft, bis jemand
-              <br />
-              vergisst zu bestellen.
+            <h1 className="mt-5 text-[clamp(2rem,4.6vw,3.4rem)] font-black uppercase leading-[1.02] tracking-[-0.035em]">
+              Jeder hat etwas zu verbergen
             </h1>
 
-            {/* Zweite Zeile: klar kleiner als die H1, klar groesser als
-                Fliesstext, volle Textfarbe statt Grau — sie wird im selben
-                Blick mitgelesen. */}
             <p className="mt-6 max-w-[30ch] text-[clamp(1.1rem,2vw,1.7rem)] font-semibold leading-[1.25] tracking-[-0.01em] text-text">
-              Müllsäcke, Papier, Chemie. Bevor jemand fragt, wo es ist.
+              Wir beraten gern. Und schweigen besser.
             </p>
 
             <p className="mt-5 max-w-[44ch] text-[0.95rem] leading-relaxed text-text-soft">
@@ -69,42 +148,17 @@ export default function HomePage() {
             </p>
 
             <div className="mt-9">
+              {/* Eigener halbtransparenter Grund unter dem Knopf: Er kann
+                  je nach Breite auf einem hellen Karton landen, und dort
+                  traegt der schwache Verlauf allein nicht. 60 % Deckung
+                  reichen, ohne dass ein Kasten entsteht. */}
               <Link
                 href="/produkte"
-                className="inline-flex min-h-[48px] items-center border border-line-strong px-7 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-text transition-colors hover:border-accent hover:text-accent"
+                className="inline-flex min-h-[48px] items-center border border-line-strong bg-[rgba(14,14,18,0.6)] px-7 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-text transition-colors hover:border-accent hover:text-accent"
               >
                 Zum Sortiment →
               </Link>
             </div>
-          </div>
-
-          {/* Bildspalte. Kein Rahmen, kein Kasten — die Aufnahme steht frei
-              auf dem Grund. Auf Desktop laeuft sie rechts aus dem Container
-              heraus und ist breiter als ihre Spalte; auf Mobil steht sie
-              unter dem Text und deutlich kleiner. */}
-          {/* KEIN w-full: Bei fester Breite 100 % wuerde der negative
-              Aussenabstand die Spalte nicht mehr verbreitern, und das Bild
-              bliebe brav im Raster stehen statt rechts anzuschneiden. */}
-          <div className="order-last lg:-mr-[clamp(24px,7vw,130px)]">
-            {/* Ausschnitt statt ganzem Hochformat: Die Buehnenaufnahme ist
-                9:16 und haette den Hero sonst auf ueber 1200 px Hoehe
-                getrieben. Der Ausschnitt sitzt eng auf der Rolle — das
-                leere obere Drittel faellt weg, und die Beschriftung des
-                Kartons rutscht so weit an den unteren Rand, dass sie nicht
-                mehr mitgelesen wird. Der Hero zeigt das Produkt, nicht das
-                Etikett. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/kategorie/entsorgung.webp"
-              alt="Blauer Abfallsack, 120 Liter, aus dem buttje-Sortiment"
-              width={720}
-              height={1280}
-              /* Erstes Bild im Sichtfeld: bewusst NICHT lazy, sonst
-                 flackert der Hero beim Laden nach. */
-              fetchPriority="high"
-              decoding="async"
-              className="h-[clamp(230px,56vw,290px)] w-full object-cover object-[50%_62%] lg:h-[clamp(400px,40vw,520px)] lg:w-[152%] lg:max-w-none lg:object-[64%_52%]"
-            />
           </div>
         </Container>
       </section>
