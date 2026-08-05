@@ -54,25 +54,35 @@ export default function VorschauHeroPage() {
             className="h-full w-full object-cover object-[72%_50%] md:object-[62%_50%] lg:object-[50%_50%]"
           />
 
-          {/* Verlauf NUR ab md. Links volle Deckung in der Seitenfarbe,
-              nach rechts auslaufend, ab 63 % vollstaendig transparent.
-              Die Zwischenstufen sind kein Zierrat: ein Verlauf mit nur
-              zwei Haltepunkten setzt am Ende sichtbar ab, mit den
-              Zwischenwerten laeuft er weich aus. Die Frau rechts bleibt
-              dadurch unberuehrt, die Kartons links scheinen schwach
-              durch. */}
+          {/* Verlauf NUR ab md, bewusst SCHWACH: 70 % Deckung am linken
+              Rand, 30 % bei 45 %, ab 60 % nichts mehr. Die Ware bleibt
+              damit klar erkennbar und wird nur gedaempft — ein staerkerer
+              Verlauf hatte sie ausgeloescht und dem Bild seinen Zweck
+              genommen. Die Lesbarkeit des Textes traegt jetzt der
+              Textschatten, nicht die Verdunkelung.
+              Der Haltepunkt bei 53 % ist kein Zierrat: ohne ihn setzt der
+              Verlauf am rechten Ende sichtbar ab. */}
           <div
             className="absolute inset-0 hidden md:block"
             style={{
               backgroundImage:
-                "linear-gradient(to right, #0e0e12 0%, #0e0e12 26%, rgba(14,14,18,0.94) 36%, rgba(14,14,18,0.82) 45%, rgba(14,14,18,0.56) 53%, rgba(14,14,18,0.22) 59%, rgba(14,14,18,0) 63%)",
+                "linear-gradient(to right, rgba(14,14,18,0.70) 0%, rgba(14,14,18,0.30) 45%, rgba(14,14,18,0.12) 53%, rgba(14,14,18,0) 60%)",
             }}
           />
         </div>
 
-        {/* Textebene. Liegt ueber dem Verlauf, nicht darunter. */}
+        {/* Textebene. Liegt ueber dem Verlauf, nicht darunter.
+
+            Der Textschatten greift erst ab md, also nur dort, wo Text auf
+            dem Bild liegt. Unter 768 px steht der Text auf glattem Grund,
+            dort waere er wirkungslos.
+            Zwei Schatten statt einem: der enge, harte setzt die
+            Buchstabenkanten ab, der weite, weiche traegt sie auf hellem
+            Grund. Ein einzelner grosser Schatten wuerde die Schrift
+            weichgezeichnet wirken lassen — genau das soll nicht
+            passieren. */}
         <Container className="relative z-10 py-[clamp(40px,8vw,120px)]">
-          <div className="max-w-[min(100%,34rem)] lg:max-w-[46%]">
+          <div className="max-w-[min(100%,34rem)] md:[text-shadow:0_1px_2px_rgba(14,14,18,0.95),0_4px_14px_rgba(14,14,18,0.6)] lg:max-w-[46%]">
             <p className="eyebrow">buttje · Wien</p>
 
             <h1 className="mt-5 text-[clamp(2rem,4.6vw,3.4rem)] font-black uppercase leading-[1.02] tracking-[-0.035em]">
@@ -89,9 +99,13 @@ export default function VorschauHeroPage() {
             </p>
 
             <div className="mt-9">
+              {/* Eigener halbtransparenter Grund unter dem Knopf: Er kann
+                  je nach Breite auf einem hellen Karton landen, und dort
+                  traegt der schwache Verlauf allein nicht. 60 % Deckung
+                  reichen, ohne dass ein Kasten entsteht. */}
               <Link
                 href="/produkte"
-                className="inline-flex min-h-[48px] items-center border border-line-strong px-7 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-text transition-colors hover:border-accent hover:text-accent"
+                className="inline-flex min-h-[48px] items-center border border-line-strong bg-[rgba(14,14,18,0.6)] px-7 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-text transition-colors hover:border-accent hover:text-accent"
               >
                 Zum Sortiment →
               </Link>
