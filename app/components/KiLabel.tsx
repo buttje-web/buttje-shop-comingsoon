@@ -33,9 +33,14 @@ export default function KiLabel({
   stark = false,
 }: {
   className?: string;
-  /** Ecke im Bildbereich. "oben" braucht der Film, sobald die
-      Bedienleiste unten steht. */
-  lage?: "unten" | "oben";
+  /** Ecke im Bildbereich.
+      "oben" braucht der Film, sobald die Bedienleiste unten steht.
+      "oben-links" braucht er im Vollbild: dort blenden die Browser ihren
+      Hinweis "Zum Beenden Esc druecken" waagrecht mittig am oberen Rand
+      ein, und ein Hochformatfilm auf einem Querformatschirm steht als
+      schmale Saeule genau in dieser Mitte - die rechte obere Ecke liegt
+      dem Hinweis damit nahe, die linke deutlich weiter weg. */
+  lage?: "unten" | "oben" | "oben-links";
   /** Dichterer Kasten fuer bewegte Bilder, siehe Kopf dieser Datei. */
   stark?: boolean;
 }) {
@@ -46,7 +51,10 @@ export default function KiLabel({
   // Breakpoint-Variante des Heros gilt das nicht, Varianten sortiert
   // Tailwind immer hinter die Grundklassen - die darf ueber className
   // kommen.
-  const ort = lage === "oben" ? "top-2 right-2" : "bottom-2 right-2";
+  const ort =
+    lage === "oben" ? "top-2 right-2"
+      : lage === "oben-links" ? "top-2 left-2"
+        : "bottom-2 right-2";
   const grund = stark ? "bg-[rgba(14,14,18,0.65)]" : "bg-[rgba(14,14,18,0.55)]";
   return (
     <span

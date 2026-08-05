@@ -105,6 +105,8 @@ export default function FilmSektion({
     }
   }
 
+  const labelLage = !gestartet ? "unten" : vollbild ? "oben-links" : "oben";
+
   return (
     <div
       ref={kasten}
@@ -130,7 +132,13 @@ export default function FilmSektion({
           preload="none"
           playsInline
           controls={gestartet}
-          controlsList="nofullscreen"
+          /* nodownload: Ueber den Herunterladen-Eintrag im Ueberlaufmenue
+             kaeme jeder an die blanke Filmdatei - und die traegt keine
+             Kennzeichnung, weil sie sich hier nicht einbrennen laesst.
+             Dieselbe Luecke wie bei der Zweitfassung, die deshalb ins
+             Archiv gewandert ist. Einen Knopf dafuer bieten wir nicht
+             selbst an. */
+          controlsList="nofullscreen nodownload"
           disablePictureInPicture
           className="film-bedienleiste absolute inset-0 h-full w-full object-cover"
           aria-label={`${titel}. KI-generiert.`}
@@ -166,14 +174,23 @@ export default function FilmSektion({
           </button>
         )}
 
-        {/* Eigener Vollbildknopf, oben links - die einzige freie Ecke:
-            rechts steht die Kennzeichnung, unten die Bedienleiste. */}
+        {/* Eigener Vollbildknopf. Er sitzt immer in der Ecke, die die
+            Kennzeichnung gerade NICHT braucht: inline oben links, im
+            Vollbild oben rechts. Unten ist beides nicht moeglich, dort
+            steht die Bedienleiste. */}
         {gestartet && (
           <button
+            key={vollbild ? "knopf-rechts" : "knopf-links"}
             type="button"
             onClick={vollbildUm}
             aria-label={vollbild ? "Vollbild beenden" : "Vollbild"}
-            className="absolute left-2 top-2 flex h-8 w-8 items-center justify-center bg-[rgba(14,14,18,0.65)] text-text transition-colors hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className={
+              `absolute top-2 ${vollbild ? "right-2" : "left-2"} ` +
+              "flex h-8 w-8 items-center justify-center bg-[rgba(14,14,18,0.65)] " +
+              "text-text transition-colors hover:text-accent focus:outline-none " +
+              "focus-visible:ring-2 focus-visible:ring-accent " +
+              "animate-[sanft-ein_260ms_ease-out]"
+            }
           >
             <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden className="fill-current">
               {vollbild ? (
@@ -185,25 +202,34 @@ export default function FilmSektion({
           </button>
         )}
 
-        {/* KI-Kennzeichnung. Standbild unten rechts wie ueberall sonst im
-            Shop, waehrend der Wiedergabe oben rechts ueber der
-            Bedienleiste. Dichterer Kasten als bei den Standbildern, weil
-            der Schnitt auf Weiss blendet - Begruendung in KiLabel.
+        {/* KI-Kennzeichnung, drei Lagen:
+              Standbild   unten rechts wie ueberall sonst im Shop
+              Wiedergabe  oben rechts, unten steht die Bedienleiste
+              Vollbild    oben LINKS, weg von der Bildschirmmitte, wo die
+                          Browser ihren Esc-Hinweis einblenden
 
-            pointer-events-none am Standbild-Label, damit der Klick
-            durchgeht: darunter liegt der Startknopf, der die ganze
-            Flaeche einnimmt. Ohne das waere die untere rechte Ecke die
-            einzige Stelle des Films, an der ein Klick nichts tut. Fuer
-            den Bildschirmleser aendert das nichts. */}
-        {gestartet ? (
-          <KiLabel
-            lage="oben"
-            stark
-            className="pointer-events-none animate-[sanft-ein_260ms_ease-out]"
-          />
-        ) : (
-          <KiLabel stark className="pointer-events-none" />
-        )}
+            Dichterer Kasten als bei den Standbildern, weil der Schnitt
+            auf Weiss blendet - Begruendung in KiLabel.
+
+            Das key sorgt dafuer, dass React bei jedem Lagenwechsel ein
+            neues Element setzt. Ohne das wuerde nur die Klasse getauscht,
+            die Einblendung liefe nicht erneut, und die Kennzeichnung
+            spraenge sichtbar von einer Ecke in die andere.
+
+            pointer-events-none, damit der Klick durchgeht: solange das
+            Standbild steht, liegt darunter der Startknopf ueber der
+            ganzen Flaeche. Ohne das waere die Ecke des Labels die einzige
+            Stelle des Films, an der ein Klick nichts tut. Fuer den
+            Bildschirmleser aendert das nichts. */}
+        <KiLabel
+          key={labelLage}
+          lage={labelLage}
+          stark
+          className={
+            "pointer-events-none" +
+            (gestartet ? " animate-[sanft-ein_260ms_ease-out]" : "")
+          }
+        />
       </div>
     </div>
   );
