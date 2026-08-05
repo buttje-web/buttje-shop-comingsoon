@@ -115,7 +115,12 @@ export default function FilmSektion({
           ? // Im Vollbild muessen die eigenen Masse weg, sonst haelt der
             // Browser den Kasten weiter bei 380 px mitten auf dem Schirm.
             "relative flex h-full w-full items-center justify-center bg-near-black"
-          : "relative mx-auto aspect-[9/16] w-full max-w-[380px] overflow-hidden border border-line bg-near-black"
+          : // 380 px, in jeder Breite. Ein Versuch mit haelftig geteilten
+            // Spalten und einem 562 px breiten Player wurde verworfen:
+            // das Standbild poster-entsorgung.webp ist 720x1280, auf
+            // Bildschirmen mit doppelter Aufloesung waere es dann um
+            // Faktor 1,56 hochgerechnet worden.
+            "relative mx-auto aspect-[9/16] w-full max-w-[380px] overflow-hidden border border-line bg-near-black"
       }
     >
       {/* Innerer Kasten. Er hat immer genau das Format des Films, damit
