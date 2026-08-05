@@ -5,21 +5,26 @@ import Container from "../components/Container";
 /*
   NUR VORSCHAU — kein Bestandteil des Shops.
 
-  Diese Seite zeigt, wie ein Hero mit dem bearbeiteten Motiv
-  hero-final.png aussehen wuerde. Sie dient allein der Beurteilung durch
-  Rami: Passen Motiv und Text zusammen, ueberlagert die Textspalte die
-  Figur oder die Gegenstaende?
+  Diese Seite zeigt, wie ein Hero mit dem freigegebenen Motiv
+  hero-final-v2.png aussehen wuerde. Sie dient allein der Beurteilung
+  durch Rami: Passen Motiv und Text zusammen, ueberlagert die Textspalte
+  die Figur oder die Gegenstaende?
 
   BEWUSST NICHT ANGEFASST: die echte Startseite (app/page.tsx) und ihr
   bestehender Hero. Diese Route ist nirgends verlinkt, steht in keiner
   Navigation und in keiner Sitemap.
 
-  Stand des Bildes: Kartonaufdruck gesetzt (scripts/hero-kartonaufdruck.py),
-  Hintergrund vollstaendig ersetzt (scripts/hero-hintergrund.py). Der
-  violette Farbstich und die schwarze Fehlflaeche oben links sind damit
-  erledigt. Der Grund ist jetzt derselbe Ton wie die Seite selbst
-  (--base, #0e0e12) — das Bild kann rechts auslaufen, ohne dass eine
-  Kante entsteht.
+  Stand des Bildes: Endfassung, ausserhalb erstellt und freigegeben. Am
+  Motiv wurde hier nur der leere Hintergrund auf den Seitengrundton
+  gezogen (scripts/hero-grundton.py, Abweichung vorher bis 3,1 Tonwerte,
+  jetzt bis 1,4). Damit setzt sich das Bild an seinen Kanten nicht mehr
+  als dunkleres Rechteck von der Seite ab. Kein Bildpunkt heller als
+  Tonwert 60 wurde dabei um mehr als einen Tonwert veraendert — Frau,
+  Kartons und Gegenstaende sind unberuehrt.
+
+  Die frueheren Zwischenstaende (hero-rohbild-v2.png, hero-mit-aufdruck.png,
+  hero-final.png) bleiben zur Nachvollziehbarkeit liegen, werden aber
+  nirgends mehr ausgeliefert.
 */
 
 export const metadata: Metadata = {
@@ -40,15 +45,29 @@ export default function VorschauHeroPage() {
           waagrechtes Scrollen ausloest. */}
       <section className="relative overflow-hidden border-b border-line">
         {/* Bildebene. Mobil im Fluss mit eigener Hoehe, ab md absolut
-            hinter dem Text. */}
-        <div
-          aria-hidden
-          className="relative h-[clamp(200px,44vw,290px)] md:absolute md:inset-0 md:h-auto"
-        >
+            hinter dem Text.
+
+            KEIN aria-hidden mehr: Das Motiv traegt jetzt einen Alt-Text mit
+            KI-Kennzeichnung und gehoert damit in den Vorlesefluss. */}
+        <div className="relative h-[clamp(200px,44vw,290px)] md:absolute md:inset-0 md:h-auto">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/hero/hero-final.png"
-            alt=""
+            src="/hero/hero-final-v2.png"
+            /* Drei WebP-Breiten, dazu die PNG-Fassung als Rueckfall fuer
+               Browser ohne WebP. 1920 und 2560 gibt es bewusst nicht: das
+               Motiv ist 1678 px breit, alles darueber waere hochgerechnet
+               und damit groesser UND schlechter als das Original. */
+            srcSet="/hero/hero-final-768.webp 768w, /hero/hero-final-1280.webp 1280w, /hero/hero-final-1678.webp 1678w"
+            /* Unter 768 px steht das Bild als eigener Block in voller
+               Fensterbreite. Ab da liegt es hinter dem Text und deckt
+               ebenfalls die volle Breite ab — deshalb durchgehend 100vw. */
+            sizes="100vw"
+            alt="Mit KI erzeugtes Bild: Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
+            width={1678}
+            height={937}
+            /* Erstes Bild im Sichtfeld: bewusst NICHT lazy. */
+            fetchPriority="high"
+            decoding="async"
             /* Auf breiten Schirmen sitzt das Motiv mittig. Je schmaler es
                wird, desto weiter wandert der Ausschnitt nach rechts —
                sonst bliebe nur der leere Hintergrund der linken
@@ -118,8 +137,7 @@ export default function VorschauHeroPage() {
 
       <Container className="py-10">
         <p className="text-[0.8rem] leading-relaxed text-muted">
-          Interne Vorschau mit dem bearbeiteten Motiv: Kartonaufdruck
-          gesetzt, Hintergrund vollständig ersetzt, Grundton wie die Seite.
+          Interne Vorschau mit der freigegebenen Endfassung des Motivs.
           Diese Seite ist nicht verlinkt und nicht Teil des Shops.
         </p>
       </Container>
