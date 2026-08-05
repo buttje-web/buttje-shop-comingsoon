@@ -285,7 +285,7 @@ export default function HomePage() {
           Unter 1024 bleibt es beim Untereinander, siehe unten. */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
-          <div className="grid grid-cols-1 gap-[clamp(28px,5vw,64px)] lg:grid-cols-2 lg:items-center">
+          <div className="grid grid-cols-1 gap-[clamp(28px,5vw,64px)] lg:grid-cols-[1fr_380px] lg:items-center">
             <div>
               {/* OHNE .grad-text, anders als in der Newsletter-Sektion.
 
