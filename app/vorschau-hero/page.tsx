@@ -49,7 +49,37 @@ export default function VorschauHeroPage() {
 
             KEIN aria-hidden mehr: Das Motiv traegt jetzt einen Alt-Text mit
             KI-Kennzeichnung und gehoert damit in den Vorlesefluss. */}
-        <div className="relative h-[clamp(200px,44vw,290px)] md:absolute md:inset-0 md:h-auto">
+        {/* AB 1280 (xl) ANDERE MASSGABE FUER DIE BILDGROESSE.
+
+            Bis 1024 fuellt das Bild die Sektion und wird von object-cover
+            beschnitten. Das geht auf, solange Sektionsbreite zu -hoehe
+            ungefaehr dem Seitenverhaeltnis des Motivs entspricht (1,79).
+            Die Hoehe kommt aber vom Text und waechst kaum mit, die Breite
+            schon: bei 1440 stand ein Kasten von 1440x625, also 2,30 —
+            object-cover hat das Motiv auf Breite gezogen und oben wie
+            unten je 90 px abgeschnitten. Genau daher die fehlenden Fuesse,
+            und genau daher standen die Kartons vergroessert unter dem Text.
+
+            Ab xl haengt die Bildbreite deshalb nicht mehr an der
+            Fensterbreite, sondern an der Bildhoehe: aspect-[1678/937] bei
+            fester Ober- und Unterkante ergibt genau die Breite, bei der
+            nichts mehr beschnitten wird. Das Bild sitzt rechts, links
+            bleibt freier Seitengrund fuer die Textspalte — und weil der
+            Bildgrund exakt derselbe Ton ist (#0e0e12), ist die Kante
+            zwischen beiden nicht zu sehen.
+
+            bottom-8 statt bottom-0: der geforderte Abstand unter den
+            Fuessen.
+
+            right-[-8%]: Rechts im Motiv stehen rund 17 Prozent leerer
+            Grund. Den schiebt der negative Wert ueber die Fensterkante
+            hinaus. Die Warengruppe rueckt dadurch nach rechts von der
+            Textspalte weg, OHNE dass das Bild kleiner wird und ohne dass
+            von der Frau etwas verloren geht — ihre rechte Kante liegt bei
+            81 Prozent der Bildbreite und bleibt damit im Fenster.
+            Waagrechtes Scrollen kann daraus nicht entstehen, die Sektion
+            hat overflow-hidden. */}
+        <div className="relative h-[clamp(200px,44vw,290px)] md:absolute md:inset-0 md:h-auto xl:bottom-8 xl:left-auto xl:right-[-8%] xl:aspect-[1678/937]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/hero/hero-final-v2.png"
