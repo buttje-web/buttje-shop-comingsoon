@@ -15,6 +15,41 @@ const KACHEL_TEASER: Record<string, string> = {
   zubehoer: "Der Rest, der den Unterschied macht.",
 };
 
+// Motiv je Kachel. Von Entsorgung gibt es zwei Fassungen, verwendet wird
+// die mit dem gebundenen Sack; entsorgung-a bleibt im Repo liegen.
+const KACHEL_BILD: Record<string, string> = {
+  entsorgung: "entsorgung-b-final",
+  papier: "papier-final",
+  chemie: "chemie-final",
+  seifen: "seifen-final",
+  handschuhe: "handschuhe-final",
+  zubehoer: "zubehoer-final",
+};
+
+// Alle Kategoriemotive sind KI-erzeugt. Der Alt-Text sagt das an erster
+// Stelle und beschreibt danach sachlich, was zu sehen ist - keine
+// Werbesprache, das ist ein Alt-Text und keine Anzeige.
+//
+// ACHTUNG, offener Punkt: Ein Alt-Text allein genuegt Artikel 50 der
+// EU-KI-Verordnung NICHT, weil sehende Nutzer ihn nicht wahrnehmen. Eine
+// sichtbare Kennzeichnung im Bild scheitert hier an der Groesse: lesbar
+// waere sie erst bei 24 Prozent der Bildbreite. Entscheidung dazu steht
+// noch aus, siehe Bericht vom 05.08.2026.
+const KACHEL_ALT: Record<string, string> = {
+  entsorgung:
+    "KI-generiert. Drei Rollen Müllsäcke in Grün, Grau und Blau, daneben ein gefüllter schwarzer Sack und eine liegende schwarze Rolle vor dunklem Hintergrund.",
+  papier:
+    "KI-generiert. Gestapelte Toilettenpapierrollen, eine Küchenrolle und ein Stapel gefalteter Papierhandtücher vor dunklem Hintergrund.",
+  chemie:
+    "KI-generiert. Sprühflasche, Kanister, Dosierflaschen und ein Seifenspender mit leeren weißen Etiketten auf dunklen Podesten.",
+  seifen:
+    "KI-generiert. Drei weiße Spenderflaschen auf dunklen Sockeln, daneben Schaum und Seifenblasen vor dunklem Hintergrund.",
+  handschuhe:
+    "KI-generiert. Eine Hand in schwarzem Einweghandschuh neben einer schwarzen Schachtel mit der Aufschrift Einweghandschuhe.",
+  zubehoer:
+    "KI-generiert. Gestapelte Mikrofasertücher, Topfreiniger, eine Kehrschaufel und ein Handbesen vor dunklem Hintergrund.",
+};
+
 export const metadata: Metadata = {
   title: { absolute: "buttje Shop - Verbrauchsgüter & Hygienebedarf für Gewerbe" },
   description:
@@ -90,7 +125,7 @@ export default function HomePage() {
                und damit groesser UND schlechter als das Original. */
             srcSet="/hero/hero-final-768.webp 768w, /hero/hero-final-1280.webp 1280w, /hero/hero-final-1678.webp 1678w"
             sizes="100vw"
-            alt="Mit KI erzeugtes Bild: Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
+            alt="KI-generiert. Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
             width={1678}
             height={937}
             /* Erstes Bild im Sichtfeld: bewusst NICHT lazy, sonst
@@ -163,8 +198,9 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Sortiment: 6 klickbare Kategorie-Kacheln (dunkle Flaeche, Name gross,
-          Teaser-Halbsatz - kein Produktfoto) */}
+      {/* Sortiment: 6 klickbare Kategorie-Kacheln. Bild oben, Text darunter.
+          Kein Text auf dem Bild - die Motive sind dunkel und kontrastarm,
+          Schrift darauf waere in der Kachelgroesse nicht sicher lesbar. */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
           <p className="eyebrow mb-6">Sortiment</p>
@@ -173,17 +209,42 @@ export default function HomePage() {
               <li key={c.slug}>
                 <Link
                   href={`/kategorie/${c.slug}`}
-                  className="group flex min-h-[150px] flex-col justify-between border border-line bg-[rgba(244,244,246,0.03)] p-6 transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
+                  className="group flex h-full flex-col border border-line bg-[rgba(244,244,246,0.03)] transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
                 >
-                  <span className="text-[clamp(1.3rem,2.6vw,1.8rem)] font-extrabold uppercase tracking-[-0.01em]">
-                    {c.label}
-                  </span>
-                  <span className="mt-3 text-[0.88rem] leading-snug text-muted">
-                    {KACHEL_TEASER[c.slug]}
-                  </span>
-                  <span className="mt-4 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
-                    Ansehen →
-                  </span>
+                  {/* aspect-[3/2] entspricht genau dem Seitenverhaeltnis der
+                      Dateien (1344x896). object-cover schneidet dadurch
+                      nichts weg - waere der Kasten anders proportioniert,
+                      liefe der Schnitt in die Ware.
+                      width und height stehen dran, damit der Browser den
+                      Platz vor dem Laden kennt und beim Nachladen nichts
+                      springt. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/kategorie/${KACHEL_BILD[c.slug]}-768.webp`}
+                    srcSet={`/kategorie/${KACHEL_BILD[c.slug]}-384.webp 384w, /kategorie/${KACHEL_BILD[c.slug]}-768.webp 768w, /kategorie/${KACHEL_BILD[c.slug]}-1344.webp 1344w`}
+                    /* Kachelbreiten, aus dem Raster gerechnet: 386 px bei
+                       1440, 373 bei 1280, 296 bei 1024, 351 bei 390. Die
+                       vw-Angaben liegen knapp darueber, das ist die sichere
+                       Richtung. */
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    alt={KACHEL_ALT[c.slug]}
+                    width={1344}
+                    height={896}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[3/2] w-full object-cover"
+                  />
+                  <div className="flex flex-1 flex-col justify-between p-6">
+                    <span className="text-[clamp(1.3rem,2.6vw,1.8rem)] font-extrabold uppercase tracking-[-0.01em]">
+                      {c.label}
+                    </span>
+                    <span className="mt-3 text-[0.88rem] leading-snug text-muted">
+                      {KACHEL_TEASER[c.slug]}
+                    </span>
+                    <span className="mt-4 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
+                      Ansehen →
+                    </span>
+                  </div>
                 </Link>
               </li>
             ))}

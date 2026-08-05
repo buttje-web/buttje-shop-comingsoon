@@ -92,7 +92,7 @@ export default function VorschauHeroPage() {
                Fensterbreite. Ab da liegt es hinter dem Text und deckt
                ebenfalls die volle Breite ab - deshalb durchgehend 100vw. */
             sizes="100vw"
-            alt="Mit KI erzeugtes Bild: Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
+            alt="KI-generiert. Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
             width={1678}
             height={937}
             /* Erstes Bild im Sichtfeld: bewusst NICHT lazy. */
