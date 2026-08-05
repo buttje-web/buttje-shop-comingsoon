@@ -5,19 +5,21 @@ import Container from "../components/Container";
 /*
   NUR VORSCHAU — kein Bestandteil des Shops.
 
-  Diese Seite zeigt, wie ein Hero mit dem Rohbild hero-rohbild-v2.png
-  aussehen wuerde. Sie dient allein der Beurteilung durch Rami:
-  Passen Motiv und Text zusammen, ueberlagert die Textspalte die Figur
-  oder die Gegenstaende?
+  Diese Seite zeigt, wie ein Hero mit dem bearbeiteten Motiv
+  hero-final.png aussehen wuerde. Sie dient allein der Beurteilung durch
+  Rami: Passen Motiv und Text zusammen, ueberlagert die Textspalte die
+  Figur oder die Gegenstaende?
 
   BEWUSST NICHT ANGEFASST: die echte Startseite (app/page.tsx) und ihr
   bestehender Hero. Diese Route ist nirgends verlinkt, steht in keiner
   Navigation und in keiner Sitemap.
 
-  Das Bild ist UNBEARBEITET. Der violette Farbstich und die schwarze
-  Fehlflaeche oben links sind bekannt und werden erst im naechsten
-  Schritt korrigiert — sie gehoeren hier absichtlich noch ins Bild,
-  sonst waere die Vorschau nicht ehrlich.
+  Stand des Bildes: Kartonaufdruck gesetzt (scripts/hero-kartonaufdruck.py),
+  Hintergrund vollstaendig ersetzt (scripts/hero-hintergrund.py). Der
+  violette Farbstich und die schwarze Fehlflaeche oben links sind damit
+  erledigt. Der Grund ist jetzt derselbe Ton wie die Seite selbst
+  (--base, #0e0e12) — das Bild kann rechts auslaufen, ohne dass eine
+  Kante entsteht.
 */
 
 export const metadata: Metadata = {
@@ -45,7 +47,7 @@ export default function VorschauHeroPage() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/hero/hero-rohbild-v2.png"
+            src="/hero/hero-final.png"
             alt=""
             /* Auf breiten Schirmen sitzt das Motiv mittig. Je schmaler es
                wird, desto weiter wandert der Ausschnitt nach rechts —
@@ -116,10 +118,9 @@ export default function VorschauHeroPage() {
 
       <Container className="py-10">
         <p className="text-[0.8rem] leading-relaxed text-muted">
-          Interne Vorschau. Das Bild ist unbearbeitet: violetter Farbstich
-          und schwarze Fehlfläche oben links werden erst nach Ihrer
-          Rückmeldung korrigiert. Diese Seite ist nicht verlinkt und nicht
-          Teil des Shops.
+          Interne Vorschau mit dem bearbeiteten Motiv: Kartonaufdruck
+          gesetzt, Hintergrund vollständig ersetzt, Grundton wie die Seite.
+          Diese Seite ist nicht verlinkt und nicht Teil des Shops.
         </p>
       </Container>
     </>
