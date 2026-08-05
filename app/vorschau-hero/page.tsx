@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "../components/Container";
+import KiLabel from "../components/KiLabel";
 
 /*
   NUR VORSCHAU - kein Bestandteil des Shops.
@@ -92,7 +93,7 @@ export default function VorschauHeroPage() {
                Fensterbreite. Ab da liegt es hinter dem Text und deckt
                ebenfalls die volle Breite ab - deshalb durchgehend 100vw. */
             sizes="100vw"
-            alt="Mit KI erzeugtes Bild: Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
+            alt="KI-generiert. Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
             width={1678}
             height={937}
             /* Erstes Bild im Sichtfeld: bewusst NICHT lazy. */
@@ -120,6 +121,10 @@ export default function VorschauHeroPage() {
                 "linear-gradient(to right, rgba(14,14,18,0.70) 0%, rgba(14,14,18,0.30) 45%, rgba(14,14,18,0.12) 53%, rgba(14,14,18,0) 60%)",
             }}
           />
+
+          {/* KI-Kennzeichnung, gleich wie auf der Startseite. Zum Zusatz
+              ab xl siehe die Begruendung dort. */}
+          <KiLabel className="xl:right-[calc(8vw+8px)]" />
         </div>
 
         {/* Textebene. Liegt ueber dem Verlauf, nicht darunter.

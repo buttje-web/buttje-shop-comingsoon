@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "./components/Container";
+import KiLabel from "./components/KiLabel";
 import OptInForm from "./components/OptInForm";
 import FilmSektion from "./components/FilmSektion";
 import { CATEGORIES } from "./categories";
+import { BILD_ALT, BILD_BASIS, bildSrcSet } from "./kategorie-bilder";
 
 // Kachel-Halbsaetze im buttje-Ton (kompakter als die Kategorie-Headlines).
 const KACHEL_TEASER: Record<string, string> = {
@@ -14,6 +16,10 @@ const KACHEL_TEASER: Record<string, string> = {
   handschuhe: "Einweg oder unkaputtbar. Sie entscheiden.",
   zubehoer: "Der Rest, der den Unterschied macht.",
 };
+
+// Motiv und Alt-Text je Kategorie stehen in app/kategorie-bilder.ts, weil
+// beides zweimal gebraucht wird: hier auf der Kachel und als Kopfbild der
+// Kategorieseite. Zwei Kopien wuerden frueher oder spaeter auseinanderlaufen.
 
 export const metadata: Metadata = {
   title: { absolute: "buttje Shop - Verbrauchsgüter & Hygienebedarf für Gewerbe" },
@@ -90,7 +96,7 @@ export default function HomePage() {
                und damit groesser UND schlechter als das Original. */
             srcSet="/hero/hero-final-768.webp 768w, /hero/hero-final-1280.webp 1280w, /hero/hero-final-1678.webp 1678w"
             sizes="100vw"
-            alt="Mit KI erzeugtes Bild: Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
+            alt="KI-generiert. Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
             width={1678}
             height={937}
             /* Erstes Bild im Sichtfeld: bewusst NICHT lazy, sonst
@@ -119,6 +125,19 @@ export default function HomePage() {
                 "linear-gradient(to right, rgba(14,14,18,0.70) 0%, rgba(14,14,18,0.30) 45%, rgba(14,14,18,0.12) 53%, rgba(14,14,18,0) 60%)",
             }}
           />
+
+          {/* KI-Kennzeichnung. Steht NACH dem Verlauf und liegt damit
+              darueber, nicht darunter.
+
+              Der Zusatz ab xl ist kein Feinschliff, sondern Pflicht: dort
+              haengt das Bild mit right-[-8%] ueber die rechte Fensterkante
+              hinaus, und die Sektion schneidet den Ueberstand ab
+              (overflow-hidden). Ein Label an der rechten KANTE DES BILDES
+              waere ab 1280 unsichtbar. 8vw entspricht den 8 Prozent der
+              Sektionsbreite, also dem Ueberstand; die 8 px darauf sind der
+              gewollte Abstand zur Fensterkante. Bis 1024 liegt Bildkante
+              und Fensterkante uebereinander, dort genuegt right-2. */}
+          <KiLabel className="xl:right-[calc(8vw+8px)]" />
         </div>
 
         {/* Textebene. Liegt ueber dem Verlauf, nicht darunter.
@@ -163,8 +182,9 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Sortiment: 6 klickbare Kategorie-Kacheln (dunkle Flaeche, Name gross,
-          Teaser-Halbsatz - kein Produktfoto) */}
+      {/* Sortiment: 6 klickbare Kategorie-Kacheln. Bild oben, Text darunter.
+          Kein Text auf dem Bild - die Motive sind dunkel und kontrastarm,
+          Schrift darauf waere in der Kachelgroesse nicht sicher lesbar. */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
           <p className="eyebrow mb-6">Sortiment</p>
@@ -173,17 +193,50 @@ export default function HomePage() {
               <li key={c.slug}>
                 <Link
                   href={`/kategorie/${c.slug}`}
-                  className="group flex min-h-[150px] flex-col justify-between border border-line bg-[rgba(244,244,246,0.03)] p-6 transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
+                  className="group flex h-full flex-col border border-line bg-[rgba(244,244,246,0.03)] transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
                 >
-                  <span className="text-[clamp(1.3rem,2.6vw,1.8rem)] font-extrabold uppercase tracking-[-0.01em]">
-                    {c.label}
-                  </span>
-                  <span className="mt-3 text-[0.88rem] leading-snug text-muted">
-                    {KACHEL_TEASER[c.slug]}
-                  </span>
-                  <span className="mt-4 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
-                    Ansehen →
-                  </span>
+                  {/* Bildkasten. Er traegt die KI-Kennzeichnung, damit die
+                      IM Bildbereich sitzt und nicht im Textteil darunter -
+                      sonst waere nicht eindeutig, worauf sie sich bezieht.
+                      leading-none: sonst setzt die Zeilenhoehe des Kastens
+                      unter dem Bild einen Spalt ab. */}
+                  <div className="relative leading-none">
+                    {/* aspect-[3/2] entspricht genau dem Seitenverhaeltnis
+                        der Dateien (1344x896). object-cover schneidet
+                        dadurch nichts weg - waere der Kasten anders
+                        proportioniert, liefe der Schnitt in die Ware.
+                        width und height stehen dran, damit der Browser den
+                        Platz vor dem Laden kennt und beim Nachladen nichts
+                        springt. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/kategorie/${BILD_BASIS[c.slug]}-768.webp`}
+                      srcSet={bildSrcSet(BILD_BASIS[c.slug])}
+                      /* Kachelbreiten, aus dem Raster gerechnet: 386 px bei
+                         1440, 373 bei 1280, 296 bei 1024, 351 bei 390. Die
+                         vw-Angaben liegen knapp darueber, das ist die
+                         sichere Richtung. */
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      alt={BILD_ALT[c.slug]}
+                      width={1344}
+                      height={896}
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[3/2] w-full object-cover"
+                    />
+                    <KiLabel />
+                  </div>
+                  <div className="flex flex-1 flex-col justify-between p-6">
+                    <span className="text-[clamp(1.3rem,2.6vw,1.8rem)] font-extrabold uppercase tracking-[-0.01em]">
+                      {c.label}
+                    </span>
+                    <span className="mt-3 text-[0.88rem] leading-snug text-muted">
+                      {KACHEL_TEASER[c.slug]}
+                    </span>
+                    <span className="mt-4 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
+                      Ansehen →
+                    </span>
+                  </div>
                 </Link>
               </li>
             ))}
