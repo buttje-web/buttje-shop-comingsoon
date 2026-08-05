@@ -5,6 +5,7 @@ import KiLabel from "./components/KiLabel";
 import OptInForm from "./components/OptInForm";
 import FilmSektion from "./components/FilmSektion";
 import { CATEGORIES } from "./categories";
+import { BILD_ALT, BILD_BASIS, bildSrcSet } from "./kategorie-bilder";
 
 // Kachel-Halbsaetze im buttje-Ton (kompakter als die Kategorie-Headlines).
 const KACHEL_TEASER: Record<string, string> = {
@@ -16,38 +17,9 @@ const KACHEL_TEASER: Record<string, string> = {
   zubehoer: "Der Rest, der den Unterschied macht.",
 };
 
-// Motiv je Kachel. Von Entsorgung gibt es zwei Fassungen, verwendet wird
-// die mit dem gebundenen Sack; entsorgung-a bleibt im Repo liegen.
-const KACHEL_BILD: Record<string, string> = {
-  entsorgung: "entsorgung-b-final",
-  papier: "papier-final",
-  chemie: "chemie-final",
-  seifen: "seifen-final",
-  handschuhe: "handschuhe-final",
-  zubehoer: "zubehoer-final",
-};
-
-// Alle Kategoriemotive sind KI-erzeugt. Der Alt-Text sagt das an erster
-// Stelle und beschreibt danach sachlich, was zu sehen ist - keine
-// Werbesprache, das ist ein Alt-Text und keine Anzeige.
-//
-// Der Alt-Text allein genuegt Artikel 50 der EU-KI-Verordnung nicht, weil
-// sehende Nutzer ihn nicht wahrnehmen. Die sichtbare Kennzeichnung leistet
-// KiLabel, ein HTML-Element im Bildbereich - Begruendung steht dort.
-const KACHEL_ALT: Record<string, string> = {
-  entsorgung:
-    "KI-generiert. Drei Rollen Müllsäcke in Grün, Grau und Blau, daneben ein gefüllter schwarzer Sack und eine liegende schwarze Rolle vor dunklem Hintergrund.",
-  papier:
-    "KI-generiert. Gestapelte Toilettenpapierrollen, eine Küchenrolle und ein Stapel gefalteter Papierhandtücher vor dunklem Hintergrund.",
-  chemie:
-    "KI-generiert. Sprühflasche, Kanister, Dosierflaschen und ein Seifenspender mit leeren weißen Etiketten auf dunklen Podesten.",
-  seifen:
-    "KI-generiert. Drei weiße Spenderflaschen auf dunklen Sockeln, daneben Schaum und Seifenblasen vor dunklem Hintergrund.",
-  handschuhe:
-    "KI-generiert. Eine Hand in schwarzem Einweghandschuh neben einer schwarzen Schachtel mit der Aufschrift Einweghandschuhe.",
-  zubehoer:
-    "KI-generiert. Gestapelte Mikrofasertücher, Topfreiniger, eine Kehrschaufel und ein Handbesen vor dunklem Hintergrund.",
-};
+// Motiv und Alt-Text je Kategorie stehen in app/kategorie-bilder.ts, weil
+// beides zweimal gebraucht wird: hier auf der Kachel und als Kopfbild der
+// Kategorieseite. Zwei Kopien wuerden frueher oder spaeter auseinanderlaufen.
 
 export const metadata: Metadata = {
   title: { absolute: "buttje Shop - Verbrauchsgüter & Hygienebedarf für Gewerbe" },
@@ -238,14 +210,14 @@ export default function HomePage() {
                         springt. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`/kategorie/${KACHEL_BILD[c.slug]}-768.webp`}
-                      srcSet={`/kategorie/${KACHEL_BILD[c.slug]}-384.webp 384w, /kategorie/${KACHEL_BILD[c.slug]}-768.webp 768w, /kategorie/${KACHEL_BILD[c.slug]}-1344.webp 1344w`}
+                      src={`/kategorie/${BILD_BASIS[c.slug]}-768.webp`}
+                      srcSet={bildSrcSet(BILD_BASIS[c.slug])}
                       /* Kachelbreiten, aus dem Raster gerechnet: 386 px bei
                          1440, 373 bei 1280, 296 bei 1024, 351 bei 390. Die
                          vw-Angaben liegen knapp darueber, das ist die
                          sichere Richtung. */
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      alt={KACHEL_ALT[c.slug]}
+                      alt={BILD_ALT[c.slug]}
                       width={1344}
                       height={896}
                       loading="lazy"

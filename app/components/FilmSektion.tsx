@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 
+import KiLabel from "./KiLabel";
+
 /*
   Film-Sektion der Startseite. Bewusst NICHT wie die alten Kategorie-Videos:
   kein Autoplay, kein Loop, kein stummes Vorschau-Abspielen.
@@ -79,6 +81,24 @@ export default function FilmSektion({
           </span>
         </button>
       )}
+
+      {/* KI-Kennzeichnung des Standbilds. Es ist KI-erzeugt wie die sechs
+          Kategoriemotive und der Hero und traegt deshalb dasselbe Label
+          an derselben Stelle.
+
+          pointer-events-none, damit der Klick durchgeht: darunter liegt
+          der Startknopf, der die ganze Flaeche einnimmt. Ohne das waere
+          die untere rechte Ecke des Films die einzige Stelle, an der ein
+          Klick nichts tut. Fuer den Bildschirmleser aendert das nichts,
+          das Label bleibt lesbar.
+
+          NUR SOLANGE DAS STANDBILD ZU SEHEN IST. Waehrend der Wiedergabe
+          fehlt die Kennzeichnung noch; die Ueberlagerung dafuer haengt an
+          einer offenen Entscheidung, siehe Bericht vom 05.08.2026:
+          Sobald das <video> selbst in den Vollbildmodus geht, liegt jede
+          Ueberlagerung aus diesem Kasten ausserhalb des Vollbildelements
+          und wird nicht mehr gezeichnet - gemessen, nicht vermutet. */}
+      {!gestartet && <KiLabel className="pointer-events-none" />}
     </div>
   );
 }

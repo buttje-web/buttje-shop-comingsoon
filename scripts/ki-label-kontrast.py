@@ -3,8 +3,11 @@
 Kontrast der KI-Kennzeichnung messen - am gerenderten Bildschirm, nicht am
 Bild.
 
-  node scripts/ki-label-messen.mjs 3121   # misst und legt die Bilder ab
-  python3 scripts/ki-label-kontrast.py    # rechnet die Kontraste daraus
+  node scripts/ki-label-messen.mjs 3121   # Startseite messen
+  python3 scripts/ki-label-kontrast.py    # Kontraste daraus rechnen
+
+  node scripts/kopfbild-messen.mjs 3131            # Kategorieseiten messen
+  python3 scripts/ki-label-kontrast.py /tmp/kopfbild
 
 WARUM AM BILDSCHIRM UND NICHT AN DER DATEI: Unter dem Label liegt nicht
 die Bilddatei, sondern das, was der Browser daraus macht - skaliert,
@@ -26,13 +29,14 @@ L ist die relative Helligkeit nach WCAG 2.
 Abhaengigkeiten: pillow, numpy
 """
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
 
 WURZEL = Path(__file__).resolve().parent.parent
-ABZUG = Path("/tmp/ki-label")
+ABZUG = Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp/ki-label")
 
 SCHRIFT = np.array([0xF4, 0xF4, 0xF6], dtype=np.float64)   # --text
 KASTEN = np.array([0x0E, 0x0E, 0x12], dtype=np.float64)    # --base
@@ -59,9 +63,13 @@ def main():
     for eintrag in daten:
         breite = eintrag["breite"]
         s = eintrag["skala"]
-        abzug = np.asarray(Image.open(ABZUG / eintrag["abzug"]).convert("RGB"),
-                           dtype=np.float64)
+        # Startseite: ein Abzug fuer alle sieben Stellen. Kategorieseiten:
+        # je Stelle eine eigene Seite und damit ein eigener Abzug.
+        gemeinsam = eintrag.get("abzug")
         for stelle in eintrag["stellen"]:
+            abzug = np.asarray(
+                Image.open(ABZUG / (stelle.get("abzug") or gemeinsam)).convert("RGB"),
+                dtype=np.float64)
             x, y, b, h = (stelle["x"], stelle["y"], stelle["b"], stelle["h"])
             teil = abzug[int(round(y * s)):int(round((y + h) * s)),
                          int(round(x * s)):int(round((x + b) * s))]

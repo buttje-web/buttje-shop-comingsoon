@@ -56,11 +56,12 @@ for (const breite of BREITEN) {
     const el = labels.nth(i);
     const k = await el.boundingBox();
     const info = await el.evaluate((n, w) => {
-      // Bezugsbild: beim Hero das <img> im selben Kasten, bei der Kachel
-      // ebenso. Der sichtbare Bildbereich ist der Schnitt aus Bildkasten
-      // und Fenster - genau daran wird die Sichtbarkeit geprueft.
+      // Bezugsflaeche: beim Hero und bei den Kacheln das <img> im selben
+      // Kasten, in der Filmsektion das <video> mit seinem Standbild. Der
+      // sichtbare Bildbereich ist der Schnitt aus dieser Flaeche und dem
+      // Fenster - genau daran wird die Sichtbarkeit geprueft.
       const kasten = n.parentElement;
-      const img = kasten.querySelector("img");
+      const img = kasten.querySelector("img, video");
       const r = n.getBoundingClientRect();
       const b = img.getBoundingClientRect();
       const sicht = {
@@ -68,7 +69,8 @@ for (const breite of BREITEN) {
         rechts: Math.min(b.right, w), unten: Math.min(b.bottom, 1e9),
       };
       return {
-        name: (img.getAttribute("src").match(/([^/]+?)(-\d+)?\.(webp|png)$/) || [])[1],
+        name: ((img.getAttribute("src") || img.getAttribute("poster") || "")
+          .match(/([^/]+?)(-\d+)?\.(webp|png|jpg)$/) || [])[1],
         sichtbar: r.left >= sicht.links - 0.5 && r.right <= sicht.rechts + 0.5
           && r.top >= sicht.oben - 0.5 && r.bottom <= sicht.unten + 0.5,
         abstandRechts: Math.round((sicht.rechts - r.right) * 10) / 10,

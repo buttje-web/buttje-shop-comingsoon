@@ -7,7 +7,11 @@ export type Category = {
   label: string; // Anzeigename (Navigation)
   headline: string; // Kategorie-Headline (Teil 4)
   intro: string; // Intro-Text (Teil 4)
-  // Header-Standbild (9:16) aus den Buehnen-Mastern. Ohne Bild: dunkler Verlauf.
+  // STILLGELEGT seit 05.08.2026: Das Kopfbild der Kategorieseite kommt jetzt
+  // aus app/kategorie-bilder.ts, dasselbe Motiv wie auf der Startseite. Diese
+  // Pfade zeigen auf die alten 9:16-Herstellerfotos (720x1280). Feld und
+  // Dateien bleiben liegen, wie beim Feld `video` beschlossen: stilllegen,
+  // nicht loeschen.
   bild?: string;
   // STILLGELEGT seit 01.08.2026: Kategorie-Videos werden nicht mehr gerendert.
   // Feld und Daten bleiben bewusst erhalten (Beschluss: stilllegen, nicht loeschen).
