@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "./components/Container";
+import KiLabel from "./components/KiLabel";
 import OptInForm from "./components/OptInForm";
 import FilmSektion from "./components/FilmSektion";
 import { CATEGORIES } from "./categories";
@@ -30,11 +31,9 @@ const KACHEL_BILD: Record<string, string> = {
 // Stelle und beschreibt danach sachlich, was zu sehen ist - keine
 // Werbesprache, das ist ein Alt-Text und keine Anzeige.
 //
-// ACHTUNG, offener Punkt: Ein Alt-Text allein genuegt Artikel 50 der
-// EU-KI-Verordnung NICHT, weil sehende Nutzer ihn nicht wahrnehmen. Eine
-// sichtbare Kennzeichnung im Bild scheitert hier an der Groesse: lesbar
-// waere sie erst bei 24 Prozent der Bildbreite. Entscheidung dazu steht
-// noch aus, siehe Bericht vom 05.08.2026.
+// Der Alt-Text allein genuegt Artikel 50 der EU-KI-Verordnung nicht, weil
+// sehende Nutzer ihn nicht wahrnehmen. Die sichtbare Kennzeichnung leistet
+// KiLabel, ein HTML-Element im Bildbereich - Begruendung steht dort.
 const KACHEL_ALT: Record<string, string> = {
   entsorgung:
     "KI-generiert. Drei Rollen Müllsäcke in Grün, Grau und Blau, daneben ein gefüllter schwarzer Sack und eine liegende schwarze Rolle vor dunklem Hintergrund.",
@@ -154,6 +153,19 @@ export default function HomePage() {
                 "linear-gradient(to right, rgba(14,14,18,0.70) 0%, rgba(14,14,18,0.30) 45%, rgba(14,14,18,0.12) 53%, rgba(14,14,18,0) 60%)",
             }}
           />
+
+          {/* KI-Kennzeichnung. Steht NACH dem Verlauf und liegt damit
+              darueber, nicht darunter.
+
+              Der Zusatz ab xl ist kein Feinschliff, sondern Pflicht: dort
+              haengt das Bild mit right-[-8%] ueber die rechte Fensterkante
+              hinaus, und die Sektion schneidet den Ueberstand ab
+              (overflow-hidden). Ein Label an der rechten KANTE DES BILDES
+              waere ab 1280 unsichtbar. 8vw entspricht den 8 Prozent der
+              Sektionsbreite, also dem Ueberstand; die 8 px darauf sind der
+              gewollte Abstand zur Fensterkante. Bis 1024 liegt Bildkante
+              und Fensterkante uebereinander, dort genuegt right-2. */}
+          <KiLabel className="xl:right-[calc(8vw+8px)]" />
         </div>
 
         {/* Textebene. Liegt ueber dem Verlauf, nicht darunter.
@@ -211,29 +223,37 @@ export default function HomePage() {
                   href={`/kategorie/${c.slug}`}
                   className="group flex h-full flex-col border border-line bg-[rgba(244,244,246,0.03)] transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
                 >
-                  {/* aspect-[3/2] entspricht genau dem Seitenverhaeltnis der
-                      Dateien (1344x896). object-cover schneidet dadurch
-                      nichts weg - waere der Kasten anders proportioniert,
-                      liefe der Schnitt in die Ware.
-                      width und height stehen dran, damit der Browser den
-                      Platz vor dem Laden kennt und beim Nachladen nichts
-                      springt. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`/kategorie/${KACHEL_BILD[c.slug]}-768.webp`}
-                    srcSet={`/kategorie/${KACHEL_BILD[c.slug]}-384.webp 384w, /kategorie/${KACHEL_BILD[c.slug]}-768.webp 768w, /kategorie/${KACHEL_BILD[c.slug]}-1344.webp 1344w`}
-                    /* Kachelbreiten, aus dem Raster gerechnet: 386 px bei
-                       1440, 373 bei 1280, 296 bei 1024, 351 bei 390. Die
-                       vw-Angaben liegen knapp darueber, das ist die sichere
-                       Richtung. */
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    alt={KACHEL_ALT[c.slug]}
-                    width={1344}
-                    height={896}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-[3/2] w-full object-cover"
-                  />
+                  {/* Bildkasten. Er traegt die KI-Kennzeichnung, damit die
+                      IM Bildbereich sitzt und nicht im Textteil darunter -
+                      sonst waere nicht eindeutig, worauf sie sich bezieht.
+                      leading-none: sonst setzt die Zeilenhoehe des Kastens
+                      unter dem Bild einen Spalt ab. */}
+                  <div className="relative leading-none">
+                    {/* aspect-[3/2] entspricht genau dem Seitenverhaeltnis
+                        der Dateien (1344x896). object-cover schneidet
+                        dadurch nichts weg - waere der Kasten anders
+                        proportioniert, liefe der Schnitt in die Ware.
+                        width und height stehen dran, damit der Browser den
+                        Platz vor dem Laden kennt und beim Nachladen nichts
+                        springt. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/kategorie/${KACHEL_BILD[c.slug]}-768.webp`}
+                      srcSet={`/kategorie/${KACHEL_BILD[c.slug]}-384.webp 384w, /kategorie/${KACHEL_BILD[c.slug]}-768.webp 768w, /kategorie/${KACHEL_BILD[c.slug]}-1344.webp 1344w`}
+                      /* Kachelbreiten, aus dem Raster gerechnet: 386 px bei
+                         1440, 373 bei 1280, 296 bei 1024, 351 bei 390. Die
+                         vw-Angaben liegen knapp darueber, das ist die
+                         sichere Richtung. */
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      alt={KACHEL_ALT[c.slug]}
+                      width={1344}
+                      height={896}
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[3/2] w-full object-cover"
+                    />
+                    <KiLabel />
+                  </div>
                   <div className="flex flex-1 flex-col justify-between p-6">
                     <span className="text-[clamp(1.3rem,2.6vw,1.8rem)] font-extrabold uppercase tracking-[-0.01em]">
                       {c.label}
