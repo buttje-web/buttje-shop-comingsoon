@@ -182,7 +182,10 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Sortiment: 6 klickbare Kategorie-Kacheln. Bild oben, Text darunter.
+      {/* Sortiment: 6 klickbare Kategorie-Kacheln, quer: Bild links, Text
+          rechts. Vorher stand das Bild oben und der Text darunter; die
+          Kachel wurde dadurch so hoch, dass auf einem hohen Schirm keine
+          Reihe mehr vollstaendig ins Bild passte.
           Kein Text auf dem Bild - die Motive sind dunkel und kontrastarm,
           Schrift darauf waere in der Kachelgroesse nicht sicher lesbar. */}
       <section className="border-t border-line">
@@ -193,30 +196,36 @@ export default function HomePage() {
               <li key={c.slug}>
                 <Link
                   href={`/kategorie/${c.slug}`}
-                  className="group flex h-full flex-col border border-line bg-[rgba(244,244,246,0.03)] transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
+                  className="group flex h-full gap-[14px] border border-line bg-[rgba(244,244,246,0.03)] p-4 transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
                 >
                   {/* Bildkasten. Er traegt die KI-Kennzeichnung, damit die
-                      IM Bildbereich sitzt und nicht im Textteil darunter -
+                      IM Bildbereich sitzt und nicht daneben im Text -
                       sonst waere nicht eindeutig, worauf sie sich bezieht.
                       leading-none: sonst setzt die Zeilenhoehe des Kastens
-                      unter dem Bild einen Spalt ab. */}
-                  <div className="relative leading-none">
+                      unter dem Bild einen Spalt ab.
+
+                      self-start ist die Zeile, an der KEIN BESCHNITT
+                      haengt: ohne sie zieht der Flex-Kasten die Bildspalte
+                      auf die volle Kachelhoehe, das Viereck ist dann nicht
+                      mehr 3:2, und object-cover schneidet die Ware an.
+                      Mit self-start bestimmt allein die Breite die Hoehe,
+                      das Viereck bleibt exakt 3:2 wie die Datei, und
+                      object-cover hat nichts wegzuschneiden. */}
+                  <div className="relative w-[46%] shrink-0 self-start leading-none">
                     {/* aspect-[3/2] entspricht genau dem Seitenverhaeltnis
-                        der Dateien (1344x896). object-cover schneidet
-                        dadurch nichts weg - waere der Kasten anders
-                        proportioniert, liefe der Schnitt in die Ware.
+                        der Dateien (1344x896).
                         width und height stehen dran, damit der Browser den
                         Platz vor dem Laden kennt und beim Nachladen nichts
                         springt. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`/kategorie/${BILD_BASIS[c.slug]}-768.webp`}
+                      src={`/kategorie/${BILD_BASIS[c.slug]}-384.webp`}
                       srcSet={bildSrcSet(BILD_BASIS[c.slug])}
-                      /* Kachelbreiten, aus dem Raster gerechnet: 386 px bei
-                         1440, 373 bei 1280, 296 bei 1024, 351 bei 390. Die
+                      /* Bildbreiten, aus dem Raster gerechnet: 162 px bei
+                         1440, 121 bei 1024, 140 bei 768, 146 bei 390. Die
                          vw-Angaben liegen knapp darueber, das ist die
                          sichere Richtung. */
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1024px) 14vw, (min-width: 640px) 20vw, 40vw"
                       alt={BILD_ALT[c.slug]}
                       width={1344}
                       height={896}
@@ -224,16 +233,33 @@ export default function HomePage() {
                       decoding="async"
                       className="aspect-[3/2] w-full object-cover"
                     />
-                    <KiLabel />
+                    {/* stark: dichterer Kasten, 65 statt 55 Prozent.
+                        In der alten hohen Kachel war das Bild 386 px
+                        breit, das Label bedeckte 22 Prozent davon und lag
+                        auf leerem Grund. Quer ist das Bild noch 121 bis
+                        162 px breit, das Label bedeckt davon 53 bis 72
+                        Prozent und liegt damit auf der Ware. Gemessen mit
+                        55 Prozent: chemie 4,16:1, papier 5,37:1 - die
+                        Vorgabe von 4,5:1 faellt. Mit 65 Prozent haelt der
+                        Kasten selbst gegen Reinweiss 5,51:1, unabhaengig
+                        davon, was gerade darunter liegt. */}
+                    <KiLabel stark />
                   </div>
-                  <div className="flex flex-1 flex-col justify-between p-6">
-                    <span className="text-[clamp(1.3rem,2.6vw,1.8rem)] font-extrabold uppercase tracking-[-0.01em]">
+                  {/* min-w-0: ohne das weigert sich die Textspalte, unter
+                      ihr laengstes Wort zu schrumpfen, und schiebt die
+                      Kachel breiter als das Raster. */}
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <span className="text-[clamp(0.95rem,1.45vw,1.1rem)] font-extrabold uppercase leading-tight tracking-[-0.01em]">
                       {c.label}
                     </span>
-                    <span className="mt-3 text-[0.88rem] leading-snug text-muted">
+                    <span className="mt-1.5 text-[clamp(0.68rem,0.92vw,0.75rem)] leading-snug text-muted">
                       {KACHEL_TEASER[c.slug]}
                     </span>
-                    <span className="mt-4 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
+                    {/* mt-auto haelt die Zeile am unteren Rand der
+                        Textspalte, damit sie in allen sechs Kacheln auf
+                        gleicher Hoehe steht - die Sprueche sind
+                        unterschiedlich lang. */}
+                    <span className="mt-auto pt-3 text-[0.6rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
                       Ansehen →
                     </span>
                   </div>
