@@ -20,7 +20,7 @@ export const CATEGORIES: Category[] = [
     bild: "/kategorie/entsorgung.webp",
     tag: "entsorgung",
     label: "Entsorgung",
-    headline: "Müllsäcke, die mehr aushalten als dein Team am Montagmorgen.",
+    headline: "Müllsäcke, die mehr aushalten als Ihr Team am Montagmorgen.",
     intro:
       "Von dünn und billig bis Bauschutt-erprobt. Jede Stärke, jede Größe, immer ehrlich beschriftet. Der Dreck sucht sich nicht aus, wann er kommt. Der richtige Sack schon.",
     // Hochformat-Fassung: ganzer Film bis zur letzten Szene (Endgrafik weg),
@@ -59,9 +59,9 @@ export const CATEGORIES: Category[] = [
     bild: "/kategorie/handschuhe.webp",
     tag: "handschuhe",
     label: "Handschuhe",
-    headline: "Damit deine Hände nach Feierabend noch aussehen wie Hände.",
+    headline: "Damit Ihre Hände nach Feierabend noch aussehen wie Hände.",
     intro:
-      "Nitril, Latex, Vinyl, Arbeitsschutz. In echten Größen, in ehrlicher Qualität. Einweg oder unkaputtbar, du entscheidest.",
+      "Nitril, Latex, Vinyl, Arbeitsschutz. In echten Größen, in ehrlicher Qualität. Einweg oder unkaputtbar. Sie entscheiden.",
   },
   {
     slug: "zubehoer",

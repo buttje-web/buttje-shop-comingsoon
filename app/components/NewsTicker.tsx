@@ -12,7 +12,7 @@ import { TICKER_MELDUNGEN, TICKER_TRENNER } from "../config/ticker";
     normal            langsam laufendes Band, pausiert bei Hover und bei
                       Tastaturfokus
     reduced-motion    kein Lauf. Stattdessen wird alle 7 s die nächste
-                      Meldung eingeblendet — statischer Wechsel ohne Bewegung.
+                      Meldung eingeblendet - statischer Wechsel ohne Bewegung.
 
   Die Animation selbst steht als UNgelayertes CSS in globals.css. Grund ist
   dieselbe Safari-Erfahrung wie bei der Navigation: Tailwind legt Utilities

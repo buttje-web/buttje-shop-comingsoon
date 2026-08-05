@@ -136,7 +136,7 @@ export default function Suche({
       ))}
       {treffer.length === 0 && bereit && (
         <li className="p-4 text-[0.82rem] text-muted">
-          Nichts gefunden — Enter zeigt die Anfrage-Optionen.
+          Nichts gefunden. Enter zeigt die Anfrage-Optionen.
         </li>
       )}
     </ul>

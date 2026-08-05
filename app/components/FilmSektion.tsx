@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 
   Bis zum Klick wird ausschliesslich das Posterbild geladen (das <video>-Element
   traegt preload="none" und bekommt die Quelle erst beim ersten Klick). Damit
-  kostet die Sektion im Normalfall 65 KB statt 12 MB — wichtig, weil die Datei
+  kostet die Sektion im Normalfall 65 KB statt 12 MB - wichtig, weil die Datei
   selbst gehostet wird.
 
   Ton laeuft mit, weil der Film Untertitel UND Sprache hat; gestartet wird er

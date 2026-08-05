@@ -65,7 +65,7 @@ export default function OptInForm({ variant = "full" }: { variant?: "full" | "co
           disabled={status === "busy" || !consent || !email}
           className="shrink-0 border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {status === "busy" ? "Wird gesendet…" : "Absenden"}
+          {status === "busy" ? "Wird gesendet..." : "Absenden"}
         </button>
       </div>
 

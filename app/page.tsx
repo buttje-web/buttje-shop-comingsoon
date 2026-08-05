@@ -7,16 +7,16 @@ import { CATEGORIES } from "./categories";
 
 // Kachel-Halbsaetze im buttje-Ton (kompakter als die Kategorie-Headlines).
 const KACHEL_TEASER: Record<string, string> = {
-  entsorgung: "Für alles, was wegmuss — in jeder Stärke.",
+  entsorgung: "Für alles, was wegmuss. In jeder Stärke.",
   papier: "Von grau-günstig bis vierlagig hochweiß.",
   chemie: "Kein Wundermittel. Nur Zeug, das funktioniert.",
   seifen: "Für Hände, die den ganzen Tag arbeiten.",
-  handschuhe: "Einweg oder unkaputtbar — du entscheidest.",
+  handschuhe: "Einweg oder unkaputtbar. Sie entscheiden.",
   zubehoer: "Der Rest, der den Unterschied macht.",
 };
 
 export const metadata: Metadata = {
-  title: { absolute: "buttje Shop — Verbrauchsgüter & Hygienebedarf für Gewerbe" },
+  title: { absolute: "buttje Shop - Verbrauchsgüter & Hygienebedarf für Gewerbe" },
   description:
     "buttje Shop, Wien. Verbrauchsgüter und Hygienebedarf für Gewerbe: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung innerhalb Österreichs.",
   alternates: { canonical: "/" },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 // BEWUSST OHNE KAUFBAR-Verzweigung: Hero-Unterzeile und Newsletter-Block
 // standen frueher in zwei Fassungen ("Das Sortiment wird gerade vorbereitet",
 // "Wir eroeffnen bald"). Ohne gesetztes SHOP_KAUFBAR zieht das Layout keinen
-// Warenkorb und damit kein cookies() — die Startseite wird dann statisch
+// Warenkorb und damit kein cookies() - die Startseite wird dann statisch
 // vorgerendert und friert diese Texte im ausgelieferten HTML ein. Genau so
 // kam die Vor-Livegang-Fassung zu Crawlern. Der Shop ist offen, die Texte
 // sind jetzt zustandsunabhaengig und koennen nicht mehr falsch einfrieren.
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* HERO — uebernommen aus /vorschau-hero, dort freigegeben.
+      {/* HERO - uebernommen aus /vorschau-hero, dort freigegeben.
           Bild, Verlauf, Texte, Ausschnitt und Verhalten in allen Breiten
           sind mit der Vorschau identisch.
 
@@ -60,7 +60,7 @@ export default function HomePage() {
             beschnitten. Das geht auf, solange Sektionsbreite zu -hoehe
             ungefaehr dem Seitenverhaeltnis des Motivs entspricht (1,79).
             Die Hoehe kommt aber vom Text und waechst kaum mit, die Breite
-            schon: bei 1440 stand ein Kasten von 1440x625, also 2,30 —
+            schon: bei 1440 stand ein Kasten von 1440x625, also 2,30 -
             object-cover hat das Motiv auf Breite gezogen und oben wie
             unten je 90 px abgeschnitten. Genau daher fehlten die Fuesse,
             und genau daher standen die Kartons vergroessert unter dem Text.
@@ -69,7 +69,7 @@ export default function HomePage() {
             Fensterbreite, sondern an der Bildhoehe: aspect-[1678/937] bei
             fester Ober- und Unterkante ergibt genau die Breite, bei der
             nichts mehr beschnitten wird. Das Bild sitzt rechts, links
-            bleibt freier Seitengrund fuer die Textspalte — und weil der
+            bleibt freier Seitengrund fuer die Textspalte - und weil der
             Bildgrund exakt derselbe Ton ist (#0e0e12), ist die Kante
             zwischen beiden nicht zu sehen.
 
@@ -78,7 +78,7 @@ export default function HomePage() {
             Grund. Den schiebt der negative Wert ueber die Fensterkante
             hinaus. Die Warengruppe rueckt dadurch von der Textspalte weg,
             OHNE dass das Bild kleiner wird und ohne dass von der Frau
-            etwas verloren geht — ihre rechte Kante liegt bei 81 Prozent
+            etwas verloren geht - ihre rechte Kante liegt bei 81 Prozent
             der Bildbreite und bleibt damit im Fenster. */}
         <div className="relative h-[clamp(200px,44vw,290px)] md:absolute md:inset-0 md:h-auto xl:bottom-8 xl:left-auto xl:right-[-8%] xl:aspect-[1678/937]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -98,7 +98,7 @@ export default function HomePage() {
             fetchPriority="high"
             decoding="async"
             /* Auf breiten Schirmen sitzt das Motiv mittig. Je schmaler es
-               wird, desto weiter wandert der Ausschnitt nach rechts —
+               wird, desto weiter wandert der Ausschnitt nach rechts -
                sonst bliebe nur der leere Hintergrund der linken
                Bildhaelfte stehen und die Figur waere weg. */
             className="h-full w-full object-cover object-[72%_50%] md:object-[62%_50%] lg:object-[50%_50%]"
@@ -106,7 +106,7 @@ export default function HomePage() {
 
           {/* Verlauf NUR ab md, bewusst SCHWACH: 70 % Deckung am linken
               Rand, 30 % bei 45 %, ab 60 % nichts mehr. Die Ware bleibt
-              damit klar erkennbar und wird nur gedaempft — ein staerkerer
+              damit klar erkennbar und wird nur gedaempft - ein staerkerer
               Verlauf hatte sie ausgeloescht und dem Bild seinen Zweck
               genommen. Die Lesbarkeit des Textes traegt der Textschatten,
               nicht die Verdunkelung.
@@ -164,7 +164,7 @@ export default function HomePage() {
       </section>
 
       {/* Sortiment: 6 klickbare Kategorie-Kacheln (dunkle Flaeche, Name gross,
-          Teaser-Halbsatz — kein Produktfoto) */}
+          Teaser-Halbsatz - kein Produktfoto) */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
           <p className="eyebrow mb-6">Sortiment</p>
@@ -200,7 +200,7 @@ export default function HomePage() {
               Die Klasse ist ein dauerhaft laufender Verlauf (9 s, endlos).
               Bei der alten Zeile sass er auf "zu verbergen." und trug die
               Pointe. Die neue Ueberschrift hat ihre Pointe nicht im
-              Schlusswort, sondern im trockenen "Ja, wirklich." darunter —
+              Schlusswort, sondern im trockenen "Ja, wirklich." darunter -
               die Ueberschrift selbst ist die gerade Feststellung, auf die
               der Nachsatz antwortet.
               Auf ein Wort gesetzt haette der Verlauf nur zwei Kandidaten:
@@ -228,7 +228,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter-Opt-in (Anker fuer "Neu eintragen" auf /bestaetigen).
-          Der Shop ist offen — die Ankuendigung der Eroeffnung ist entfernt,
+          Der Shop ist offen - die Ankuendigung der Eroeffnung ist entfernt,
           es geht hier nur noch um neue Produkte und Angebote. */}
       <section id="newsletter" className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
