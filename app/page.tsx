@@ -196,7 +196,7 @@ export default function HomePage() {
               <li key={c.slug}>
                 <Link
                   href={`/kategorie/${c.slug}`}
-                  className="group flex h-full gap-[16px] border border-line bg-[rgba(244,244,246,0.03)] p-4 transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
+                  className="group flex h-full gap-[14px] border border-line bg-[rgba(244,244,246,0.03)] p-4 transition-colors hover:border-line-strong hover:bg-[rgba(244,244,246,0.06)]"
                 >
                   {/* Bildkasten. Er traegt die KI-Kennzeichnung, damit die
                       IM Bildbereich sitzt und nicht daneben im Text -
@@ -211,7 +211,7 @@ export default function HomePage() {
                       Mit self-start bestimmt allein die Breite die Hoehe,
                       das Viereck bleibt exakt 3:2 wie die Datei, und
                       object-cover hat nichts wegzuschneiden. */}
-                  <div className="relative w-[38%] shrink-0 self-start leading-none">
+                  <div className="relative w-[46%] shrink-0 self-start leading-none">
                     {/* aspect-[3/2] entspricht genau dem Seitenverhaeltnis
                         der Dateien (1344x896).
                         width und height stehen dran, damit der Browser den
@@ -221,11 +221,11 @@ export default function HomePage() {
                     <img
                       src={`/kategorie/${BILD_BASIS[c.slug]}-384.webp`}
                       srcSet={bildSrcSet(BILD_BASIS[c.slug])}
-                      /* Bildbreiten, aus dem Raster gerechnet: 135 px bei
-                         1440, 100 bei 1024, 116 bei 768, 121 bei 390. Die
+                      /* Bildbreiten, aus dem Raster gerechnet: 162 px bei
+                         1440, 121 bei 1024, 140 bei 768, 146 bei 390. Die
                          vw-Angaben liegen knapp darueber, das ist die
                          sichere Richtung. */
-                      sizes="(min-width: 1024px) 12vw, (min-width: 640px) 18vw, 35vw"
+                      sizes="(min-width: 1024px) 14vw, (min-width: 640px) 20vw, 40vw"
                       alt={BILD_ALT[c.slug]}
                       width={1344}
                       height={896}
@@ -236,30 +236,30 @@ export default function HomePage() {
                     {/* stark: dichterer Kasten, 65 statt 55 Prozent.
                         In der alten hohen Kachel war das Bild 386 px
                         breit, das Label bedeckte 22 Prozent davon und lag
-                        auf leerem Grund. Quer ist das Bild nur noch rund
-                        135 px breit, das Label bedeckt zwei Drittel und
-                        liegt damit auf der Ware. Gemessen mit 55 Prozent:
-                        chemie 4,16:1, papier 5,37:1 - die Vorgabe von
-                        4,5:1 faellt. Mit 65 Prozent haelt der Kasten
-                        selbst gegen Reinweiss 5,51:1, unabhaengig davon,
-                        was gerade darunter liegt. */}
+                        auf leerem Grund. Quer ist das Bild noch 121 bis
+                        162 px breit, das Label bedeckt davon 53 bis 72
+                        Prozent und liegt damit auf der Ware. Gemessen mit
+                        55 Prozent: chemie 4,16:1, papier 5,37:1 - die
+                        Vorgabe von 4,5:1 faellt. Mit 65 Prozent haelt der
+                        Kasten selbst gegen Reinweiss 5,51:1, unabhaengig
+                        davon, was gerade darunter liegt. */}
                     <KiLabel stark />
                   </div>
                   {/* min-w-0: ohne das weigert sich die Textspalte, unter
                       ihr laengstes Wort zu schrumpfen, und schiebt die
                       Kachel breiter als das Raster. */}
                   <div className="flex min-w-0 flex-1 flex-col">
-                    <span className="text-[clamp(1rem,1.6vw,1.25rem)] font-extrabold uppercase leading-tight tracking-[-0.01em]">
+                    <span className="text-[clamp(0.95rem,1.45vw,1.1rem)] font-extrabold uppercase leading-tight tracking-[-0.01em]">
                       {c.label}
                     </span>
-                    <span className="mt-1.5 text-[clamp(0.72rem,0.98vw,0.8rem)] leading-snug text-muted">
+                    <span className="mt-1.5 text-[clamp(0.68rem,0.92vw,0.75rem)] leading-snug text-muted">
                       {KACHEL_TEASER[c.slug]}
                     </span>
                     {/* mt-auto haelt die Zeile am unteren Rand der
                         Textspalte, damit sie in allen sechs Kacheln auf
                         gleicher Hoehe steht - die Sprueche sind
                         unterschiedlich lang. */}
-                    <span className="mt-auto pt-3 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
+                    <span className="mt-auto pt-3 text-[0.6rem] font-bold uppercase tracking-[0.2em] text-text transition-colors group-hover:text-accent">
                       Ansehen →
                     </span>
                   </div>
