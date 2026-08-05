@@ -308,14 +308,12 @@ export default function HomePage() {
               <h2 className="max-w-[20ch] text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
                 Ein Film über Verbrauchsgüter
               </h2>
-              <p className="mt-3 max-w-[52ch] text-[0.95rem] text-muted">
+              {/* Eine Spur groesser als der uebrige Fliesstext des Shops
+                  (0,95rem): der Nachsatz traegt hier die Pointe und steht
+                  allein unter der Ueberschrift. Weit genug unter der h2,
+                  die bei 1,6 bis 2,6rem liegt. */}
+              <p className="mt-3 max-w-[52ch] text-[1.05rem] text-muted">
                 Ja, wirklich.
-              </p>
-              {/* Kleiner als der Absatz darueber, damit die Reihenfolge
-                  Ueberschrift, Pointe, Nachsatz auch ohne Lesen sichtbar
-                  ist. */}
-              <p className="mt-4 max-w-[52ch] text-[0.78rem] leading-relaxed text-muted">
-                48 Sekunden. Kein Produkt zu sehen.
               </p>
             </div>
             <div>
