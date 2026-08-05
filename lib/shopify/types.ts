@@ -33,6 +33,8 @@ export type Product = {
   priceRange: { minVariantPrice: Money; maxVariantPrice?: Money };
   images?: Image[];
   variants?: ProductVariant[];
+  /** Shopify-Tags (Kategorie, "sku-offen", ...). Nur in der Produktliste gefuellt. */
+  tags?: string[];
   // Redaktionelle Metafelder (custom.*), koennen null/leer sein
   spitzname?: string | null;
   teaser?: string | null;
