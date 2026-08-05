@@ -28,7 +28,7 @@ function Geschlossen() {
       <div className="border border-line px-6 py-16 text-center">
         <p className="mx-auto max-w-[46ch] text-muted">
           Der Shop startet in Kürze. Bis zur Eröffnung können Sie das Sortiment
-          durchsehen — Preise für Geschäftskunden folgen.
+          durchsehen. Preise für Geschäftskunden folgen.
         </p>
         <Link
           href="/produkte"
@@ -69,7 +69,7 @@ export default async function CartPage() {
 
   const netto = Number(cart.cost.subtotalAmount.amount);
 
-  // Sendungsgewicht in kg. Varianten ohne gepflegtes Gewicht zaehlen als 0 —
+  // Sendungsgewicht in kg. Varianten ohne gepflegtes Gewicht zaehlen als 0 -
   // dann liegt die Schaetzung zu niedrig, nie zu hoch. gewichtVollstaendig
   // sagt der Anzeige, ob sie sich auf den Wert verlassen darf.
   const FAKTOR: Record<string, number> = { KILOGRAMS: 1, GRAMS: 0.001, POUNDS: 0.4535924, OUNCES: 0.0283495 };

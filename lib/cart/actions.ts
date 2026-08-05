@@ -34,7 +34,7 @@ import { UID_ATTRIBUT } from "@/app/lib/uid";
  *    genauso aus wie Fall 1. Deshalb wird NACHGEFASST: erst noch einmal
  *    lesen, und nur wenn er dann immer noch weg ist, einen neuen anlegen.
  *    Ohne dieses Nachfassen wuerde eine kurze Stoerung einen gefuellten
- *    Warenkorb still wegwerfen — der Kunde stuende ploetzlich bei einer
+ *    Warenkorb still wegwerfen - der Kunde stuende ploetzlich bei einer
  *    Position statt bei acht.
  * 3. Gegenstelle nicht erreichbar. Kein neuer Warenkorb, keine
  *    Wiederholung (der Ausgang der abgebrochenen Mutation ist unbekannt),
@@ -142,7 +142,7 @@ export async function loadCart(): Promise<Cart | null> {
   return getCart(id);
 }
 
-// Der Attributname steht in app/lib/uid.ts — eine "use server"-Datei darf
+// Der Attributname steht in app/lib/uid.ts - eine "use server"-Datei darf
 // nur async-Funktionen exportieren.
 
 /**
@@ -152,7 +152,7 @@ export async function loadCart(): Promise<Cart | null> {
  * komplette Attributliste, deshalb wird hier bewusst nur dieses eine Attribut
  * gesetzt: der Warenkorb fuehrt sonst keine.
  *
- * Fehler werden geschluckt. Das Attribut ist eine Beigabe — es darf den Weg
+ * Fehler werden geschluckt. Das Attribut ist eine Beigabe - es darf den Weg
  * zur Kassa niemals blockieren, wenn Shopify gerade zickt.
  */
 export async function setUidAttribut(uid: string): Promise<boolean> {

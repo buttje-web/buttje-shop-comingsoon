@@ -13,7 +13,7 @@ import { MAIL_LESBAR, mailKlartext } from "../lib/kontakt";
 // WARUM useSyncExternalStore UND KEIN useEffect + useState: Ein setState
 // direkt im Effekt-Rumpf verstoesst gegen react-hooks/set-state-in-effect
 // und loest eine zusaetzliche Renderrunde aus. useSyncExternalStore liefert
-// beim Server- und beim Hydrations-Render "false" und danach "true" — ohne
+// beim Server- und beim Hydrations-Render "false" und danach "true" - ohne
 // Hydrations-Warnung und ohne eigenen Zustand.
 
 const nichtsAbonnieren = () => () => {};

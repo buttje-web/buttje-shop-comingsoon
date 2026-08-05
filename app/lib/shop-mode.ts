@@ -1,6 +1,6 @@
 // Feature-Schalter "Kaufbarkeit".
 //
-// AUS (Standard): Katalogmodus wie bisher — keine Preise sichtbar, Hinweis
+// AUS (Standard): Katalogmodus wie bisher - keine Preise sichtbar, Hinweis
 //                 "Preise fuer Geschaeftskunden in Kuerze", kein Warenkorb,
 //                 kein Checkout, keine offers in den strukturierten Daten.
 // EIN:            Preise sichtbar, Hinweis weg, Warenkorb und Checkout aktiv.

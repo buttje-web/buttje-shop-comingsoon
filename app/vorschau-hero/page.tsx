@@ -3,7 +3,7 @@ import Link from "next/link";
 import Container from "../components/Container";
 
 /*
-  NUR VORSCHAU — kein Bestandteil des Shops.
+  NUR VORSCHAU - kein Bestandteil des Shops.
 
   Diese Seite zeigt, wie ein Hero mit dem freigegebenen Motiv
   hero-final-v2.png aussehen wuerde. Sie dient allein der Beurteilung
@@ -19,7 +19,7 @@ import Container from "../components/Container";
   gezogen (scripts/hero-grundton.py, Abweichung vorher bis 3,1 Tonwerte,
   jetzt bis 1,4). Damit setzt sich das Bild an seinen Kanten nicht mehr
   als dunkleres Rechteck von der Seite ab. Kein Bildpunkt heller als
-  Tonwert 60 wurde dabei um mehr als einen Tonwert veraendert — Frau,
+  Tonwert 60 wurde dabei um mehr als einen Tonwert veraendert - Frau,
   Kartons und Gegenstaende sind unberuehrt.
 
   Die frueheren Zwischenstaende (hero-rohbild-v2.png, hero-mit-aufdruck.png,
@@ -55,7 +55,7 @@ export default function VorschauHeroPage() {
             beschnitten. Das geht auf, solange Sektionsbreite zu -hoehe
             ungefaehr dem Seitenverhaeltnis des Motivs entspricht (1,79).
             Die Hoehe kommt aber vom Text und waechst kaum mit, die Breite
-            schon: bei 1440 stand ein Kasten von 1440x625, also 2,30 —
+            schon: bei 1440 stand ein Kasten von 1440x625, also 2,30 -
             object-cover hat das Motiv auf Breite gezogen und oben wie
             unten je 90 px abgeschnitten. Genau daher die fehlenden Fuesse,
             und genau daher standen die Kartons vergroessert unter dem Text.
@@ -64,7 +64,7 @@ export default function VorschauHeroPage() {
             Fensterbreite, sondern an der Bildhoehe: aspect-[1678/937] bei
             fester Ober- und Unterkante ergibt genau die Breite, bei der
             nichts mehr beschnitten wird. Das Bild sitzt rechts, links
-            bleibt freier Seitengrund fuer die Textspalte — und weil der
+            bleibt freier Seitengrund fuer die Textspalte - und weil der
             Bildgrund exakt derselbe Ton ist (#0e0e12), ist die Kante
             zwischen beiden nicht zu sehen.
 
@@ -75,7 +75,7 @@ export default function VorschauHeroPage() {
             Grund. Den schiebt der negative Wert ueber die Fensterkante
             hinaus. Die Warengruppe rueckt dadurch nach rechts von der
             Textspalte weg, OHNE dass das Bild kleiner wird und ohne dass
-            von der Frau etwas verloren geht — ihre rechte Kante liegt bei
+            von der Frau etwas verloren geht - ihre rechte Kante liegt bei
             81 Prozent der Bildbreite und bleibt damit im Fenster.
             Waagrechtes Scrollen kann daraus nicht entstehen, die Sektion
             hat overflow-hidden. */}
@@ -90,7 +90,7 @@ export default function VorschauHeroPage() {
             srcSet="/hero/hero-final-768.webp 768w, /hero/hero-final-1280.webp 1280w, /hero/hero-final-1678.webp 1678w"
             /* Unter 768 px steht das Bild als eigener Block in voller
                Fensterbreite. Ab da liegt es hinter dem Text und deckt
-               ebenfalls die volle Breite ab — deshalb durchgehend 100vw. */
+               ebenfalls die volle Breite ab - deshalb durchgehend 100vw. */
             sizes="100vw"
             alt="Mit KI erzeugtes Bild: Frau mit Spaten und Kaffeetasse neben Versandkartons, Kanister Grundreiniger, Müllsäcken, Klebeband, Kabelbindern und Handschuhen vor dunklem Hintergrund."
             width={1678}
@@ -99,7 +99,7 @@ export default function VorschauHeroPage() {
             fetchPriority="high"
             decoding="async"
             /* Auf breiten Schirmen sitzt das Motiv mittig. Je schmaler es
-               wird, desto weiter wandert der Ausschnitt nach rechts —
+               wird, desto weiter wandert der Ausschnitt nach rechts -
                sonst bliebe nur der leere Hintergrund der linken
                Bildhaelfte stehen und die Figur waere weg. */
             className="h-full w-full object-cover object-[72%_50%] md:object-[62%_50%] lg:object-[50%_50%]"
@@ -107,7 +107,7 @@ export default function VorschauHeroPage() {
 
           {/* Verlauf NUR ab md, bewusst SCHWACH: 70 % Deckung am linken
               Rand, 30 % bei 45 %, ab 60 % nichts mehr. Die Ware bleibt
-              damit klar erkennbar und wird nur gedaempft — ein staerkerer
+              damit klar erkennbar und wird nur gedaempft - ein staerkerer
               Verlauf hatte sie ausgeloescht und dem Bild seinen Zweck
               genommen. Die Lesbarkeit des Textes traegt jetzt der
               Textschatten, nicht die Verdunkelung.
@@ -130,7 +130,7 @@ export default function VorschauHeroPage() {
             Zwei Schatten statt einem: der enge, harte setzt die
             Buchstabenkanten ab, der weite, weiche traegt sie auf hellem
             Grund. Ein einzelner grosser Schatten wuerde die Schrift
-            weichgezeichnet wirken lassen — genau das soll nicht
+            weichgezeichnet wirken lassen - genau das soll nicht
             passieren. */}
         <Container className="relative z-10 py-[clamp(40px,8vw,120px)]">
           <div className="max-w-[min(100%,34rem)] md:[text-shadow:0_1px_2px_rgba(14,14,18,0.95),0_4px_14px_rgba(14,14,18,0.6)] lg:max-w-[46%]">

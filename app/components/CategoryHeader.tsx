@@ -13,7 +13,7 @@ import Container from "./Container";
   Kategorie-Videos mehr. app/components/CategoryVideo.tsx bleibt bewusst im
   Repo, wird aber nirgends mehr eingebunden; ebenso bleibt das Feld `video`
   in app/categories.ts bestehen. Wer Videos reaktivieren will, rendert
-  CategoryVideo hier wieder anstelle des <img> — sonst ist nichts noetig.
+  CategoryVideo hier wieder anstelle des <img> - sonst ist nichts noetig.
 */
 
 export default function CategoryHeader({
@@ -70,7 +70,7 @@ export default function CategoryHeader({
                   aria-hidden
                   className="absolute inset-0 bg-[rgba(14,14,18,0.36)]"
                 />
-                {/* Zusaetzlicher Verlauf nach unten — verankert das Bild im Grund */}
+                {/* Zusaetzlicher Verlauf nach unten - verankert das Bild im Grund */}
                 <div
                   aria-hidden
                   className="absolute inset-0"

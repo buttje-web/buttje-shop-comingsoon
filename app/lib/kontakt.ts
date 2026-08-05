@@ -7,13 +7,13 @@
 //
 // KEIN Ersatz fuer die Pflichtangabe: § 5 ECG verlangt unmittelbare
 // elektronische Erreichbarkeit. Deshalb gibt es zwingend die lesbare
-// Ersatzform fuer Besucher ohne JavaScript — siehe MAIL_LESBAR. Ein Bild
+// Ersatzform fuer Besucher ohne JavaScript - siehe MAIL_LESBAR. Ein Bild
 // oder ein reines Kontaktformular waere an dieser Stelle ein rechtliches
 // Risiko und ist bewusst nicht gewaehlt.
 
 /**
  * Die Shop-Adresse, base64-kodiert. Absichtlich auch hier im Kommentar
- * nicht ausgeschrieben — sonst stuende sie wieder als Zeichenfolge da.
+ * nicht ausgeschrieben - sonst stuende sie wieder als Zeichenfolge da.
  */
 export const MAIL_B64 = "c2hvcEBidXR0amUuYXQ=";
 

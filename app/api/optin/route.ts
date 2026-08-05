@@ -6,7 +6,7 @@ import { sendeBestaetigungsMail } from "@/lib/mail";
 // Eroeffnungs-Opt-in: legt den Kontakt als Kunden mit Marketing-Status
 // PENDING an (Double-Opt-in: erst nach Bestaetigung gilt der Kontakt als
 // eingewilligt). Zeitstempel + Herkunfts-Tag werden mitgeschrieben.
-// Fehlermeldungen sind bewusst generisch — interne Systemnamen bleiben
+// Fehlermeldungen sind bewusst generisch - interne Systemnamen bleiben
 // serverseitig.
 
 const CREATE = `mutation($input: CustomerInput!){

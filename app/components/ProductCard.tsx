@@ -13,7 +13,7 @@ import type { Product } from "@/lib/shopify/types";
 // Produktkachel: Bild, Name, Teaser-Zeile (gedaempft) + VE.
 // Katalogmodus (KAUFBAR=aus): keine Preise, Hinweiszeile fuer Geschaeftskunden.
 // Kaufmodus (KAUFBAR=ein):    Preis; bei 0,00 stattdessen "Preis auf Anfrage".
-// Server-Komponente — liest den Schalter direkt, kein prop-Durchreichen noetig.
+// Server-Komponente - liest den Schalter direkt, kein prop-Durchreichen noetig.
 
 export default function ProductCard({ product: p }: { product: Product }) {
   const min = p.priceRange?.minVariantPrice;

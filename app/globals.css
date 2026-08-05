@@ -267,7 +267,7 @@ body {
 /* ---------------------------------------------------------------------------
    News-Ticker der Kopfleiste.
    BEWUSST UNGELAYERTES CSS (kein @layer, keine Tailwind-Utility): Dieselbe
-   Vorsichtsmassnahme wie bei der Navigation — aeltere Safari ignorieren
+   Vorsichtsmassnahme wie bei der Navigation - aeltere Safari ignorieren
    @layer teilweise, und eine nicht laufende oder falsch positionierte
    Kopfleiste faellt sofort auf.
    --------------------------------------------------------------------------- */
@@ -303,7 +303,7 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   KEINE automatische Silbentrennung — nirgends.
+   KEINE automatische Silbentrennung - nirgends.
    Anlass: hyphens-auto auf einer Versalien-Headline brach "KEINE" als
    "KEI-NE" um. Automatische Trennung ist im deutschen Satz bei Versalien
    und kurzen Woertern unzuverlaessig, deshalb generell aus, auch im
@@ -312,7 +312,7 @@ body {
    Ueberschriften brechen ausserdem NUR an Wortgrenzen: kein
    overflow-wrap, kein word-break. Laeuft ein sehr langer Produktname
    ueber den Rand, wird das gemeldet und per Schriftgroesse oder
-   manuellem Umbruch geloest — nicht durch Wiedereinschalten der Trennung.
+   manuellem Umbruch geloest - nicht durch Wiedereinschalten der Trennung.
    --------------------------------------------------------------------------- */
 html,
 body {

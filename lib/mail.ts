@@ -28,7 +28,7 @@ export async function sendeBestaetigungsMail(an: string, link: string): Promise<
   const text = [
     "Fast geschafft.",
     "",
-    "Sie möchten zur Eröffnung des buttje Shops informiert werden.",
+    "Sie möchten über Neuigkeiten und Angebote von buttje informiert werden.",
     "Bitte bestätigen Sie Ihre Anmeldung mit diesem Link:",
     "",
     link,
@@ -52,7 +52,7 @@ export async function sendeBestaetigungsMail(an: string, link: string): Promise<
         <tr><td style="font-family:Inter,Helvetica,Arial,sans-serif;color:#F4F4F6;">
           <p style="margin:0 0 14px;font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:-0.3px;">Fast geschafft.</p>
           <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:rgba(244,244,246,0.74);">
-            Sie möchten zur Eröffnung des buttje Shops informiert werden.
+            Sie möchten über Neuigkeiten und Angebote von buttje informiert werden.
             Bitte bestätigen Sie Ihre Anmeldung mit einem Klick.
           </p>
           <p style="margin:0 0 28px;">
@@ -77,7 +77,7 @@ export async function sendeBestaetigungsMail(an: string, link: string): Promise<
   await transport().sendMail({
     from: ABSENDER,
     to: an,
-    subject: "Bitte bestätigen: Ihre Anmeldung — buttje",
+    subject: "Bitte bestätigen: Ihre Anmeldung - buttje",
     text,
     html,
   });

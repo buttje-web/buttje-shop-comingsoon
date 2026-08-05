@@ -55,15 +55,15 @@ export default async function BestaetigenPage({
   const inhalt: Record<Zustand, { titel: string; text: string }> = {
     bestaetigt: {
       titel: "Bestätigt.",
-      text: "Ihre Anmeldung steht. Sie hören von uns, wenn der Shop für Geschäftskunden öffnet. Abmeldung jederzeit möglich — jede E-Mail enthält einen Abmeldelink.",
+      text: "Ihre Anmeldung steht. Sie hören von uns, sobald es Neues gibt. Abmeldung jederzeit möglich, jede E-Mail enthält einen Abmeldelink.",
     },
     abgelaufen: {
       titel: "Link abgelaufen.",
-      text: "Dieser Bestätigungslink war 7 Tage gültig und ist inzwischen abgelaufen. Tragen Sie sich einfach neu ein — dann kommt ein frischer Link.",
+      text: "Dieser Bestätigungslink war 7 Tage gültig und ist inzwischen abgelaufen. Tragen Sie sich einfach neu ein. Dann kommt ein frischer Link.",
     },
     ungueltig: {
       titel: "Link ungültig.",
-      text: "Dieser Bestätigungslink ist nicht gültig. Tragen Sie sich einfach neu ein — dann kommt ein frischer Link.",
+      text: "Dieser Bestätigungslink ist nicht gültig. Tragen Sie sich einfach neu ein. Dann kommt ein frischer Link.",
     },
     fehler: {
       titel: "Das hat nicht geklappt.",

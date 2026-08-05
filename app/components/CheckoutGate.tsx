@@ -17,7 +17,7 @@ import { setUidAttribut } from "@/lib/cart/actions";
   Unternehmer zu handeln und die AGB zur Kenntnis genommen zu haben.
 
   Stufe 2: optionales UID-Feld mit reiner FORMATpruefung. Die UID bleibt
-  freiwillig — ein leeres Feld sperrt nichts. Ist etwas eingetragen, muss
+  freiwillig - ein leeres Feld sperrt nichts. Ist etwas eingetragen, muss
   es formal passen, sonst bleibt der Kassa-Knopf zu. Keine VIES-Abfrage:
   eine formal gueltige Nummer kann trotzdem erfunden sein.
 */
@@ -25,7 +25,7 @@ import { setUidAttribut } from "@/lib/cart/actions";
 export default function CheckoutGate({ checkoutUrl }: { checkoutUrl: string }) {
   const [confirmed, setConfirmed] = useState(false);
   const [uid, setUid] = useState("");
-  // Fehler erst zeigen, wenn das Feld einmal verlassen wurde — nicht
+  // Fehler erst zeigen, wenn das Feld einmal verlassen wurde - nicht
   // schon beim ersten getippten Zeichen.
   const [uidBeruehrt, setUidBeruehrt] = useState(false);
 
@@ -34,14 +34,14 @@ export default function CheckoutGate({ checkoutUrl }: { checkoutUrl: string }) {
   const frei = confirmed && uidOk;
 
   /*
-    Die UID kann im Checkout nicht vorbefuellt werden — Shopify bietet dafuer
+    Die UID kann im Checkout nicht vorbefuellt werden - Shopify bietet dafuer
     keinen Weg. Damit sie trotzdem an der Bestellung ankommt, haengt sie als
     Bestell-Attribut am Warenkorb und ist spaeter im Admin sichtbar.
 
     Geschrieben wird beim Verlassen des Felds, nicht bei jedem Tastendruck:
     das spart Requests und schreibt nur fertige Eingaben. Ungueltige Eingaben
     werden gar nicht erst uebertragen. Schlaegt das Setzen fehl, passiert
-    nichts weiter — der Weg zur Kassa bleibt davon unberuehrt.
+    nichts weiter - der Weg zur Kassa bleibt davon unberuehrt.
   */
   async function uidSichern(wert: string) {
     setUidBeruehrt(true);

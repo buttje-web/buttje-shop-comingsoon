@@ -80,8 +80,8 @@ export default function BuyBox({
 
       {preisOffen && (
         <p className="mt-2 max-w-[42ch] text-[0.78rem] leading-relaxed text-muted">
-          Für diese Verpackungseinheit nennen wir Ihnen den Preis gern direkt —
-          per{" "}
+          Für diese Verpackungseinheit nennen wir Ihnen den Preis gern direkt.
+          Per{" "}
           <a
             href="https://wa.me/4367762080802"
             target="_blank"
@@ -116,7 +116,7 @@ export default function BuyBox({
                 if (!ergebnis.ok) {
                   // Verstaendliche Meldung aus der Server-Action. Geworfene
                   // Fehler werden im Produktionsbuild redigiert und kaemen
-                  // hier nie lesbar an — deshalb ein Rueckgabewert.
+                  // hier nie lesbar an - deshalb ein Rueckgabewert.
                   setError(ergebnis.meldung);
                   return;
                 }
@@ -144,7 +144,7 @@ export default function BuyBox({
 
       {/* Versand-Kurzinfo (Werte zentral in app/lib/versand.ts) */}
       <p className="mt-3 text-[0.66rem] text-muted">
-        Versand ab {euro(VERSAND_AB)} — versandkostenfrei ab{" "}
+        Versand ab {euro(VERSAND_AB)}. Versandkostenfrei ab{" "}
         {euro(VERSAND.freiAb)} netto (bis {GRATIS_BIS_KG} kg).
       </p>
     </div>

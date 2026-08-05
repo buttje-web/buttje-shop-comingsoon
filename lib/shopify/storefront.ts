@@ -40,7 +40,7 @@ export type StorefrontFetchOptions = {
    *
    * NUR fuer LESENDE Abfragen setzen. Bei Mutationen ist ein zweiter
    * Versuch gefaehrlich: Bricht die Verbindung NACH dem Absenden ab, ist
-   * unbekannt, ob die Gegenstelle den Auftrag schon ausgefuehrt hat — eine
+   * unbekannt, ob die Gegenstelle den Auftrag schon ausgefuehrt hat - eine
    * Wiederholung koennte dieselbe Position ein zweites Mal anlegen.
    * Deshalb ist der Standard "nicht wiederholen".
    */
@@ -50,7 +50,7 @@ export type StorefrontFetchOptions = {
 /**
  * Verbindung zur Storefront-API fehlgeschlagen: abgebrochene Verbindung,
  * TLS-Abbruch oder Zeitlimit. KEINE Aussage darueber, ob die Gegenstelle
- * den Auftrag ausgefuehrt hat — bei Mutationen ist der Ausgang offen.
+ * den Auftrag ausgefuehrt hat - bei Mutationen ist der Ausgang offen.
  */
 export class StorefrontNetzError extends Error {}
 
@@ -58,7 +58,7 @@ export class StorefrontNetzError extends Error {}
  * Zeitbudget je Versuch. Bewusst knapp: Zwei Versuche plus Pause muessen
  * zusammen unter dem Laufzeitlimit der Vercel-Funktion bleiben
  * (4000 + 250 + 4000 = 8,25 s). Die Gegenstelle antwortet normal in
- * deutlich unter einer Sekunde — wer laenger braucht, ist gestoert.
+ * deutlich unter einer Sekunde - wer laenger braucht, ist gestoert.
  */
 const ZEITLIMIT_MS = 4000;
 const PAUSE_MS = 250;

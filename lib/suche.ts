@@ -1,5 +1,5 @@
 // Client-seitige Produktsuche: Normalisierung, Tippfehler-Toleranz, Ranking.
-// Läuft komplett im Browser — Suchbegriffe verlassen den Client nicht.
+// Läuft komplett im Browser - Suchbegriffe verlassen den Client nicht.
 // (Kein "server-only": wird von Client-Komponenten importiert.)
 
 export type SuchEintrag = {

@@ -89,7 +89,7 @@ export default function DatenschutzPage() {
         informieren. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1
         lit. a DSGVO). Die Anmeldung erfolgt im Double-Opt-in-Verfahren: Erst
         nach Bestätigung gilt Ihre Einwilligung als erteilt. Sie können sich
-        jederzeit abmelden — per Abmeldelink in jeder E-Mail oder formlos an{" "}
+        jederzeit abmelden. Per Abmeldelink in jeder E-Mail oder formlos an{" "}
         <EMailLink />. Die Daten werden in
         unserem Shopsystem gespeichert und nach Widerruf für Werbezwecke nicht
         weiter verwendet.

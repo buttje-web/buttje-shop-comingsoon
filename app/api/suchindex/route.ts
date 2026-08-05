@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getSearchIndex } from "@/lib/shopify";
 
 // Kompakter Produktindex fuer die client-seitige Suche.
-// Die eigentliche Suche laeuft im Browser — hierher kommt nur der Index,
+// Die eigentliche Suche laeuft im Browser - hierher kommt nur der Index,
 // nie ein Suchbegriff. Kein Logging.
 
 export async function GET() {
@@ -12,7 +12,7 @@ export async function GET() {
       { produkte },
       {
         headers: {
-          // CDN darf 5 Minuten cachen — Produktdaten aendern sich selten.
+          // CDN darf 5 Minuten cachen - Produktdaten aendern sich selten.
           "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600",
         },
       },

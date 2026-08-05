@@ -6,13 +6,13 @@
 
   WARUM IM RENDERING UND NICHT IN DEN SHOPIFY-TITELN: Die Titel in Shopify
   speisen auch Suche, Suchindex und spaeter den WhatsApp-Katalog. Ein hartes
-  geschuetztes Leerzeichen in den Stammdaten koennte dort stoeren — beim
+  geschuetztes Leerzeichen in den Stammdaten koennte dort stoeren - beim
   Suchen wuerde "30 L" die Variante mit nbsp nicht mehr finden. Die Daten
   bleiben deshalb sauber, das geschuetzte Leerzeichen entsteht erst beim
   Ausspielen.
 
   WICHTIG: Nur fuer sichtbaren Text verwenden. NICHT fuer Meta-Titel,
-  JSON-LD, Alt-Texte oder den Suchindex — dort gehoert das normale
+  JSON-LD, Alt-Texte oder den Suchindex - dort gehoert das normale
   Leerzeichen hin.
 */
 

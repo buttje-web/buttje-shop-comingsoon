@@ -127,14 +127,14 @@ type CartMutationResult = {
  *
  * Passiert im Normalbetrieb: Ein Warenkorb wird nach abgeschlossener
  * Bestellung verbraucht und nach laengerer Untaetigkeit verworfen. Das
- * Cookie mit der ID lebt laenger als der Warenkorb selbst — die Lage ist
+ * Cookie mit der ID lebt laenger als der Warenkorb selbst - die Lage ist
  * also erwartbar und KEIN Serverfehler. Aufrufer sollen einen neuen
  * Warenkorb anlegen statt abzubrechen.
  */
 export class WarenkorbWegError extends Error {}
 
 /**
- * Wirft bei userErrors — und zwar WarenkorbWegError, wenn die Gegenstelle
+ * Wirft bei userErrors - und zwar WarenkorbWegError, wenn die Gegenstelle
  * die cartId bemaengelt. Die Unterscheidung laeuft ueber das Feld, nicht
  * ueber den Meldungstext: der kommt uebersetzt zurueck und aendert sich.
  */

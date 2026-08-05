@@ -3,7 +3,7 @@
 // BEWUSST EIN RUECKGABEWERT UND KEIN GEWORFENER FEHLER: Next redigiert
 // Fehlermeldungen aus Server-Actions im Produktionsbuild ("The specific
 // message is omitted in production builds"). Ein geworfener Text kommt beim
-// Kunden also nie an — er sieht nur eine Serverfehlerseite. Zurueckgegebene
+// Kunden also nie an - er sieht nur eine Serverfehlerseite. Zurueckgegebene
 // Werte werden nicht redigiert und lassen sich anzeigen.
 //
 // Liegt bewusst in einer eigenen Datei: lib/cart/actions.ts traegt

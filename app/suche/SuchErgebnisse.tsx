@@ -68,9 +68,9 @@ export default function SuchErgebnisse({ kaufbar }: { kaufbar: boolean }) {
       />
 
       {treffer === null ? (
-        <p className="text-muted">Suche wird geladen …</p>
+        <p className="text-muted">Suche wird geladen...</p>
       ) : !query.trim() ? (
-        <p className="text-muted">Tippen Sie los — Titel, Artikelnummer, Marke oder Kategorie.</p>
+        <p className="text-muted">Tippen Sie los - Titel, Artikelnummer, Marke oder Kategorie.</p>
       ) : treffer.length === 0 ? (
         <div className="max-w-[60ch] border border-line px-6 py-10">
           <p className="text-[1.05rem] font-bold uppercase tracking-[-0.01em]">

@@ -3,7 +3,7 @@
 //
 // Der Gratisversand gilt in Shopify NUR in der untersten Gewichtsstufe. Eine
 // Sendung ueber dieser Grenze bleibt auch oberhalb des Schwellenwerts
-// kostenpflichtig — deshalb darf hier nicht pauschal "versandkostenfrei"
+// kostenpflichtig - deshalb darf hier nicht pauschal "versandkostenfrei"
 // stehen, sobald der Warenwert erreicht ist.
 
 import {
@@ -31,7 +31,7 @@ export default function FreeShippingBar({
   const remaining = Math.max(0, THRESHOLD - amount);
   const pct = Math.min(100, Math.round((amount / THRESHOLD) * 100));
 
-  // Zu schwer fuer Gratisversand — nur aussagen, wenn das Gewicht belastbar ist.
+  // Zu schwer fuer Gratisversand - nur aussagen, wenn das Gewicht belastbar ist.
   const zuSchwer = gewichtBekannt && gewichtKg > GRATIS_BIS_KG;
   const ueberMax = gewichtBekannt && gewichtKg > MAX_KG;
   const tarif = gewichtBekannt ? tarifFuerGewicht(gewichtKg) : null;
@@ -43,14 +43,14 @@ export default function FreeShippingBar({
       <p className="mb-2 text-[0.78rem] leading-snug">
         {ueberMax ? (
           <span className="font-semibold">
-            Sendung über {MAX_KG} kg — Versand auf Anfrage
+            Sendung über {MAX_KG} kg - Versand auf Anfrage
           </span>
         ) : zuSchwer ? (
           <>
             <span className="font-semibold">
               Versand {tarif !== null ? euro(tarif) : ""}
             </span>{" "}
-            — bei {gewichtKg.toLocaleString("de-AT", { maximumFractionDigits: 1 })} kg
+            - bei {gewichtKg.toLocaleString("de-AT", { maximumFractionDigits: 1 })} kg
             greift der Gratisversand nicht
           </>
         ) : wertErreicht ? (

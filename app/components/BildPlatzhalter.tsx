@@ -1,7 +1,7 @@
-// Dunkler Platzhalter fuer Produkte ohne eigenes Bild — im Buehne-Look
+// Dunkler Platzhalter fuer Produkte ohne eigenes Bild - im Buehne-Look
 // (near-black mit dezentem Spotlight von oben), gedimmtes b + "Bild folgt".
 // Sobald ein echtes Bild hochgeladen ist, rendert der Aufrufer das Bild
-// statt dieser Komponente — kein weiterer Eingriff noetig.
+// statt dieser Komponente - kein weiterer Eingriff noetig.
 
 export default function BildPlatzhalter() {
   return (
