@@ -24,12 +24,20 @@ import type { Product } from "@/lib/shopify/types";
 // (verschachtelte Bedienelemente in einem Link waeren beides nicht).
 //
 // WELCHER KAUFBEREICH, entschieden aus den Daten der Kachel:
-//   Preis 0,00 oder Tag "sku-offen"  ->  ANFRAGEN, Weg zur Produktseite
-//   mehr als eine Variante           ->  GROESSE WAEHLEN, ebenfalls dorthin
-//   genau eine, verfuegbar, Preis    ->  Menge + INS SACKERL
+//   Preis 0,00                     ->  ANFRAGEN, Weg zur Produktseite
+//   mehr als eine Variante         ->  GROESSE WAEHLEN, ebenfalls dorthin
+//   genau eine, verfuegbar, Preis  ->  Menge + INS SACKERL
 // Die Reihenfolge ist Absicht: Was keinen Preis hat, ist nicht kaufbar,
 // auch nicht mit nur einer Variante. Der Kunde sieht in dem Fall oben
 // "Preis auf Anfrage" - ein Sackerl-Knopf darunter waere ein Widerspruch.
+//
+// KEINE TAGS ALS KRITERIUM. "sku-offen" haengt auch an rund 25 Produkten
+// mit Preis, die kaufbar sein muessen (Dr. Schnell Forol, Buzil Perfekt
+// G 440, Diversey Suma Inox, Vileda Fensterabzieher und weitere);
+// "preis-offen" steht ebenfalls an Produkten mit Preis. Beide Tags bilden
+// den Zustand nicht ab. Verlaesslich ist allein das Preisfeld, und genau
+// das entscheidet hier - dieselbe Pruefung, die auch die Preiszeile
+// darueber steuert.
 
 /** Neutraler Knopf, der auf die Produktseite fuehrt (kein Kauf von hier aus). */
 function WegKnopf({
@@ -65,12 +73,11 @@ export default function ProductCard({ product: p }: { product: Product }) {
 
   const ziel = `/produkt/${p.handle}`;
   const varianten = p.variants ?? [];
-  const skuOffen = (p.tags ?? []).includes("sku-offen");
   const einzige = varianten.length === 1 ? varianten[0] : null;
 
   let kaufbereich: React.ReactNode = null;
   if (KAUFBAR) {
-    if (preisOffen || skuOffen) {
+    if (preisOffen) {
       kaufbereich = (
         <WegKnopf href={ziel} titel={p.title}>
           Anfragen
