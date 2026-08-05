@@ -29,27 +29,49 @@ export const metadata: Metadata = {
 export default function VorschauHeroPage() {
   return (
     <>
-      {/* Das Bild liegt als Flaeche hinter dem Text und laeuft bewusst
-          ueber den Container hinaus. overflow-hidden verhindert, dass
-          daraus waagrechtes Scrollen wird. */}
+      {/* ZWEI ANORDNUNGEN, geteilt bei 768 px (Tailwind md):
+          - unter 768: Bild oben als eigener Block, Text darunter auf dem
+            Seitenhintergrund. Kein Text ueber dem Motiv.
+          - ab 768: Bild als Flaeche hinter dem Text, darueber ein
+            Verlauf, der die linke Haelfte beruhigt.
+          overflow-hidden verhindert, dass der Ueberstand des Bildes
+          waagrechtes Scrollen ausloest. */}
       <section className="relative overflow-hidden border-b border-line">
-        {/* Bildebene */}
-        <div aria-hidden className="absolute inset-0">
+        {/* Bildebene. Mobil im Fluss mit eigener Hoehe, ab md absolut
+            hinter dem Text. */}
+        <div
+          aria-hidden
+          className="relative h-[clamp(200px,44vw,290px)] md:absolute md:inset-0 md:h-auto"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/hero/hero-rohbild-v2.png"
             alt=""
             /* Auf breiten Schirmen sitzt das Motiv mittig. Je schmaler es
                wird, desto weiter wandert der Ausschnitt nach rechts —
-               sonst bliebe auf dem Handy nur der leere Hintergrund der
-               linken Bildhaelfte stehen und die Figur waere weg. */
+               sonst bliebe nur der leere Hintergrund der linken
+               Bildhaelfte stehen und die Figur waere weg. */
             className="h-full w-full object-cover object-[72%_50%] md:object-[62%_50%] lg:object-[50%_50%]"
+          />
+
+          {/* Verlauf NUR ab md. Links volle Deckung in der Seitenfarbe,
+              nach rechts auslaufend, ab 63 % vollstaendig transparent.
+              Die Zwischenstufen sind kein Zierrat: ein Verlauf mit nur
+              zwei Haltepunkten setzt am Ende sichtbar ab, mit den
+              Zwischenwerten laeuft er weich aus. Die Frau rechts bleibt
+              dadurch unberuehrt, die Kartons links scheinen schwach
+              durch. */}
+          <div
+            className="absolute inset-0 hidden md:block"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, #0e0e12 0%, #0e0e12 26%, rgba(14,14,18,0.94) 36%, rgba(14,14,18,0.82) 45%, rgba(14,14,18,0.56) 53%, rgba(14,14,18,0.22) 59%, rgba(14,14,18,0) 63%)",
+            }}
           />
         </div>
 
-        {/* Textebene. Vorrang vor dem Bild: eigene Spalte, die auf
-            breiten Schirmen nur die linke Haelfte einnimmt. */}
-        <Container className="relative z-10 py-[clamp(56px,8vw,120px)]">
+        {/* Textebene. Liegt ueber dem Verlauf, nicht darunter. */}
+        <Container className="relative z-10 py-[clamp(40px,8vw,120px)]">
           <div className="max-w-[min(100%,34rem)] lg:max-w-[46%]">
             <p className="eyebrow">buttje · Wien</p>
 
