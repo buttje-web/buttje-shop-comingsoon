@@ -285,7 +285,7 @@ export default function HomePage() {
           Unter 1024 bleibt es beim Untereinander, siehe unten. */}
       <section className="border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
-          <div className="grid grid-cols-1 gap-[clamp(28px,5vw,64px)] lg:grid-cols-[1fr_380px] lg:items-center">
+          <div className="grid grid-cols-1 gap-[clamp(28px,5vw,64px)] lg:grid-cols-2 lg:items-center">
             <div>
               {/* OHNE .grad-text, anders als in der Newsletter-Sektion.
 
@@ -305,7 +305,12 @@ export default function HomePage() {
                   Ruhiger ist deshalb: gar kein Verlauf. Als Stilmittel
                   bleibt er der Seite erhalten, nur eben einmal statt
                   zweimal. */}
-              <h2 className="max-w-[20ch] text-[clamp(1.6rem,4vw,2.6rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
+              {/* In der Groessenordnung der Hero-Ueberschrift
+                  (clamp(2rem,4.6vw,3.4rem)), eine Spur darunter, weil es
+                  eine h2 ist und nicht die Seitenueberschrift. Vorher
+                  clamp(1.6rem,4vw,2.6rem) - in einer halb so breiten
+                  Textspalte wirkte der Block dadurch verloren. */}
+              <h2 className="max-w-[20ch] text-[clamp(1.9rem,4.4vw,3.2rem)] font-black uppercase leading-[1.05] tracking-[-0.02em]">
                 Ein Film über Verbrauchsgüter
               </h2>
               {/* Eine Spur groesser als der uebrige Fliesstext des Shops
