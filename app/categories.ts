@@ -15,6 +15,11 @@ export type Category = {
   bild?: string;
   // STILLGELEGT seit 01.08.2026: Kategorie-Videos werden nicht mehr gerendert.
   // Feld und Daten bleiben bewusst erhalten (Beschluss: stilllegen, nicht loeschen).
+  //
+  // ACHTUNG, die Pfade zeigen ins Leere. Seit 05.08.2026 liegen die Dateien
+  // NICHT MEHR unter public/, sondern unter medien/archiv/ - siehe den
+  // Hinweis am Feld video von entsorgung. Wer Kategorie-Videos reaktiviert,
+  // muss sie vorher zurueckschieben.
   video?: { src: string; poster: string };
 };
 
@@ -29,6 +34,14 @@ export const CATEGORIES: Category[] = [
       "Von dünn und billig bis Bauschutt-erprobt. Jede Stärke, jede Größe, immer ehrlich beschriftet. Der Dreck sucht sich nicht aus, wann er kommt. Der richtige Sack schon.",
     // Hochformat-Fassung: ganzer Film bis zur letzten Szene (Endgrafik weg),
     // mit eingebrannten Untertiteln und Tonspur (Ton-Knopf im Player).
+    //
+    // VERSCHOBEN am 05.08.2026 nach medien/archiv/entsorgung-portrait.mp4
+    // und medien/archiv/poster-portrait.jpg. Grund: die Dateien wurden seit
+    // der Stilllegung in keinem HTML mehr genannt, blieben unter public/
+    // aber ueber ihre Adresse abrufbar - ein fotorealistisches KI-Video ohne
+    // jede Kennzeichnung. Aufgehoben statt geloescht, der Schnitt ist
+    // ausserhalb entstanden und hier nicht wiederherstellbar.
+    // Zum Reaktivieren die beiden Dateien nach public/video/ zurueckschieben.
     video: { src: "/video/entsorgung-portrait.mp4", poster: "/video/poster-portrait.jpg" },
   },
   {

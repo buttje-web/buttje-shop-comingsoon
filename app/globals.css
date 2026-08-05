@@ -111,8 +111,25 @@ body {
   }
 }
 
+/* Sanftes Einblenden. Gebraucht von der KI-Kennzeichnung im Filmplayer:
+   beim Start wechselt sie von unten rechts nach oben rechts, weil dort
+   die Bedienleiste erscheint. Ohne Einblendung liest sich der Wechsel
+   als Sprung. */
+@keyframes sanft-ein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .grad-text {
+    animation: none;
+  }
+  /* Die Kennzeichnung steht danach trotzdem, nur ohne Ueberblendung. */
+  .animate-\[sanft-ein_260ms_ease-out\] {
     animation: none;
   }
 }

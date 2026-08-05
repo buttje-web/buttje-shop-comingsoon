@@ -76,6 +76,11 @@ for (const breite of BREITEN) {
         abstandRechts: Math.round((sicht.rechts - r.right) * 10) / 10,
         abstandUnten: Math.round((sicht.unten - r.bottom) * 10) / 10,
         schrift: getComputedStyle(n).fontSize,
+        // Deckung und Schriftfarbe kommen aus dem Browser, nicht aus einer
+        // Annahme im Auswerteskript - der Film hat einen dichteren Kasten
+        // als die Standbilder, und das darf die Rechnung nicht uebersehen.
+        kasten: getComputedStyle(n).backgroundColor,
+        farbe: getComputedStyle(n).color,
       };
     }, breite);
     stellen.push({ ...info, x: k.x, y: k.y + await page.evaluate(() => window.scrollY),

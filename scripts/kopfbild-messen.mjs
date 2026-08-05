@@ -92,6 +92,8 @@ for (const breite of BREITEN) {
         abstandRechts: Math.round((s.rechts - r.right) * 10) / 10,
         abstandUnten: Math.round((s.unten - r.bottom) * 10) / 10,
         schrift: getComputedStyle(n).fontSize,
+        kasten: getComputedStyle(n).backgroundColor,
+        farbe: getComputedStyle(n).color,
       };
     }, breite);
 

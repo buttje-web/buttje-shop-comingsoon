@@ -16,15 +16,20 @@ darueber. Ein Wert aus der Datei waere eine Schaetzung. Gemessen wird
 deshalb der Bildschirmabzug derselben Seite mit ausgeblendetem Label:
 genau die Bildpunkte, die spaeter unter dem Kasten liegen.
 
-GEMESSEN WIRD DER HELLSTE PUNKT, nicht der Mittelwert. Der Kasten mit
-55 Prozent Deckung hebt den Kontrast an; entscheidend ist die Stelle, an
-der er am wenigsten hilft.
+GEMESSEN WIRD DER HELLSTE PUNKT, nicht der Mittelwert. Der Kasten hebt
+den Kontrast an; entscheidend ist die Stelle, an der er am wenigsten
+hilft.
 
 Rechenweg je Punkt:
   unter  = Bildpunkt aus dem Abzug
-  kasten = 0,55 * #0e0e12 + 0,45 * unter
-  kontrast = (L(#f4f4f6) + 0,05) / (L(kasten) + 0,05)
+  kasten = Deckung * Kastenfarbe + (1 - Deckung) * unter
+  kontrast = (L(Schriftfarbe) + 0,05) / (L(kasten) + 0,05)
 L ist die relative Helligkeit nach WCAG 2.
+
+Deckung, Kastenfarbe und Schriftfarbe werden nicht angenommen, sondern
+aus dem Browser uebernommen (getComputedStyle). Das ist keine Feinheit:
+die Standbilder tragen 55 Prozent Deckung, der Filmplayer 65, und eine
+fest verdrahtete Zahl haette den Unterschied verschluckt.
 
 Abhaengigkeiten: pillow, numpy
 """
@@ -38,9 +43,12 @@ from PIL import Image
 WURZEL = Path(__file__).resolve().parent.parent
 ABZUG = Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp/ki-label")
 
-SCHRIFT = np.array([0xF4, 0xF4, 0xF6], dtype=np.float64)   # --text
-KASTEN = np.array([0x0E, 0x0E, 0x12], dtype=np.float64)    # --base
-DECKUNG = 0.55
+def rgba(s):
+    """rgba(14, 14, 18, 0.55) -> (Farbe, Deckung). Aus dem Browser, nicht
+    aus einer Annahme: der Filmplayer hat einen dichteren Kasten als die
+    Standbilder, und das darf hier nicht untergehen."""
+    z = [float(t) for t in s[s.index("(") + 1:s.index(")")].split(",")]
+    return np.array(z[:3], dtype=np.float64), (z[3] if len(z) > 3 else 1.0)
 
 
 def relative_helligkeit(rgb):
@@ -58,7 +66,7 @@ def kontrast(a, b):
 def main():
     daten = json.loads((ABZUG / "messung.json").read_text())
     print(f'{"Breite":>7} {"Stelle":12s} {"Label x/y/b/h":22s} '
-          f'{"hellster Punkt":16s} {"unter Kasten":14s} {"Kontrast":>9s}  sichtbar')
+          f'{"hellster Punkt":14s} {"Deckung":6s} {"unter Kasten":14s} {"Kontrast":>9s}  sichtbar')
     schlechteste = {}
     for eintrag in daten:
         breite = eintrag["breite"]
@@ -77,12 +85,15 @@ def main():
             # einzelner heller Kanal macht den Punkt noch nicht hell.
             i = int(np.argmax(relative_helligkeit(teil).ravel()))
             unter = teil.reshape(-1, 3)[i]
-            ueber = DECKUNG * KASTEN + (1 - DECKUNG) * unter
-            k = float(kontrast(SCHRIFT, ueber))
+            kasten, deckung = rgba(stelle["kasten"])
+            schrift, _ = rgba(stelle["farbe"])
+            ueber = deckung * kasten + (1 - deckung) * unter
+            k = float(kontrast(schrift, ueber))
             schlechteste[breite] = min(schlechteste.get(breite, 99), k)
             print(f'{breite:7d} {stelle["name"]:12s} '
                   f'{x:6.0f} {y:6.0f} {b:4.0f} {h:4.0f}   '
-                  f'{unter[0]:4.0f}{unter[1]:4.0f}{unter[2]:4.0f}     '
+                  f'{unter[0]:4.0f}{unter[1]:4.0f}{unter[2]:4.0f}   '
+                  f'{deckung*100:3.0f}%  '
                   f'{ueber[0]:4.0f}{ueber[1]:4.0f}{ueber[2]:4.0f}    '
                   f'{k:7.2f}:1  {"ja" if stelle["sichtbar"] else "NEIN"}')
         print(f'{breite:7d} {"":12s} waagrechtes Scrollen: '
