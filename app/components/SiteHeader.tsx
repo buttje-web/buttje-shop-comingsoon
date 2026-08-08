@@ -4,13 +4,22 @@ import Wortmarke from "./Wortmarke";
 import MobileNav from "./MobileNav";
 import Suche from "./Suche";
 import CartLink from "./CartLink";
+import KontoLink from "./KontoLink";
 import NewsTicker from "./NewsTicker";
 import { KAUFBAR } from "../lib/shop-mode";
 
 // Sticky Nav im dunklen buttje-Look.
 // Desktop (>= lg): Kategorie-Dropdown + Links. Mobil/Tablet hochkant: Burger-Menue.
 
-export default function SiteHeader() {
+export default function SiteHeader({
+  kontoFassung = "a",
+}: {
+  /* Fassung des Konto-Eintrags (a: nur Wort, b: mit Unterzeile).
+     Entscheidung zwischen a und b liegt bei Rami - der Vorgabewert hier
+     ist nur der Arbeitsstand, keine Festlegung. Vergleich beider
+     Fassungen: /vorschau-konto. */
+  kontoFassung?: "a" | "b";
+} = {}) {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-[rgba(14,14,18,0.92)]">
       {/* Topbar als News-Ticker. Die erste Meldung ist weiterhin der
@@ -38,6 +47,9 @@ export default function SiteHeader() {
           >
             Versand &amp; Zahlung
           </Link>
+          {/* Konto LINKS neben der Lupe - Reihenfolge Konto, Lupe, Sackerl
+              (Vorgabe Rami, 08.08.2026). */}
+          <KontoLink variant="leiste" fassung={kontoFassung} />
           <Suche variant="header" />
           {/* Warenkorb-Link nur im Kaufmodus */}
           {KAUFBAR && <CartLink />}
@@ -45,6 +57,9 @@ export default function SiteHeader() {
 
         {/* Mobil/Tablet hochkant: Burger (via .nav-mobile) */}
         <div className="nav-mobile items-center gap-2">
+          {/* Schmale Leiste: nur das Personen-Symbol, das Wort steht im
+              Burger-Menue als Texteintrag KONTO. */}
+          <KontoLink variant="kompakt" />
           {KAUFBAR && <CartLink />}
           <MobileNav />
         </div>
