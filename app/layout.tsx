@@ -16,7 +16,7 @@ const organizationLd = {
   name: ORG.name,
   legalName: ORG.legalName,
   url: ORG.url,
-  email: ORG.email,
+  // Kein "email" hier: siehe Begruendung in app/lib/seo.ts.
   telephone: ORG.telephone,
   vatID: ORG.vatID,
   address: {
@@ -37,7 +37,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "buttje Shop — Verbrauchsgüter & Hygienebedarf für Gewerbe",
+    default: "buttje Shop - Verbrauchsgüter & Hygienebedarf für Gewerbe",
     template: "%s | buttje Shop",
   },
   description:
@@ -65,14 +65,14 @@ export default async function RootLayout({
 
                 Das Plausible-Script PRUEFT localStorage.plausible_ignore
                 bereits von sich aus und sendet dann nichts. Was ihm fehlt:
-                Es SETZT den Marker nirgends — im Script kommen weder
+                Es SETZT den Marker nirgends - im Script kommen weder
                 location.search noch setItem vor. Der Aufruf mit
                 ?plausible_ignore=true blieb deshalb wirkungslos.
                 Diese Zeilen schliessen genau diese Luecke.
 
                 beforeInteractive ist Pflicht, nicht Geschmack: Der Marker
                 muss stehen, BEVOR der Tracker den ersten Seitenaufruf
-                meldet — sonst zaehlt der erste Aufruf trotzdem.
+                meldet - sonst zaehlt der erste Aufruf trotzdem.
 
                 ?plausible_ignore=false raeumt den Marker wieder weg, sonst
                 kaeme man ohne Entwicklerkonsole nicht mehr aus dem
@@ -93,7 +93,7 @@ else if(v==='false'){localStorage.removeItem('plausible_ignore')}}catch(e){}`}
             </Script>
           </>
         )}
-        {/* Im Katalogmodus gibt es keinen Warenkorb — dann auch keinen
+        {/* Im Katalogmodus gibt es keinen Warenkorb - dann auch keinen
             CartProvider und keinen Cart-Abruf pro Seitenaufruf. */}
         {KAUFBAR ? (
           <CartProvider initialCount={(await loadCart())?.totalQuantity ?? 0}>

@@ -38,8 +38,8 @@ function seoDescription(p: Product): string {
   if (ids.length) parts.push(`${ids.join(", ")}.`);
   parts.push(
     KAUFBAR
-      ? `B2B-Shop für Gewerbe — Nettopreise zzgl. USt. Lieferung innerhalb Österreichs.`
-      : `B2B-Shop für Gewerbe — ${PREIS_HINWEIS_KATALOG}. Lieferung innerhalb Österreichs.`,
+      ? `B2B-Shop für Gewerbe. Nettopreise zzgl. USt. Lieferung innerhalb Österreichs.`
+      : `B2B-Shop für Gewerbe. ${PREIS_HINWEIS_KATALOG}. Lieferung innerhalb Österreichs.`,
   );
   return parts.join(" ");
 }
@@ -101,16 +101,16 @@ export default async function ProductPage({ params }: { params: Params }) {
   // Frueher stand hier eine feste Liste aus drei Feldnamen. Die griff zu
   // kurz: Material, Masse und Fassungsvermoegen standen doppelt, sobald die
   // Box sie fuehrte. Jetzt wird aus der Box selbst abgeleitet, was raus muss
-  // — ueber Label UND Wert, weil dieselbe Angabe links unterschiedlich
+  // - ueber Label UND Wert, weil dieselbe Angabe links unterschiedlich
   // heissen kann ("Blatt/Rolle" gegen "Blatt je Rolle").
   //
   // Zeilen, die nur die Herstellertabelle hat (Gewicht, Produktart,
-  // Zolltarifnummer …), bleiben unangetastet.
+  // Zolltarifnummer ...), bleiben unangetastet.
   const boxDaten = variant?.sku ? boxZeilen(variant.sku, {
     hersteller: product.vendor, ean: variant.barcode, ve: product.ve ?? variant.title,
   }) : [];
 
-  /** Klein, ohne Sonderzeichen und ohne Fuellwoerter — zum Vergleichen. */
+  /** Klein, ohne Sonderzeichen und ohne Fuellwoerter - zum Vergleichen. */
   const norm = (s: string) =>
     s.toLowerCase()
       .replace(/ä/g, "a").replace(/ö/g, "o").replace(/ü/g, "u").replace(/ß/g, "ss")
@@ -151,7 +151,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   const preisOffen = istPreisOffen(min?.amount);
 
   // Katalogmodus: bewusst KEIN offers-Block (kein Preis in strukturierten Daten).
-  // Kaufmodus: offers nur, wenn ein echter Preis existiert — ein Angebot mit
+  // Kaufmodus: offers nur, wenn ein echter Preis existiert - ein Angebot mit
   // 0,00 waere eine Falschaussage gegenueber Suchmaschinen.
   const productLd = {
     "@context": "https://schema.org",
@@ -288,7 +288,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                  Bei Produkten MIT Produktdaten-Box werden die dort schon
                  gezeigten Zeilen herausgefiltert, damit Hersteller,
                  Artikelnummer und EAN nicht doppelt stehen. Bei Produkten
-                 OHNE Box bleibt die Tabelle unveraendert — dort ist sie die
+                 OHNE Box bleibt die Tabelle unveraendert - dort ist sie die
                  einzige Datenquelle. */}
           {technikHtml && (
             <div

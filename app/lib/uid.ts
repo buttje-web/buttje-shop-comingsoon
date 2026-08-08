@@ -5,7 +5,7 @@
   Eine formal gueltige Nummer kann trotzdem erfunden sein. Die Pruefung
   faengt Tippfehler ab, sie ersetzt keine Verifikation.
 
-  Die UID bleibt optional — ein leeres Feld ist immer gueltig.
+  Die UID bleibt optional - ein leeres Feld ist immer gueltig.
 */
 
 /**
@@ -24,7 +24,7 @@ const AT = /^ATU\d{8}$/;
 
 /**
  * Uebrige EU: Laenderpraefix + 2 bis 12 alphanumerische Zeichen.
- * Grundmuster, absichtlich grosszuegig — die Laenderregeln unterscheiden
+ * Grundmuster, absichtlich grosszuegig - die Laenderregeln unterscheiden
  * sich stark, und ein zu strenges Muster wuerde echte Kunden aussperren.
  */
 const EU_GRUNDMUSTER = /^[A-Z]{2}[A-Z0-9]{2,12}$/;
@@ -35,7 +35,7 @@ const EU_GRUNDMUSTER = /^[A-Z]{2}[A-Z0-9]{2,12}$/;
  * WICHTIG bei AT: Beginnt die Nummer mit "AT", wird die strenge
  * ATU-Regel verlangt. Ohne diese Sonderbehandlung wuerde "AT12345678"
  * (fehlendes U, ein haeufiger Tippfehler) ueber das Grundmuster
- * durchrutschen — und genau solche Faelle soll die Pruefung fangen.
+ * durchrutschen - und genau solche Faelle soll die Pruefung fangen.
  */
 export function uidGueltig(eingabe: string): boolean {
   const u = uidNormalisieren(eingabe);

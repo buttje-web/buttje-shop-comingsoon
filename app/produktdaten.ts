@@ -16,7 +16,7 @@ export type Produktinhalt = {
   aufmacher: string;
   anwendung?: string;
   dosierung?: string;
-  /** Abschnitt "Gut zu wissen" — Warnhinweise, Handhabung, Haltbarkeit. */
+  /** Abschnitt "Gut zu wissen" - Warnhinweise, Handhabung, Haltbarkeit. */
   gutZuWissen?: string;
   /** Nur rendern, wenn belegt. Keine Auslobung ohne Nachweis im Datenblatt. */
   zertifikate?: string;
@@ -27,7 +27,7 @@ export type Produktinhalt = {
     gisbau?: string;
     /**
      * Weitere Zeilen fuer die Box, in dieser Reihenfolge angehaengt.
-     * Gedacht fuer Warengruppen mit ganz anderen Kennzahlen als Chemie —
+     * Gedacht fuer Warengruppen mit ganz anderen Kennzahlen als Chemie -
      * Papier braucht Lagen, Blatt und Rollenlaenge, nicht pH und GISBAU.
      */
     weitere?: [string, string][];
@@ -174,7 +174,7 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
       "Vorreinigung und Fleck 1:12 mit kaltem Wasser, Sprühextraktion 80 bis 100 ml auf 10 l.",
     gutZuWissen:
       "Farbechtheit vor der ersten Anwendung an verdeckter Stelle prüfen.",
-    technik: { inhalt: "1 l", ph: "6,5–7,5 (Konzentrat)" },
+    technik: { inhalt: "1 l", ph: "6,5-7,5 (Konzentrat)" },
   },
   // ---- Batch 2: Papier (Texte von Rami, Fachdaten aus den Hersteller-
   // Datenblaettern; bei Abweichung gilt der Hersteller) ----------------------
@@ -249,7 +249,7 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
   // Laengenangaben bewusst ENTFERNT (02.08.2026, Entscheidung Rami):
   // Die Quelle nennt "Blatt/Rolle 380", daraus wurde am 01.08. "380 m".
   // Solange der Lieferant nicht bestaetigt, ob CU-3380CN die 270- oder die
-  // 380-m-Rolle ist, steht hier gar keine Laenge — lieber keine Angabe als
+  // 380-m-Rolle ist, steht hier gar keine Laenge - lieber keine Angabe als
   // eine falsche. Wieder eintragen erst nach Bestaetigung.
   "CU-3380CN": {
     aufmacher: "Manche Probleme löst man mit Größe.",
@@ -335,14 +335,14 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
       "Der Beutel für den kleinen Korb unterm Schreibtisch. Unauffällig, bis er fehlt.",
     anwendung:
       "Müllbeutel für kleine Papierkörbe und Kosmetikeimer, Büro und Sanitärraum.",
-    technik: { weitere: [["Material", "HDPE, 10–20 % Regenerat"], ["Maße", "310 x 370 mm"], ["Fassungsvermögen", "6 Liter"], ["Farbe", "grau"]] },
+    technik: { weitere: [["Material", "HDPE, 10-20 % Regenerat"], ["Maße", "310 x 370 mm"], ["Fassungsvermögen", "6 Liter"], ["Farbe", "grau"]] },
   },
   "59984": {
     aufmacher:
       "Transparent heißt kontrollierbar. In sensiblen Bereichen ist Durchsicht kein Design, sondern Vorschrift.",
     anwendung:
       "Müllbeutel für 60-Liter-Behälter, transparent für Bereiche mit Sichtkontrolle.",
-    technik: { weitere: [["Material", "HDPE, 10–20 % Regenerat"], ["Maße", "600 x 720 mm"], ["Fassungsvermögen", "60 Liter"], ["Farbe", "transparent"]] },
+    technik: { weitere: [["Material", "HDPE, 10-20 % Regenerat"], ["Maße", "600 x 720 mm"], ["Fassungsvermögen", "60 Liter"], ["Farbe", "transparent"]] },
   },
   "10010": {
     aufmacher:
@@ -430,7 +430,7 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
 
   // ---- Batch 5: Seifen -----------------------------------------------------
   // CWS-C490000 traegt bewusst KEINE "neutral"-Auslobung ueber den Titel
-  // hinaus — der Hersteller bestaetigt die Rezeptur fuer diese Artikelnummer
+  // hinaus - der Hersteller bestaetigt die Rezeptur fuer diese Artikelnummer
   // nicht (offener Alex-Punkt). STE-106672 behaelt die VE 20 Stueck/Karton,
   // obwohl der Hersteller 22 nennt; auch das ist ein Alex-Punkt.
   "STE-106123": {
@@ -441,8 +441,8 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
     dosierung: "2 bis 3 ml auf angefeuchtete Hände, aufschäumen, abspülen.",
     gutZuWissen: "Vor Frost schützen, Lagerung 5 bis 30 °C.",
     zertifikate:
-      "Hautverträglichkeit dermatologisch bestätigt, hautneutraler pH-Wert (4,1–5,8), ohne tierische Bestandteile, HACCP-geeignet, frei von Mikroplastik nach EU-Verordnung 2023/2055.",
-    technik: { inhalt: "5 l", ph: "4,1–5,8 (hautneutral)" },
+      "Hautverträglichkeit dermatologisch bestätigt, hautneutraler pH-Wert (4,1-5,8), ohne tierische Bestandteile, HACCP-geeignet, frei von Mikroplastik nach EU-Verordnung 2023/2055.",
+    technik: { inhalt: "5 l", ph: "4,1-5,8 (hautneutral)" },
   },
   "STE-106672": {
     aufmacher: "Die Pumpflasche für Stellen ohne Spender. Hinstellen, fertig.",
@@ -451,7 +451,7 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
     dosierung: "2 bis 3 ml auf angefeuchtete Hände, aufschäumen, abspülen.",
     zertifikate:
       "Hautverträglichkeit dermatologisch bestätigt, hautneutraler pH-Wert, ohne tierische Bestandteile.",
-    technik: { inhalt: "500 ml", ph: "4,1–5,8 (hautneutral)" },
+    technik: { inhalt: "500 ml", ph: "4,1-5,8 (hautneutral)" },
   },
   "CWS-C490000": {
     aufmacher: "Der Nachfüllkanister für CWS-Spendersysteme. Fünf Liter Ruhe.",
@@ -535,7 +535,7 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
  * die Originale bleiben zusätzlich in buttje-shop/datenblaetter/sdb/.
  *
  * Zurückdrehen: SDB_DOWNLOADS_AKTIV auf false setzen UND die Kopien aus
- * public/datenblaetter/ entfernen — der Schalter allein blendet nur den
+ * public/datenblaetter/ entfernen - der Schalter allein blendet nur den
  * Block aus, die URLs blieben sonst erreichbar.
  *
  * Neues SDB aufnehmen: PDF unter dem SKU-Namen in beide Ordner legen und

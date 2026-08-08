@@ -1,4 +1,4 @@
-// Server-seitiger Admin-API-Client (client_credentials grant) — nur fuer
+// Server-seitiger Admin-API-Client (client_credentials grant) - nur fuer
 // Route Handler. Credentials liegen ausschliesslich in Server-Env-Variablen
 // und erreichen nie den Browser. Token wird im Modul-Scope gecached und vor
 // Ablauf erneuert (Muster aus Hermes/shopify-auth.mjs).

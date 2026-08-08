@@ -13,7 +13,7 @@
 export const TICKER_MELDUNGEN: string[] = [
   "Verkauf ausschließlich an Gewerbetreibende, Vereine und öffentliche Einrichtungen",
   "Versandkostenfrei ab 150 EUR netto",
-  "Lieferzeit 3 bis 7 Werktage",
+  "Lieferzeit 3 bis 7 Werktage bei Lagerware",
 ];
 
 /** Trennzeichen zwischen den Meldungen im Laufband. */

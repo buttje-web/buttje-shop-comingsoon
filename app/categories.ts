@@ -7,10 +7,19 @@ export type Category = {
   label: string; // Anzeigename (Navigation)
   headline: string; // Kategorie-Headline (Teil 4)
   intro: string; // Intro-Text (Teil 4)
-  // Header-Standbild (9:16) aus den Buehnen-Mastern. Ohne Bild: dunkler Verlauf.
+  // STILLGELEGT seit 05.08.2026: Das Kopfbild der Kategorieseite kommt jetzt
+  // aus app/kategorie-bilder.ts, dasselbe Motiv wie auf der Startseite. Diese
+  // Pfade zeigen auf die alten 9:16-Herstellerfotos (720x1280). Feld und
+  // Dateien bleiben liegen, wie beim Feld `video` beschlossen: stilllegen,
+  // nicht loeschen.
   bild?: string;
   // STILLGELEGT seit 01.08.2026: Kategorie-Videos werden nicht mehr gerendert.
   // Feld und Daten bleiben bewusst erhalten (Beschluss: stilllegen, nicht loeschen).
+  //
+  // ACHTUNG, die Pfade zeigen ins Leere. Seit 05.08.2026 liegen die Dateien
+  // NICHT MEHR unter public/, sondern unter medien/archiv/ - siehe den
+  // Hinweis am Feld video von entsorgung. Wer Kategorie-Videos reaktiviert,
+  // muss sie vorher zurueckschieben.
   video?: { src: string; poster: string };
 };
 
@@ -20,11 +29,19 @@ export const CATEGORIES: Category[] = [
     bild: "/kategorie/entsorgung.webp",
     tag: "entsorgung",
     label: "Entsorgung",
-    headline: "Müllsäcke, die mehr aushalten als dein Team am Montagmorgen.",
+    headline: "Müllsäcke, die mehr aushalten als Ihr Team am Montagmorgen.",
     intro:
       "Von dünn und billig bis Bauschutt-erprobt. Jede Stärke, jede Größe, immer ehrlich beschriftet. Der Dreck sucht sich nicht aus, wann er kommt. Der richtige Sack schon.",
     // Hochformat-Fassung: ganzer Film bis zur letzten Szene (Endgrafik weg),
     // mit eingebrannten Untertiteln und Tonspur (Ton-Knopf im Player).
+    //
+    // VERSCHOBEN am 05.08.2026 nach medien/archiv/entsorgung-portrait.mp4
+    // und medien/archiv/poster-portrait.jpg. Grund: die Dateien wurden seit
+    // der Stilllegung in keinem HTML mehr genannt, blieben unter public/
+    // aber ueber ihre Adresse abrufbar - ein fotorealistisches KI-Video ohne
+    // jede Kennzeichnung. Aufgehoben statt geloescht, der Schnitt ist
+    // ausserhalb entstanden und hier nicht wiederherstellbar.
+    // Zum Reaktivieren die beiden Dateien nach public/video/ zurueckschieben.
     video: { src: "/video/entsorgung-portrait.mp4", poster: "/video/poster-portrait.jpg" },
   },
   {
@@ -59,9 +76,9 @@ export const CATEGORIES: Category[] = [
     bild: "/kategorie/handschuhe.webp",
     tag: "handschuhe",
     label: "Handschuhe",
-    headline: "Damit deine Hände nach Feierabend noch aussehen wie Hände.",
+    headline: "Damit Ihre Hände nach Feierabend noch aussehen wie Hände.",
     intro:
-      "Nitril, Latex, Vinyl, Arbeitsschutz. In echten Größen, in ehrlicher Qualität. Einweg oder unkaputtbar, du entscheidest.",
+      "Nitril, Latex, Vinyl, Arbeitsschutz. In echten Größen, in ehrlicher Qualität. Einweg oder unkaputtbar. Sie entscheiden.",
   },
   {
     slug: "zubehoer",

@@ -55,11 +55,37 @@ export const SEARCH_INDEX_QUERY = `
 `;
 
 // Produktliste (fuer Listen-/Kategorie-Seite). Optionaler Filter (z.B. Kategorie-Tag).
+//
+// variants steht hier und NICHT im Fragment ProductCard: das Fragment wird
+// auch von PRODUCT_BY_HANDLE_QUERY benutzt, und die Seite holt dort
+// variants(first: 50). Zweimal dasselbe Feld mit verschiedenen Argumenten
+// in einer Auswahl lehnt GraphQL ab.
+//
+// first: 2 genuegt. Die Kachel muss nur wissen, ob es GENAU EINE Variante
+// gibt (dann Menge und Sackerl-Knopf) oder mehr als eine (dann der Weg auf
+// die Produktseite). Die Zahl selbst wird nirgends angezeigt.
+//
+// KEINE tags: Der Tag "sku-offen" haengt auch an rund 25 Produkten, die
+// einen Preis haben und kaufbar sein muessen; "preis-offen" ebenso. Beide
+// bilden den Zustand nicht ab. Verlaesslich ist allein das Preisfeld.
 export const PRODUCTS_QUERY = `
   query Products($first: Int!, $query: String) {
     products(first: $first, query: $query) {
       edges {
-        node { ...ProductCard }
+        node {
+          ...ProductCard
+          variants(first: 2) {
+            edges {
+              node {
+                id
+                title
+                availableForSale
+                price { ...Money }
+                selectedOptions { name value }
+              }
+            }
+          }
+        }
       }
     }
   }

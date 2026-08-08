@@ -8,7 +8,7 @@ import { useCart } from "./CartContext";
 // Ab 640 px zusaetzlich das Wort. Touch-Ziel >= 44px.
 
 // Eigenes Sackerl-Icon (Variante D, von Rami gewaehlt): Papiertragetasche
-// als Silhouette — Trapezkorpus, oben schmaler als unten, darueber ein
+// als Silhouette - Trapezkorpus, oben schmaler als unten, darueber ein
 // Henkelbogen. Das lucide "shopping-bag" war quadratisch und wirkte wie ein
 // Koffer. Zwei getrennte Henkelboegen waren angedacht, verschmelzen bei 18 px
 // aber zu einer Kuppe; deshalb ein breiter Bogen.
@@ -41,7 +41,7 @@ export default function CartLink() {
       className="flex min-h-[44px] items-center gap-2 border border-line-strong px-[13px] text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-text transition-colors hover:border-accent hover:text-accent"
     >
       <SackerlIcon />
-      {/* Wort erst ab 640 px — Klassen liegen als ungelayertes CSS in
+      {/* Wort erst ab 640 px - Klassen liegen als ungelayertes CSS in
           globals.css, damit aeltere Safari die Sichtbarkeit sicher treffen. */}
       <span className="cart-label-long">Sackerl&nbsp;</span>({count})
     </Link>

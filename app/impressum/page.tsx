@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LegalArticle from "../components/LegalArticle";
+import EMailLink from "../components/EMailLink";
 
 export const metadata: Metadata = { title: "Impressum" };
 
@@ -20,7 +21,7 @@ export default function ImpressumPage() {
 
       <p>
         E-Mail:{" "}
-        <a href="mailto:shop@buttje.at">shop@buttje.at</a>
+        <EMailLink />
         <br />
         Telefon: +43 1 236 632 64 42
       </p>

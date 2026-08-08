@@ -47,6 +47,7 @@ export async function getProducts(first = 48, query?: string): Promise<Product[]
     query: PRODUCTS_QUERY,
     variables: { first, query },
     revalidate: 60,
+    wiederholen: true,
   });
   return unwrap(data.products).map(normalizeProduct);
 }
@@ -83,6 +84,7 @@ export async function getSearchIndex(): Promise<
     query: SEARCH_INDEX_QUERY,
     variables: { first: 100 },
     revalidate: 300,
+    wiederholen: true,
   });
   return unwrap(data.products).map((p) => ({
     handle: p.handle,
@@ -110,6 +112,7 @@ export async function getProductByHandle(handle: string): Promise<Product | null
     query: PRODUCT_BY_HANDLE_QUERY,
     variables: { handle },
     revalidate: 60,
+    wiederholen: true,
   });
   return data.product ? normalizeProduct(data.product) : null;
 }
@@ -118,6 +121,34 @@ type CartMutationResult = {
   cart: Cart | null;
   userErrors: { field: string[] | null; message: string }[];
 };
+
+/**
+ * Der Warenkorb hinter der uebergebenen ID existiert nicht (mehr).
+ *
+ * Passiert im Normalbetrieb: Ein Warenkorb wird nach abgeschlossener
+ * Bestellung verbraucht und nach laengerer Untaetigkeit verworfen. Das
+ * Cookie mit der ID lebt laenger als der Warenkorb selbst - die Lage ist
+ * also erwartbar und KEIN Serverfehler. Aufrufer sollen einen neuen
+ * Warenkorb anlegen statt abzubrechen.
+ */
+export class WarenkorbWegError extends Error {}
+
+/**
+ * Wirft bei userErrors - und zwar WarenkorbWegError, wenn die Gegenstelle
+ * die cartId bemaengelt. Die Unterscheidung laeuft ueber das Feld, nicht
+ * ueber den Meldungstext: der kommt uebersetzt zurueck und aendert sich.
+ */
+function pruefeUserErrors(
+  mutation: string,
+  userErrors: CartMutationResult["userErrors"],
+): void {
+  if (!userErrors.length) return;
+  const meldung = `${mutation}: ${JSON.stringify(userErrors)}`;
+  if (userErrors.some((e) => e.field?.includes("cartId"))) {
+    throw new WarenkorbWegError(meldung);
+  }
+  throw new Error(meldung);
+}
 
 function normalizeCart(cart: (Cart & { lines: Edges<Cart["lines"][number]> }) | null): Cart | null {
   if (!cart) return null;
@@ -149,7 +180,7 @@ export async function addCartLines(
     variables: { cartId, lines },
   });
   const { cart, userErrors } = data.cartLinesAdd;
-  if (userErrors.length) throw new Error(`cartLinesAdd: ${JSON.stringify(userErrors)}`);
+  pruefeUserErrors("cartLinesAdd", userErrors);
   const normalized = normalizeCart(cart as never);
   if (!normalized) throw new Error("cartLinesAdd lieferte keinen Warenkorb.");
   return normalized;
@@ -165,7 +196,7 @@ export async function updateCartLines(
     variables: { cartId, lines },
   });
   const { cart, userErrors } = data.cartLinesUpdate;
-  if (userErrors.length) throw new Error(`cartLinesUpdate: ${JSON.stringify(userErrors)}`);
+  pruefeUserErrors("cartLinesUpdate", userErrors);
   const normalized = normalizeCart(cart as never);
   if (!normalized) throw new Error("cartLinesUpdate lieferte keinen Warenkorb.");
   return normalized;
@@ -181,7 +212,7 @@ export async function removeCartLines(
     variables: { cartId, lineIds },
   });
   const { cart, userErrors } = data.cartLinesRemove;
-  if (userErrors.length) throw new Error(`cartLinesRemove: ${JSON.stringify(userErrors)}`);
+  pruefeUserErrors("cartLinesRemove", userErrors);
   const normalized = normalizeCart(cart as never);
   if (!normalized) throw new Error("cartLinesRemove lieferte keinen Warenkorb.");
   return normalized;
@@ -203,7 +234,7 @@ export async function updateCartAttributes(
     variables: { cartId, attributes },
   });
   const { cart, userErrors } = data.cartAttributesUpdate;
-  if (userErrors.length) throw new Error(`cartAttributesUpdate: ${JSON.stringify(userErrors)}`);
+  pruefeUserErrors("cartAttributesUpdate", userErrors);
   const normalized = normalizeCart(cart as never);
   if (!normalized) throw new Error("cartAttributesUpdate lieferte keinen Warenkorb.");
   return normalized;
@@ -214,6 +245,7 @@ export async function getCart(id: string): Promise<Cart | null> {
   const data = await storefront<{ cart: (Cart & { lines: Edges<Cart["lines"][number]> }) | null }>({
     query: CART_QUERY,
     variables: { id },
+    wiederholen: true,
   });
   return normalizeCart(data.cart);
 }

@@ -6,6 +6,7 @@ import { trackEvent } from "../lib/analytics";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
+import EMailLink from "./EMailLink";
 import { einheitenSchuetzen } from "../lib/titel";
 import { VERSAND, VERSAND_AB, GRATIS_BIS_KG, euro } from "../lib/versand";
 import type { ProductVariant, Money } from "@/lib/shopify/types";
@@ -79,8 +80,8 @@ export default function BuyBox({
 
       {preisOffen && (
         <p className="mt-2 max-w-[42ch] text-[0.78rem] leading-relaxed text-muted">
-          Für diese Verpackungseinheit nennen wir Ihnen den Preis gern direkt —
-          per{" "}
+          Für diese Verpackungseinheit nennen wir Ihnen den Preis gern direkt.
+          Per{" "}
           <a
             href="https://wa.me/4367762080802"
             target="_blank"
@@ -90,12 +91,7 @@ export default function BuyBox({
             WhatsApp
           </a>{" "}
           oder{" "}
-          <a
-            href="mailto:shop@buttje.at"
-            className="text-accent underline underline-offset-2"
-          >
-            shop@buttje.at
-          </a>
+          <EMailLink className="text-accent underline underline-offset-2" />
           .
         </p>
       )}
@@ -108,14 +104,28 @@ export default function BuyBox({
           disabled={disabled}
           onClick={() => {
             if (!merchandiseId) return;
-            trackEvent("add_to_cart", { handle: productHandle });
             setError(null);
+            // Erst legen, dann zaehlen. Das Zaehlen stand frueher VOR dem
+            // Warenkorb-Aufruf und damit im Weg: Wirft das Analytics-Script,
+            // bricht der Handler ab, bevor addItem ueberhaupt laeuft.
+            // Nebeneffekt der neuen Reihenfolge: gezaehlt wird nur noch, was
+            // auch wirklich im Sackerl gelandet ist.
             startTransition(async () => {
               try {
-                const total = await addItem(merchandiseId, qty);
-                setCount(total);
-              } catch (e) {
-                setError(e instanceof Error ? e.message : "Fehler");
+                const ergebnis = await addItem(merchandiseId, qty);
+                if (!ergebnis.ok) {
+                  // Verstaendliche Meldung aus der Server-Action. Geworfene
+                  // Fehler werden im Produktionsbuild redigiert und kaemen
+                  // hier nie lesbar an - deshalb ein Rueckgabewert.
+                  setError(ergebnis.meldung);
+                  return;
+                }
+                setCount(ergebnis.anzahl);
+                trackEvent("add_to_cart", { handle: productHandle });
+              } catch {
+                setError(
+                  "Das hat gerade nicht geklappt. Bitte versuchen Sie es in einem Moment noch einmal.",
+                );
               }
             });
           }}
@@ -134,7 +144,7 @@ export default function BuyBox({
 
       {/* Versand-Kurzinfo (Werte zentral in app/lib/versand.ts) */}
       <p className="mt-3 text-[0.66rem] text-muted">
-        Versand ab {euro(VERSAND_AB)} — versandkostenfrei ab{" "}
+        Versand ab {euro(VERSAND_AB)}. Versandkostenfrei ab{" "}
         {euro(VERSAND.freiAb)} netto (bis {GRATIS_BIS_KG} kg).
       </p>
     </div>

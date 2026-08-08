@@ -49,3 +49,6 @@ next-env.d.ts
 # Hersteller-PDFs (SDB/Datenblaetter), lokal abgelegt. Einbau in den Shop ist
 # ein eigener Auftrag; bis dahin nicht im Repo und nicht im Deployment.
 /datenblaetter
+
+# Python-Zwischenstand der Bildskripte
+__pycache__/

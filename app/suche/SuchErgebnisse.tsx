@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BildPlatzhalter from "../components/BildPlatzhalter";
 import PriceTag from "../components/PriceTag";
+import EMailLink from "../components/EMailLink";
 import { bereiteVor, suche, type SuchEintrag } from "@/lib/suche";
 import { einheitenSchuetzen } from "../lib/titel";
 
@@ -67,9 +68,9 @@ export default function SuchErgebnisse({ kaufbar }: { kaufbar: boolean }) {
       />
 
       {treffer === null ? (
-        <p className="text-muted">Suche wird geladen …</p>
+        <p className="text-muted">Suche wird geladen...</p>
       ) : !query.trim() ? (
-        <p className="text-muted">Tippen Sie los — Titel, Artikelnummer, Marke oder Kategorie.</p>
+        <p className="text-muted">Tippen Sie los - Titel, Artikelnummer, Marke oder Kategorie.</p>
       ) : treffer.length === 0 ? (
         <div className="max-w-[60ch] border border-line px-6 py-10">
           <p className="text-[1.05rem] font-bold uppercase tracking-[-0.01em]">
@@ -87,12 +88,10 @@ export default function SuchErgebnisse({ kaufbar }: { kaufbar: boolean }) {
             >
               Per WhatsApp anfragen →
             </a>
-            <a
-              href="mailto:shop@buttje.at"
+            <EMailLink
               className="border border-line px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-muted transition-colors hover:border-accent hover:text-accent"
-            >
-              shop@buttje.at →
-            </a>
+              nachtext=" →"
+            />
           </div>
         </div>
       ) : (

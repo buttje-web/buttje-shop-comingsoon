@@ -12,7 +12,7 @@ import {
 
   Bewusst OHNE Fuelltext-Abschnitte wie "Beschreibung" oder "Zusammenfassung".
   Jeder Abschnitt erscheint nur, wenn er Inhalt hat. Produkte ohne Eintrag in
-  app/produktdaten.ts rendern gar nichts von hier — die Seite bleibt dann wie
+  app/produktdaten.ts rendern gar nichts von hier - die Seite bleibt dann wie
   bisher bei Headline, Bild und Kaufbereich.
 */
 
@@ -33,7 +33,7 @@ function Abschnitt({ titel, text }: { titel: string; text?: string }) {
 
   FRUEHER stand hier eine feste Label-Breite (w-[13ch]). Lange Labels wie
   "FASSUNGSVERMOEGEN" liefen darueber hinaus und ueberlagerten den Wert.
-  Jetzt bestimmt die Grid-Spalte max-content ihre Breite selbst — sie ist
+  Jetzt bestimmt die Grid-Spalte max-content ihre Breite selbst - sie ist
   immer so breit wie das laengste Label der jeweiligen Box, nie schmaler.
   Unter 420 px klappt das Grid auf eine Spalte um, Label ueber Wert.
 */
@@ -71,7 +71,7 @@ export default function ProduktInfo({
 
   return (
     <div className="mt-12 flex flex-col gap-8">
-      {/* Aufmacher — traegt keine Zwischenueberschrift, er fuehrt in den Text */}
+      {/* Aufmacher - traegt keine Zwischenueberschrift, er fuehrt in den Text */}
       <p className="max-w-[62ch] text-[1.05rem] leading-relaxed text-text">
         {inhalt.aufmacher}
       </p>
@@ -94,7 +94,7 @@ export default function ProduktInfo({
 
       {/* Datenblaetter und Downloads.
           GEBAUT, ABER AUS: Die SDB-PDFs liegen ausserhalb von public/ und sind
-          ueber keine URL erreichbar. Erst nach Ramis Freigabe scharfschalten —
+          ueber keine URL erreichbar. Erst nach Ramis Freigabe scharfschalten -
           siehe Kommentar an SDB_DOWNLOADS_AKTIV in app/produktdaten.ts. */}
       {zeigeDownloads && (
         <section className="border-t border-line pt-6">
