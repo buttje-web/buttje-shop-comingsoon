@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProductsNav from "./ProductsNav";
+import Wortmarke from "./Wortmarke";
 import MobileNav from "./MobileNav";
 import Suche from "./Suche";
 import CartLink from "./CartLink";
@@ -20,20 +21,20 @@ export default function SiteHeader() {
         {/* Wortmarke bewusst OHNE .grad-text: Die Klasse ist ein animierter
             Verlauf, die Marke haette damit je nach Moment eine andere Farbe.
             Ein Logo, das seine Farbe wechselt, ist kein Logo. Jetzt eine
-            feste Farbe, auf jeder Seite und in jedem Zustand dieselbe. */}
-        <Link
-          href="/"
-          className="text-[1.4rem] font-extrabold lowercase tracking-[-0.04em] text-text transition-colors hover:text-accent"
-        >
-          buttje
-        </Link>
+            feste Farbe, auf jeder Seite und in jedem Zustand dieselbe.
+            Auf der Startseite scrollt der Klick nach oben statt ins Leere
+            zu laufen - Begruendung im Kopf von Wortmarke.tsx. */}
+        <Wortmarke />
 
         {/* Desktop-Navigation (Sichtbarkeit via .nav-desktop, Safari-sicher) */}
         <div className="nav-desktop items-center gap-[clamp(12px,2.2vw,30px)]">
           <ProductsNav />
           <Link
             href="/versand-zahlung"
-            className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-text transition-colors hover:text-accent"
+            // Innenabstand auf 44 Punkte Hoehe, unsichtbar: Der Verweis hat
+            // weder Rahmen noch Hintergrund, die Schrift bleibt an Ort und
+            // Stelle. Begruendung ausfuehrlich in ProductsNav.tsx.
+            className="py-[13px] text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-text transition-colors hover:text-accent"
           >
             Versand &amp; Zahlung
           </Link>

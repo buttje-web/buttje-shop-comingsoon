@@ -101,7 +101,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
         ) : (
           <ul className="grid grid-cols-1 border-l border-t border-line min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             {products.map((p, i) => (
-              <ProductCard key={p.id} product={p} zuerst={i < 4} />
+              <ProductCard key={p.id} product={p} zuerst={i === 0} />
             ))}
           </ul>
         )}
