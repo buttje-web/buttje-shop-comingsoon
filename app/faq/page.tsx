@@ -3,6 +3,7 @@ import Link from "next/link";
 import Container from "../components/Container";
 import JsonLd from "../components/JsonLd";
 import { FAQ_TEILE, type FaqFrage } from "./faq-daten";
+import { ORG_ID } from "../lib/seo";
 
 /*
   FAQ, Fassung vom 08.08.2026 (59 Fragen in sieben Teilen). Ersetzt die
@@ -44,6 +45,9 @@ export default function FaqPage() {
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    // Herausgeber-Verweis auf den Organization-Block aus app/layout.tsx
+    // (per @id, der Block selbst steht auf jeder Seite genau einmal).
+    publisher: { "@id": ORG_ID },
     mainEntity: FAQ_TEILE.flatMap((t) =>
       t.fragen.map((f) => ({
         "@type": "Question",
