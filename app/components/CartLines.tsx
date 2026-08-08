@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { removeItem, updateItem } from "@/lib/cart/actions";
 import type { CartLine } from "@/lib/shopify/types";
@@ -58,23 +59,45 @@ function CartLineRow({ line }: { line: CartLine }) {
 
   const img = line.merchandise.product.featuredImage;
   const lineTotal = (Number(line.merchandise.price.amount) * qty).toFixed(2);
+  const titel = line.merchandise.product.title;
+  const zurProduktseite = `/produkt/${line.merchandise.product.handle}`;
 
+  /*
+    Zwei getrennte Klickflaechen: Bild und Name fuehren zur Produktseite,
+    Mengenzaehler, Entfernen und Preis liegen ausserhalb der Links.
+
+    Bewusst KEIN Link um die ganze Zeile mit stopPropagation an den Knoepfen:
+    Ein Button in einem Link ist ungueltiges HTML, und der Tastaturweg waere
+    kaputt. Getrennte Flaechen loesen das ohne Sonderbehandlung.
+  */
   return (
     <li className={`flex flex-wrap items-center gap-x-4 gap-y-3 py-5 ${pending ? "opacity-60" : ""}`}>
-      <div className="h-16 w-16 shrink-0 overflow-hidden border border-line bg-white">
+      <Link
+        href={zurProduktseite}
+        aria-label={titel}
+        className="block h-16 w-16 shrink-0 overflow-hidden border border-line bg-white transition-colors hover:border-accent"
+      >
         {img ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={img.url}
-            alt={img.altText ?? line.merchandise.product.title}
+            alt={img.altText ?? titel}
             className="h-full w-full object-contain"
           />
         ) : null}
-      </div>
+      </Link>
 
       <div className="min-w-[200px] flex-1">
         <p className="text-sm font-bold uppercase tracking-[-0.01em]">
-          {einheitenSchuetzen(line.merchandise.product.title)}
+          {/* no-underline nur zur Sicherheit: Im Ruhezustand ist der Name
+              nicht als Link markiert, erst beim Ueberfahren faerbt er sich. */}
+          <Link
+            href={zurProduktseite}
+            aria-label={titel}
+            className="no-underline transition-colors hover:text-accent"
+          >
+            {einheitenSchuetzen(titel)}
+          </Link>
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-3">
           <QuantityStepper value={qty} onChange={change} />
