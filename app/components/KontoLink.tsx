@@ -5,6 +5,10 @@ import type { JSX } from "react";
   Adresse ausserhalb dieser App, deshalb ein einfaches <a> und KEIN
   next/link (Link prefetcht nur interne Routen, extern bringt er nichts).
 
+  Fassung A (Symbol + KONTO, ohne Unterzeile) - Entscheidung Rami,
+  09.08.2026. Fassung B mit Unterzeile und die Vergleichsseite
+  /vorschau-konto sind mit derselben Entscheidung entfallen.
+
   Drei Erscheinungsformen:
   - variant="leiste":  Desktop-Kopfleiste, Symbol + Wort KONTO.
   - variant="kompakt": schmale Kopfleiste (< 1024 px), nur das Symbol im
@@ -12,14 +16,9 @@ import type { JSX } from "react";
   - variant="menue":   Texteintrag im Burger-Menue, gleiche Typografie wie
                        die uebrigen Menuepunkte.
 
-  Zwei Fassungen fuer variant="leiste", Entscheidung liegt bei Rami:
-  - fassung="a": nur Symbol + KONTO
-  - fassung="b": zusaetzlich graue Unterzeile "Bestellungen und Nachbestellen"
-
   Beruehrungsziel: wie bei ProductsNav ueber Innenabstand geloest, nicht
   ueber sichtbare Groesse - der Verweis hat weder Rahmen noch Hintergrund.
-  Fassung A: 18,4 px Zeile + 2 x 13 px = 44,4 px.
-  Fassung B: ~27 px Textblock + 2 x 9 px = ~45 px.
+  18,4 px Zeile + 2 x 13 px = 44,4 px.
 
   Vorlesesoftware: aria-label beginnt mit dem sichtbaren Wort "Konto"
   (Label-in-Name-Regel) und sagt dann, was dahinter liegt. Beim reinen
@@ -52,11 +51,9 @@ function PersonIcon() {
 
 export default function KontoLink({
   variant = "leiste",
-  fassung = "a",
   onNavigiert,
 }: {
   variant?: "leiste" | "kompakt" | "menue";
-  fassung?: "a" | "b";
   onNavigiert?: () => void;
 }): JSX.Element {
   if (variant === "menue") {
@@ -82,29 +79,6 @@ export default function KontoLink({
         className="flex h-11 w-11 items-center justify-center border border-line-strong text-text transition-colors hover:border-accent hover:text-accent"
       >
         <PersonIcon />
-      </a>
-    );
-  }
-
-  if (fassung === "b") {
-    return (
-      <a
-        href={KONTO_URL}
-        aria-label={ARIA_LABEL}
-        className="flex items-center gap-2 py-[9px] text-text transition-colors hover:text-accent"
-      >
-        <PersonIcon />
-        <span className="flex flex-col">
-          <span className="text-[0.72rem] font-semibold uppercase leading-tight tracking-[0.18em]">
-            Konto
-          </span>
-          {/* Unterzeile bewusst ohne Versalien und ohne Sperrung: Sie soll
-              als Erklaerung unter dem Menuepunkt stehen, nicht als zweiter
-              Menuepunkt wirken. */}
-          <span className="text-[0.62rem] leading-tight text-muted">
-            Bestellungen und Nachbestellen
-          </span>
-        </span>
       </a>
     );
   }
