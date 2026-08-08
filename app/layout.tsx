@@ -84,6 +84,21 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="de" className={`${inter.variable} h-full antialiased`}>
+      <head>
+        {/*
+          Verbindung zur Bild-Herkunft vorbereiten.
+
+          Die Produktfotos liegen auf einer anderen Herkunft als die Seite.
+          Ohne diesen Hinweis beginnen Namensaufloesung, Verbindungsaufbau
+          und Verschluesselung erst, wenn der Browser das erste Bild
+          anfordert. Das groesste sichtbare Bild - der Massstab fuer die
+          Ladezeit - haengt genau daran.
+
+          crossOrigin ist noetig, weil Bilder anonym geladen werden; ohne
+          das Attribut baut der Browser die Verbindung ein zweites Mal auf.
+        */}
+        <link rel="preconnect" href="https://cdn.shopify.com" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-full flex flex-col bg-base text-text">
         <JsonLd data={organizationLd} />
         {/* Privacy-friendly analytics by Plausible (offizielles Snippet,

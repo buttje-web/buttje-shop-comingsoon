@@ -44,10 +44,19 @@ export default async function ProductsPage() {
         </div>
       ) : (
         <ul className="grid grid-cols-1 border-l border-t border-line min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-          {/* Die ersten vier stehen im weitesten Raster in der ersten Zeile
-              und werden deshalb sofort geladen, der Rest beim Scrollen. */}
+          {/*
+            NUR die erste Kachel wird vorrangig geladen, nicht die ersten vier.
+
+            Frueher waren es vier - die erste Zeile im weitesten Raster. Auf
+            dem Handy steht dort aber nur EINE Kachel, die drei anderen liegen
+            unter dem Bildschirm. Vorrang fuer alle vier hiess: Sie teilen
+            sich die gedrosselte Bandbreite mit genau dem Bild, an dem die
+            Ladezeit gemessen wird, und bremsen es aus.
+            Auf dem Schreibtisch kostet das nichts: Die uebrigen drei laden
+            unmittelbar danach, dort ist die Leitung nicht der Engpass.
+          */}
           {products.map((p, i) => (
-            <ProductCard key={p.id} product={p} zuerst={i < 4} />
+            <ProductCard key={p.id} product={p} zuerst={i === 0} />
           ))}
         </ul>
       )}

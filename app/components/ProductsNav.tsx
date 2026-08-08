@@ -70,12 +70,27 @@ export default function ProductsNav() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="true"
+        // Kein eigener Innenabstand: Die Hoehe kommt vom Link darin, der
+        // seine 44 Punkte selbst mitbringt. Beides zu polstern wuerde den
+        // Knopf auf rund 70 Punkte treiben und die 62er-Leiste sprengen.
         className="flex items-center gap-1 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-text transition-colors hover:text-accent"
       >
         <Link
           href="/produkte"
           onClick={(e) => e.stopPropagation()}
-          className="hover:text-accent"
+          /*
+            Innenabstand statt Pseudo-Element, anders als in der Kachel.
+            Grund: Ein Pruefwerkzeug misst den Rahmen des Elements. Eine
+            unsichtbare Flaeche darueber verbessert das Antippen, laesst
+            den Rahmen aber bei 18,4 Punkten - die Pruefung faellt weiter
+            durch. Gemessen und bestaetigt.
+            Hier ist Polstern moeglich, weil diese Verweise weder Rahmen
+            noch Hintergrund haben: Der Kasten waechst unsichtbar, die
+            Schrift bleibt, wo sie war. In der Kachel ging das nicht, dort
+            haengen sichtbare Rahmen an den Massen.
+            13 Punkte oben und unten: 18,4 + 26 = 44,4.
+          */
+          className="py-[13px] hover:text-accent"
         >
           Produkte
         </Link>
