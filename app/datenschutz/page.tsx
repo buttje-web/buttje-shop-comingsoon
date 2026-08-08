@@ -9,6 +9,12 @@ export default function DatenschutzPage() {
     <LegalArticle
       eyebrow="Rechtliches"
       title="Datenschutzerklärung"
+      /* Kleinere UNTERGRENZE als der Standard (2rem): Das Ein-Wort-Titel
+         DATENSCHUTZERKLAERUNG wurde auf schmalen Bildschirmen sonst rechts
+         abgeschnitten (Trennung ist bewusst aus, Umbruch nur an
+         Wortgrenzen). 5vw und Obergrenze unveraendert - ab rund 400
+         Punkten Breite rendert die Seite exakt wie vorher. */
+      titleSize="text-[clamp(1.25rem,5vw,3.5rem)]"
       updated="01.08.2026"
     >
       <h2>1. Verantwortlicher</h2>
