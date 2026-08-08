@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import SortimentKnopf from "../components/SortimentKnopf";
 import Container from "../components/Container";
 import KiLabel from "../components/KiLabel";
 
@@ -159,12 +159,11 @@ export default function VorschauHeroPage() {
                   je nach Breite auf einem hellen Karton landen, und dort
                   traegt der schwache Verlauf allein nicht. 60 % Deckung
                   reichen, ohne dass ein Kasten entsteht. */}
-              <Link
-                href="/produkte"
-                className="inline-flex min-h-[48px] items-center border border-line-strong bg-[rgba(14,14,18,0.6)] px-7 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-text transition-colors hover:border-accent hover:text-accent"
-              >
-                Zum Sortiment →
-              </Link>
+              {/* Gleicher Knopf wie auf der Startseite (Entscheidung Rami,
+                  08.08.2026: mitgezogen, damit die Vorschau der Startseite
+                  entspricht). Ein Kachelabschnitt existiert hier nicht,
+                  der Knopf laeuft bewusst leer - siehe SortimentKnopf.tsx. */}
+              <SortimentKnopf />
             </div>
           </div>
         </Container>
