@@ -6,7 +6,7 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import JsonLd from "./components/JsonLd";
 import { CartProvider } from "./components/CartContext";
-import { ORG, SITE_URL } from "./lib/seo";
+import { ORG, SITE_URL, SITE_NAME } from "./lib/seo";
 import { KAUFBAR } from "./lib/shop-mode";
 import { loadCart } from "@/lib/cart/actions";
 
@@ -44,6 +44,37 @@ export const metadata: Metadata = {
     "buttje Shop, Wien. Verbrauchsgüter und Hygienebedarf für Gewerbe: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung innerhalb Österreichs.",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
+  /*
+    Vorschaubild fuer geteilte Links, hier als Standard fuer ALLE Seiten.
+    Seiten mit eigenem openGraph-Block erben es, solange sie kein eigenes
+    Bild setzen - keine tut das.
+
+    metadataBase oben macht daraus eine vollstaendige Adresse mit
+    https://shop.buttje.at davor. Ein relativer Pfad genuegt hier nicht:
+    Die Vorschau-Dienste holen das Bild ohne Kenntnis unserer Seite.
+
+    Die KI-Kennzeichnung ist in die Datei GEBRANNT. Bei einem geteilten
+    Link gibt es kein HTML, in dem ein Label stehen koennte - siehe
+    scripts/og-bild.py und den Kopf von app/components/KiLabel.tsx.
+  */
+  openGraph: {
+    type: "website",
+    locale: "de_AT",
+    siteName: SITE_NAME,
+    url: "/",
+    title: "buttje Shop - Verbrauchsgüter & Hygienebedarf für Gewerbe",
+    description:
+      "Verbrauchsgüter und Hygienebedarf für Gewerbe in Wien: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung innerhalb Österreichs.",
+    images: [
+      {
+        url: "/og/og-standard.jpg",
+        width: 1200,
+        height: 630,
+        alt: "buttje Shop, Wien: Kartons, Kanister, Müllsäcke und Zubehör (KI-generiert)",
+      },
+    ],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default async function RootLayout({

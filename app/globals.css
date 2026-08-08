@@ -363,3 +363,64 @@ h1, h2, h3, h4, h5, h6 {
   overflow-wrap: normal;
   word-break: normal;
 }
+
+/* ---------------------------------------------------------------------------
+   BERUEHRUNGSZIELE
+
+   Mehrere Bedienelemente der Produktkachel sind rund 32 Punkte hoch: die
+   beiden Zaehlerknoepfe, "Ins Sackerl" und die Wegknoepfe. Empfohlen sind 44.
+   Groesser zeichnen duerfen wir sie nicht - die Kachelmasse sind gesetzt.
+
+   Deshalb waechst nur die BERUEHRUNGSFLAECHE, ueber ein unsichtbares
+   Pseudo-Element. Es gehoert zum Knopf und faengt Zeigereingaben fuer ihn ab.
+   Das gezeichnete Element bleibt unveraendert, das Layout ebenso: Ein absolut
+   gesetztes Pseudo-Element nimmt keinen Platz im Fluss ein.
+
+   RICHTUNG IST NICHT BELIEBIG. Zaehler und Sackerl-Knopf stehen nur 8 Punkte
+   auseinander. Waechst jede Flaeche mittig in beide Richtungen, nehmen sie
+   sich gegenseitig den Platz - gemessen kamen so nur 39 Punkte heraus, nicht
+   44. Deshalb waechst der Zaehler nach OBEN in den Innenabstand darueber und
+   der Sackerl-Knopf nach UNTEN in den darunter. So erreichen beide volle 44,
+   ohne sich zu ueberschneiden.
+
+   EHRLICH DAZU: Ein Pruefwerkzeug, das die Groesse des Elements selbst misst,
+   sieht davon nichts - der Rahmen des Knopfes bleibt 32 Punkte. Was sich
+   aendert, ist das, worauf es ankommt: wo ein Fingertipp landet. Nachgemessen
+   wird deshalb mit elementFromPoint, nicht am Rahmen.
+   --------------------------------------------------------------------------- */
+.ziel44 {
+  position: relative;
+}
+.ziel44::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
+
+/* Waechst nach oben: fuer den Zaehler, unter dem der Sackerl-Knopf sitzt. */
+.ziel44-hoch::after {
+  top: auto;
+  bottom: -2px;
+  transform: none;
+}
+
+/* Waechst nach unten: fuer den Sackerl-Knopf, ueber dem der Zaehler sitzt. */
+.ziel44-tief::after {
+  top: 0;
+  bottom: auto;
+  transform: none;
+}
+
+/* Die Zaehlerknoepfe sind zusaetzlich nur 32 Punkte BREIT. Ihre Flaeche waechst
+   nach aussen, nie nach innen: Das Zahlenfeld dazwischen muss antippbar
+   bleiben, sonst zaehlt ein Tipp auf die Zahl versehentlich hoch oder runter. */
+.ziel44-links::after {
+  left: -12px;
+}
+.ziel44-rechts::after {
+  right: -12px;
+}

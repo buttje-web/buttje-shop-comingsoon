@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import LegalArticle from "../components/LegalArticle";
 
-export const metadata: Metadata = { title: "Versand & Zahlung" };
+// Eigenes canonical, sonst erbt die Seite das der Startseite aus
+// app/layout.tsx und zeigt damit auf eine ANDERE Adresse. Genau daran
+// scheitert die SEO-Pruefung "Document does not have a valid rel=canonical".
+export const metadata: Metadata = {
+  title: "Versand & Zahlung",
+  alternates: { canonical: "/versand-zahlung" },
+};
 
 export default function VersandZahlungPage() {
   return (

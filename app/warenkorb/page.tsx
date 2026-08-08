@@ -8,9 +8,13 @@ import PriceTag from "../components/PriceTag";
 import { KAUFBAR } from "../lib/shop-mode";
 import { loadCart } from "@/lib/cart/actions";
 
+// Eigenes canonical, sonst erbt die Seite das der Startseite aus
+// app/layout.tsx und zeigt damit auf eine ANDERE Adresse. Genau daran
+// scheitert die SEO-Pruefung "Document does not have a valid rel=canonical".
 export const metadata: Metadata = {
   title: "Sackerl",
   robots: { index: false, follow: true },
+  alternates: { canonical: "/warenkorb" },
 };
 
 // Katalogmodus (KAUFBAR=aus): Kauf ist deaktiviert. Die Seite bleibt als

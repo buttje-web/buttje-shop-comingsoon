@@ -94,7 +94,8 @@ export default function KachelKauf({
         disabled={pending}
         aria-label={`${titel} ins Sackerl legen`}
         className={
-          "mt-2 h-8 w-full border border-accent bg-transparent px-2 " +
+          // ziel44: 32 Punkte gezeichnet, 44 Punkte antippbar (globals.css)
+          "ziel44 ziel44-tief mt-2 h-8 w-full border border-accent bg-transparent px-2 " +
           "text-[0.64rem] font-bold uppercase leading-none tracking-[0.16em] text-accent " +
           "transition-colors enabled:hover:bg-[rgba(92,200,255,0.12)] disabled:opacity-40"
         }

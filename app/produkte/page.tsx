@@ -4,7 +4,13 @@ import ProductCard from "../components/ProductCard";
 import { getProducts } from "@/lib/shopify";
 import type { Product } from "@/lib/shopify/types";
 
-export const metadata: Metadata = { title: "Produkte" };
+// Eigenes canonical, sonst erbt die Seite das der Startseite aus
+// app/layout.tsx und zeigt damit auf eine ANDERE Adresse. Genau daran
+// scheitert die SEO-Pruefung "Document does not have a valid rel=canonical".
+export const metadata: Metadata = {
+  title: "Produkte",
+  alternates: { canonical: "/produkte" },
+};
 
 // Produktliste / Kategorie-Seite. Solange der Store leer ist (oder Tokens
 // fehlen), zeigen wir einen ruhigen Platzhalter statt eines Fehlers.
@@ -38,8 +44,10 @@ export default async function ProductsPage() {
         </div>
       ) : (
         <ul className="grid grid-cols-1 border-l border-t border-line min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {/* Die ersten vier stehen im weitesten Raster in der ersten Zeile
+              und werden deshalb sofort geladen, der Rest beim Scrollen. */}
+          {products.map((p, i) => (
+            <ProductCard key={p.id} product={p} zuerst={i < 4} />
           ))}
         </ul>
       )}
