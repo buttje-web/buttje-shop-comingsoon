@@ -29,6 +29,15 @@
 // - "Paketband" (passt dazu bei Muellsaecken 120 L): kein Artikel.
 // - "Handschuhe" als Empfehlung: alle Handschuhe stehen auf Anfrage.
 // - Warengruppe Staubsauger-Deos: derzeit keine Artikel im Sortiment.
+//
+// NACHTRAG, VORGEMERKT (Rami, 09.08.2026 - NICHT vorab bauen):
+// Sobald die Handschuhe Preise haben (Ausloeser: SKU-Lieferung des
+// Lieferanten), bekommen sie eine EIGENE Gruppenregel:
+//   passt dazu: Reiniger und Muellsaecke.
+//   Alternativen: untereinander nach Material (Nitril/Latex/Vinyl).
+// Gleichzeitig werden Handschuhe wieder als passt-dazu-Ziel in den
+// bestehenden Gruppen ergaenzt (muellbeutel-klein, muellsaecke-120,
+// reiniger - siehe Gruppenregeln oben).
 
 /** Gesperrte Artikel - erscheinen NIE als Empfehlung (Vorgabe Rami). */
 export const GESPERRTE_SKUS: ReadonlySet<string> = new Set([
