@@ -8,6 +8,7 @@ import type { CartLine } from "@/lib/shopify/types";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import { einheitenSchuetzen } from "../lib/titel";
+import { bildBreite, SACKERL_BREITE } from "../lib/bild";
 import PriceTag from "./PriceTag";
 
 function CartLineRow({ line }: { line: CartLine }) {
@@ -80,8 +81,11 @@ function CartLineRow({ line }: { line: CartLine }) {
         {img ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={img.url}
+            src={bildBreite(img.url, SACKERL_BREITE)}
+            width={64}
+            height={64}
             alt={img.altText ?? titel}
+            decoding="async"
             className="h-full w-full object-contain"
           />
         ) : null}

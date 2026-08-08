@@ -27,3 +27,17 @@ export const ORG = {
 };
 
 export const FREE_SHIPPING_THRESHOLD = 100;
+
+/*
+  Standard-Vorschaubild fuer geteilte Links.
+
+  Liegt hier und nicht nur in app/layout.tsx, weil jede Seite mit einem
+  EIGENEN openGraph-Block den geerbten ersetzt statt ihn zu ergaenzen und
+  das Bild deshalb erneut setzen muss. Ein zweiter Pfad im Code waere
+  genau die Stelle, an der die beiden spaeter auseinanderlaufen.
+
+  Die KI-Kennzeichnung ist in die Datei gebrannt, siehe scripts/og-bild.py.
+*/
+export const OG_BILD = "/og/og-standard.jpg";
+export const OG_ALT =
+  "buttje Shop, Wien: Kartons, Kanister, Müllsäcke und Zubehör (KI-generiert)";

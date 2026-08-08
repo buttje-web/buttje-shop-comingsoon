@@ -4,7 +4,7 @@ import Container from "../../components/Container";
 import CategoryHeader from "../../components/CategoryHeader";
 import ProductCard from "../../components/ProductCard";
 import JsonLd from "../../components/JsonLd";
-import { SITE_URL } from "../../lib/seo";
+import { SITE_URL, OG_BILD, OG_ALT } from "../../lib/seo";
 import { CATEGORIES, categoryBySlug } from "../../categories";
 import { getProductsByCategory } from "@/lib/shopify";
 import type { Product } from "@/lib/shopify/types";
@@ -43,6 +43,14 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       title: `${cat.label} für Gewerbe (B2B) kaufen | buttje Shop`,
       description: CATEGORY_SEO[cat.slug],
       url: `/kategorie/${cat.slug}`,
+      /*
+        Das Vorschaubild MUSS hier stehen, obwohl es im Layout schon als
+        Standard gesetzt ist: Definiert eine Seite einen eigenen
+        openGraph-Block, ersetzt er den geerbten vollstaendig - er wird
+        nicht Feld fuer Feld zusammengefuehrt. Ohne diese Zeilen hatten
+        alle sechs Kategorieseiten gar kein Vorschaubild.
+      */
+      images: [{ url: OG_BILD, width: 1200, height: 630, alt: OG_ALT }],
     },
   };
 }
@@ -92,8 +100,8 @@ export default async function CategoryPage({ params }: { params: Params }) {
           </div>
         ) : (
           <ul className="grid grid-cols-1 border-l border-t border-line min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {products.map((p, i) => (
+              <ProductCard key={p.id} product={p} zuerst={i < 4} />
             ))}
           </ul>
         )}

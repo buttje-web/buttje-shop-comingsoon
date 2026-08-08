@@ -5,9 +5,13 @@ import { KAUFBAR } from "../lib/shop-mode";
 
 // Suchseite: noindex (interne Funktionsseite), Suchbegriff steckt im
 // URL-Hash und erreicht den Server nicht.
+// Eigenes canonical, sonst erbt die Seite das der Startseite aus
+// app/layout.tsx und zeigt damit auf eine ANDERE Adresse. Genau daran
+// scheitert die SEO-Pruefung "Document does not have a valid rel=canonical".
 export const metadata: Metadata = {
   title: "Suche",
   robots: { index: false, follow: false },
+  alternates: { canonical: "/suche" },
 };
 
 export default function SuchePage() {
