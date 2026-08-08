@@ -6,19 +6,35 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import JsonLd from "./components/JsonLd";
 import { CartProvider } from "./components/CartContext";
-import { ORG, SITE_URL, SITE_NAME } from "./lib/seo";
+import { ORG, ORG_ID, SITE_URL, SITE_NAME } from "./lib/seo";
 import { KAUFBAR } from "./lib/shop-mode";
 import { loadCart } from "@/lib/cart/actions";
 
 const organizationLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  // Stabile Kennung: die FAQ-Seite verweist darueber auf die Organisation
+  // als Herausgeber, ohne den Block zu duplizieren.
+  "@id": ORG_ID,
   name: ORG.name,
   legalName: ORG.legalName,
+  description: ORG.beschreibung,
   url: ORG.url,
-  // Kein "email" hier: siehe Begruendung in app/lib/seo.ts.
-  telephone: ORG.telephone,
+  // Kein "email" und KEINE Telefonnummer hier: siehe app/lib/seo.ts.
   vatID: ORG.vatID,
+  // Oesterreichische Firmenbuchnummer. schema.org kennt dafuer kein eigenes
+  // Feld, PropertyValue mit Klarnamen ist das uebliche Muster.
+  identifier: {
+    "@type": "PropertyValue",
+    name: "Firmenbuchnummer",
+    value: ORG.firmenbuchnummer,
+  },
+  logo: {
+    "@type": "ImageObject",
+    url: ORG.logo,
+    width: 512,
+    height: 512,
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: ORG.address.streetAddress,
