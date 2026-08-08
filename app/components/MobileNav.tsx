@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CATEGORIES } from "../categories";
 import Suche from "./Suche";
+import KontoLink from "./KontoLink";
 
 /*
   Mobiles Menue (Burger) fuer Smartphone + Tablet hochkant (< lg).
@@ -104,6 +105,11 @@ export default function MobileNav() {
                 ))}
               </ul>
               <ul className="divide-y divide-line border-y border-line">
+                {/* Texteintrag KONTO (Vorgabe Rami, 08.08.2026): Das Wort
+                    entfaellt in der schmalen Kopfleiste, hier steht es. */}
+                <li>
+                  <KontoLink variant="menue" onNavigiert={() => setOpen(false)} />
+                </li>
                 <li>
                   <Link
                     href="/versand-zahlung"

@@ -4,6 +4,7 @@ import Wortmarke from "./Wortmarke";
 import MobileNav from "./MobileNav";
 import Suche from "./Suche";
 import CartLink from "./CartLink";
+import KontoLink from "./KontoLink";
 import NewsTicker from "./NewsTicker";
 import { KAUFBAR } from "../lib/shop-mode";
 
@@ -38,6 +39,9 @@ export default function SiteHeader() {
           >
             Versand &amp; Zahlung
           </Link>
+          {/* Konto LINKS neben der Lupe - Reihenfolge Konto, Lupe, Sackerl
+              (Vorgabe Rami, 08.08.2026; Fassung A abgenommen 09.08.2026). */}
+          <KontoLink variant="leiste" />
           <Suche variant="header" />
           {/* Warenkorb-Link nur im Kaufmodus */}
           {KAUFBAR && <CartLink />}
@@ -45,6 +49,9 @@ export default function SiteHeader() {
 
         {/* Mobil/Tablet hochkant: Burger (via .nav-mobile) */}
         <div className="nav-mobile items-center gap-2">
+          {/* Schmale Leiste: nur das Personen-Symbol, das Wort steht im
+              Burger-Menue als Texteintrag KONTO. */}
+          <KontoLink variant="kompakt" />
           {KAUFBAR && <CartLink />}
           <MobileNav />
         </div>
