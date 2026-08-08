@@ -10,6 +10,7 @@ import { einheitenSchuetzen } from "../../lib/titel";
 import { bildBreite, bildSrcSet, DETAIL_STUFEN, DETAIL_SIZES } from "../../lib/bild";
 import { PRODUKTINHALTE } from "../../produktdaten";
 import BuyBox from "../../components/BuyBox";
+import CrossSelling from "../../components/CrossSelling";
 import { SITE_URL, SITE_NAME, OG_BILD, OG_ALT } from "../../lib/seo";
 import { KAUFBAR, istPreisOffen, PREIS_HINWEIS_KATALOG } from "../../lib/shop-mode";
 import { getProductByHandle } from "@/lib/shopify";
@@ -318,6 +319,10 @@ export default async function ProductPage({ params }: { params: Params }) {
           )}
         </div>
       </div>
+
+      {/* Cross-Selling: "Alternativen" + "Passt dazu", kuratiert je SKU
+          (app/crossselling.ts). Leere Bloecke verschwinden ersatzlos. */}
+      <CrossSelling sku={variant?.sku} eigenesHandle={product.handle} />
     </Container>
   );
 }
