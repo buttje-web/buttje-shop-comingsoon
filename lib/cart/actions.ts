@@ -89,7 +89,7 @@ export async function addItem(
     await setCartId(cart.id);
   }
 
-  revalidatePath("/warenkorb");
+  revalidatePath("/sackerl");
   return { ok: true, anzahl: cart.totalQuantity };
 }
 
@@ -102,14 +102,14 @@ export async function updateItem(lineId: string, quantity: number): Promise<Cart
   if (!id) return { ok: true, anzahl: 0 };
   try {
     const cart = await updateCartLines(id, [{ id: lineId, quantity }]);
-    revalidatePath("/warenkorb");
+    revalidatePath("/sackerl");
     return { ok: true, anzahl: cart.totalQuantity };
   } catch (e) {
     if (e instanceof StorefrontNetzError) {
       return { ok: false, meldung: MELDUNG_NICHT_ERREICHBAR };
     }
     if (!(e instanceof WarenkorbWegError)) throw e;
-    revalidatePath("/warenkorb");
+    revalidatePath("/sackerl");
     return { ok: true, anzahl: 0 };
   }
 }
@@ -123,14 +123,14 @@ export async function removeItem(lineId: string): Promise<CartErgebnis> {
   if (!id) return { ok: true, anzahl: 0 };
   try {
     const cart = await removeCartLines(id, [lineId]);
-    revalidatePath("/warenkorb");
+    revalidatePath("/sackerl");
     return { ok: true, anzahl: cart.totalQuantity };
   } catch (e) {
     if (e instanceof StorefrontNetzError) {
       return { ok: false, meldung: MELDUNG_NICHT_ERREICHBAR };
     }
     if (!(e instanceof WarenkorbWegError)) throw e;
-    revalidatePath("/warenkorb");
+    revalidatePath("/sackerl");
     return { ok: true, anzahl: 0 };
   }
 }

@@ -3,6 +3,7 @@ import AnfrageWahl from "./AnfrageWahl";
 import BildPlatzhalter from "./BildPlatzhalter";
 import { bildBreite, bildSrcSet, KACHEL_STUFEN, KACHEL_SIZES } from "../lib/bild";
 import KachelKauf from "./KachelKauf";
+import PreisDetails from "./PreisDetails";
 import { einheitenSchuetzen } from "../lib/titel";
 import PriceTag from "./PriceTag";
 import {
@@ -27,7 +28,7 @@ import type { Product } from "@/lib/shopify/types";
 //
 // WELCHER KAUFBEREICH, entschieden aus den Daten der Kachel:
 //   Preis 0,00                     ->  ANFRAGEN, Weg zur Produktseite
-//   mehr als eine Variante         ->  GROESSE WAEHLEN, ebenfalls dorthin
+//   mehr als eine Variante         ->  EINHEIT WAEHLEN, ebenfalls dorthin
 //   genau eine, verfuegbar, Preis  ->  Menge + INS SACKERL
 // Die Reihenfolge ist Absicht: Was keinen Preis hat, ist nicht kaufbar,
 // auch nicht mit nur einer Variante. Der Kunde sieht in dem Fall oben
@@ -105,9 +106,12 @@ export default function ProductCard({
         <AnfrageWahl titel={p.title} sku={einzige?.sku ?? null} klein />
       );
     } else if (varianten.length > 1) {
+      // "Einheit waehlen", nicht "Groesse waehlen": die Varianten des
+      // Shops sind Verpackungseinheiten (Rolle, Karton), keine Groessen.
+      // Umbenannt am 09.08. mit dem ersten echten Zweivarianten-Produkt.
       kaufbereich = (
         <WegKnopf href={ziel} titel={p.title}>
-          Größe wählen
+          Einheit wählen
         </WegKnopf>
       );
     } else if (einzige?.availableForSale) {
@@ -168,10 +172,20 @@ export default function ProductCard({
               {PREIS_AUF_ANFRAGE}
             </p>
           ) : (
-            <p className="mt-2 text-[0.8rem] font-semibold">
-              {abPreis}
-              <PriceTag amount={min!.amount} currency={min!.currencyCode} />
-            </p>
+            <>
+              <p className="mt-2 text-[0.8rem] font-semibold">
+                {abPreis}
+                <PriceTag amount={min!.amount} currency={min!.currencyCode} />
+              </p>
+              {/* Brutto klein darunter. Der Grundpreis entfaellt auf der
+                  Kachel aus Platzgruenden, er steht auf der Produktseite. */}
+              <PreisDetails
+                nettoAmount={min!.amount}
+                currencyCode={min!.currencyCode}
+                abPreis={!!abPreis}
+                className="mt-0.5"
+              />
+            </>
           )}
           {p.ve && (
             <p className="mt-0.5 text-[0.72rem] text-muted">VE: {p.ve}</p>

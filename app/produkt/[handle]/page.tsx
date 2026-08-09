@@ -10,6 +10,7 @@ import { einheitenSchuetzen } from "../../lib/titel";
 import { bildBreite, bildSrcSet, DETAIL_STUFEN, DETAIL_SIZES } from "../../lib/bild";
 import { PRODUKTINHALTE } from "../../produktdaten";
 import BuyBox from "../../components/BuyBox";
+import { GRUNDMENGEN } from "../../grundmengen";
 import CrossSelling from "../../components/CrossSelling";
 import { SITE_URL, SITE_NAME, OG_BILD, OG_ALT } from "../../lib/seo";
 import { KAUFBAR, istPreisOffen, PREIS_HINWEIS_KATALOG } from "../../lib/shop-mode";
@@ -176,16 +177,35 @@ export default async function ProductPage({ params }: { params: Params }) {
     ...(product.featuredImage ? { image: product.featuredImage.url } : {}),
     ...(KAUFBAR && !preisOffen && min
       ? {
-          offers: {
-            "@type": "Offer",
-            url,
-            price: min.amount,
-            priceCurrency: min.currencyCode,
-            valueAddedTaxIncluded: false,
-            availability: variant?.availableForSale
-              ? "https://schema.org/InStock"
-              : "https://schema.org/OutOfStock",
-          },
+          // Mehrere Varianten: AggregateOffer mit der Preisspanne. Ein
+          // Einzelangebot zum niedrigsten Preis waere eine Falschaussage,
+          // sobald die Varianten verschieden kosten (Rolle 7,50 gegen
+          // Karton 85,50 beim Typ-100).
+          offers:
+            (product.variants?.length ?? 0) > 1
+              ? {
+                  "@type": "AggregateOffer",
+                  url,
+                  lowPrice: min.amount,
+                  highPrice:
+                    product.priceRange?.maxVariantPrice?.amount ?? min.amount,
+                  priceCurrency: min.currencyCode,
+                  offerCount: product.variants!.length,
+                  valueAddedTaxIncluded: false,
+                  availability: product.variants!.some((v) => v.availableForSale)
+                    ? "https://schema.org/InStock"
+                    : "https://schema.org/OutOfStock",
+                }
+              : {
+                  "@type": "Offer",
+                  url,
+                  price: min.amount,
+                  priceCurrency: min.currencyCode,
+                  valueAddedTaxIncluded: false,
+                  availability: variant?.availableForSale
+                    ? "https://schema.org/InStock"
+                    : "https://schema.org/OutOfStock",
+                },
         }
       : {}),
   };
@@ -257,6 +277,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                   fallbackPrice={min ?? { amount: "0", currencyCode: "EUR" }}
                   productHandle={product.handle}
                   productTitle={product.title}
+                  grundmenge={GRUNDMENGEN[product.handle] ?? null}
                 />
                 {/* Auf Anfrage-Produkten entfaellt der Knopf: Dort steht in
                     der BuyBox bereits der WhatsApp/E-Mail-Balken, ein

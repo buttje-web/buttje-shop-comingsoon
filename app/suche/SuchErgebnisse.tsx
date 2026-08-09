@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BildPlatzhalter from "../components/BildPlatzhalter";
 import PriceTag from "../components/PriceTag";
+import PreisDetails from "../components/PreisDetails";
 import EMailLink from "../components/EMailLink";
 import { bereiteVor, suche, type SuchEintrag } from "@/lib/suche";
 import { einheitenSchuetzen } from "../lib/titel";
@@ -137,12 +138,32 @@ export default function SuchErgebnisse({ kaufbar }: { kaufbar: boolean }) {
                       Preis auf Anfrage
                     </p>
                   ) : (
-                    <p className="mt-2 text-[0.8rem] font-semibold">
-                      <PriceTag
-                        amount={t.preis!.amount}
-                        currency={t.preis!.currencyCode}
+                    <>
+                      <p className="mt-2 text-[0.8rem] font-semibold">
+                        {/* "ab" wie auf der Produktkachel, sobald die
+                            Variantenpreise auseinanderfallen. preisBis
+                            fehlt in alten, vom CDN gecachten
+                            Indexstaenden - dann kein "ab", wie bisher. */}
+                        {Number(t.preisBis?.amount) > Number(t.preis!.amount)
+                          ? "ab "
+                          : ""}
+                        <PriceTag
+                          amount={t.preis!.amount}
+                          currency={t.preis!.currencyCode}
+                        />
+                      </p>
+                      {/* Brutto auch im Suchergebnis - "bei jedem Artikel".
+                          Grundpreis wie auf der Kachel: aus Platzgruenden
+                          nur auf der Produktseite. */}
+                      <PreisDetails
+                        nettoAmount={t.preis!.amount}
+                        currencyCode={t.preis!.currencyCode}
+                        abPreis={
+                          Number(t.preisBis?.amount) > Number(t.preis!.amount)
+                        }
+                        className="mt-0.5"
                       />
-                    </p>
+                    </>
                   )}
                   {t.ve && <p className="mt-0.5 text-[0.72rem] text-muted">VE: {t.ve}</p>}
                 </Link>

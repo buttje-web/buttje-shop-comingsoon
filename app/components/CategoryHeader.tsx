@@ -54,7 +54,9 @@ export default function CategoryHeader({
       <div className="grid grid-cols-1 items-start gap-[clamp(28px,5vw,64px)] md:grid-cols-[1fr_minmax(320px,480px)]">
         {/* Text-Spalte */}
         <div>
-          <span className="eyebrow">Kategorie</span>
+          {/* Mit Kategorienamen, damit die Zeile auch fuer sich stehend
+              sagt, wo man ist - der Punkt trennt wie im Fusszeilen-Copyright. */}
+          <span className="eyebrow">Kategorie · {label}</span>
           {/* KEINE Silbentrennung. Ein frueherer Versuch mit hyphens-auto
               hat lange Woerter zwar gebaendigt, dafuer aber Versalien-
               Headlines als "KEI-NE" umgebrochen. Umbruch jetzt nur an

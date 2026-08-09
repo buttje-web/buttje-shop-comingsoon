@@ -6,6 +6,8 @@ import { trackEvent } from "../lib/analytics";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
+import PreisDetails from "./PreisDetails";
+import type { Grundmenge } from "../grundmengen";
 import AnfrageWahl from "./AnfrageWahl";
 import { einheitenSchuetzen } from "../lib/titel";
 import { VERSAND, VERSAND_AB, GRATIS_BIS_KG, euro } from "../lib/versand";
@@ -19,12 +21,15 @@ export default function BuyBox({
   fallbackPrice,
   productHandle,
   productTitle,
+  grundmenge = null,
 }: {
   variants: ProductVariant[];
   fallbackPrice: Money;
   productHandle: string;
   /** Produktname im Klartext - fuer den vorbefuellten Anfragetext. */
   productTitle: string;
+  /** Belegte Menge je VE aus grundmengen.ts; null = kein Grundpreis. */
+  grundmenge?: Grundmenge | null;
 }) {
   const first = variants.find((v) => v.availableForSale) ?? variants[0];
   const [selectedId, setSelectedId] = useState<string | null>(first?.id ?? null);
@@ -80,13 +85,31 @@ export default function BuyBox({
           <PriceTag amount={price.amount} currency={price.currencyCode} />
         )}
       </p>
+      {/* Brutto und, wo die Menge belegt ist, der Grundpreis. Rechnet
+          vom Preis der GEWAEHLTEN Einheit, nicht vom Produktminimum.
+
+          Grundpreis NUR bei genau einer Variante: grundmengen.ts belegt
+          die Menge je Produkt, der Preis gehoert aber zur Variante. Seit
+          dem 09.08. legt die Katalogpflege Karton-Zweitvarianten an
+          (Typ-100: Rolle und Karton) - traefe die Produktmenge auf die
+          Kartonvariante, waere der Grundpreis um den Kartonfaktor
+          falsch. Also lieber keine Zeile als eine falsche, bis das Feld
+          je Variante gefuehrt wird. */}
+      {!preisOffen && (
+        <PreisDetails
+          nettoAmount={price.amount}
+          currencyCode={price.currencyCode}
+          grundmenge={variants.length === 1 ? grundmenge : null}
+          className="mt-1"
+        />
+      )}
 
       {/* Preis auf Anfrage: statt Menge und Sackerl-Knopf DAUERHAFT der
           zweigeteilte Balken WhatsApp/E-Mail (Vorgabe Rami, 09.08.2026,
-          ersetzt alle frueheren Fassungen). Der fruehere Hinweistext mit
-          denselben zwei Wegen ist damit abgeloest. sku der GEWAEHLTEN
-          Einheit - bei mehreren Einheiten fragt der Kunde genau die an,
-          die er angeklickt hat. */}
+          ersetzt alle frueheren Fassungen samt Aufklapper). Der fruehere
+          Hinweistext mit denselben zwei Wegen bleibt abgeloest. sku der
+          GEWAEHLTEN Einheit - bei mehreren Einheiten fragt der Kunde
+          genau die an, die er angeklickt hat. */}
       {preisOffen ? (
         <div className="mt-5">
           <AnfrageWahl titel={productTitle} sku={selected?.sku ?? null} />

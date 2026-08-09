@@ -66,6 +66,7 @@ export async function getSearchIndex(): Promise<
     bild: string | null;
     bildAlt: string | null;
     preis: { amount: string; currencyCode: string } | null;
+    preisBis: { amount: string; currencyCode: string } | null;
   }[]
 > {
   type Raw = {
@@ -75,7 +76,10 @@ export async function getSearchIndex(): Promise<
     vendor: string | null;
     tags: string[];
     featuredImage: { url: string; altText: string | null } | null;
-    priceRange: { minVariantPrice: { amount: string; currencyCode: string } } | null;
+    priceRange: {
+      minVariantPrice: { amount: string; currencyCode: string };
+      maxVariantPrice?: { amount: string; currencyCode: string } | null;
+    } | null;
     teaser: MetafieldRef;
     ve: MetafieldRef;
     variants: Edges<{ sku: string | null }>;
@@ -98,6 +102,7 @@ export async function getSearchIndex(): Promise<
     bild: p.featuredImage?.url ?? null,
     bildAlt: p.featuredImage?.altText ?? null,
     preis: p.priceRange?.minVariantPrice ?? null,
+    preisBis: p.priceRange?.maxVariantPrice ?? null,
   }));
 }
 
