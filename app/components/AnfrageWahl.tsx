@@ -91,13 +91,24 @@ export default function AnfrageWahl({
   const whatsappText = `Anfrage zu ${titel}${artikel ? `, Artikelnummer ${artikel}` : ""}:`;
   const betreff = `Anfrage: ${titel}${artikel ? ` (${artikel})` : ""}`;
 
-  const wegKlasse =
-    "flex min-h-[44px] w-full items-center gap-2.5 px-3 " +
+  // Eine Haelfte des Balkens. In der Kachel-Fassung 32 Punkte gezeichnet,
+  // die Tippflaeche waechst per ziel44-tief nach UNTEN - nach oben sitzt
+  // der ANFRAGEN-Knopf, dessen eigene Flaeche in die Fuge reicht.
+  const haelfte =
+    `flex ${klein ? "ziel44 ziel44-tief h-8" : "min-h-[44px]"} min-w-0 flex-1 ` +
+    "items-center justify-center gap-2 px-1 " +
     `${klein ? "text-[0.64rem]" : "text-[0.72rem]"} font-bold uppercase leading-none ` +
     "tracking-[0.16em] transition-colors hover:text-accent focus-visible:text-accent";
+  // Woerter entfallen in schmalen Kacheln (Behaeltermass, nicht
+  // Fenstermass) - dann sprechen die Symbole, die Vorlese-Beschriftung
+  // bleibt immer dran.
+  const wort = klein ? "@max-[230px]:hidden" : "";
 
   return (
-    <div ref={rahmen} className={klein ? "w-full" : "inline-block min-w-[260px]"}>
+    <div
+      ref={rahmen}
+      className={klein ? "@container w-full" : "inline-block min-w-[260px]"}
+    >
       <button
         ref={knopf}
         type="button"
@@ -106,40 +117,48 @@ export default function AnfrageWahl({
         aria-label={`Anfragen: ${titel}`}
         onClick={() => setOffen((o) => !o)}
         className={
+          // Zustand und Grundfarben schliessen sich aus, sonst entscheidet
+          // die CSS-Reihenfolge statt des Zustands (text-muted schlug
+          // text-accent).
           klein
             ? // wie WegKnopf der Kachel: 32 gezeichnet, 44 antippbar (ziel44)
-              "ziel44 flex h-8 w-full items-center justify-center border border-line-strong px-2 " +
-              "text-[0.64rem] font-bold uppercase leading-none tracking-[0.16em] text-muted " +
-              "transition-colors hover:border-text hover:text-text " +
-              (offen ? "border-text text-text" : "")
-            : "min-h-[44px] w-full border border-line-strong px-6 py-3 text-[0.72rem] font-bold " +
-              "uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent " +
-              (offen ? "border-accent text-accent" : "")
+              "ziel44 flex h-8 w-full items-center justify-center border px-2 " +
+              "text-[0.64rem] font-bold uppercase leading-none tracking-[0.16em] transition-colors " +
+              (offen
+                ? "border-accent text-accent"
+                : "border-line-strong text-muted hover:border-text hover:text-text")
+            : "min-h-[44px] w-full border px-6 py-3 text-[0.72rem] font-bold " +
+              "uppercase tracking-[0.2em] transition-colors " +
+              (offen
+                ? "border-accent text-accent"
+                : "border-line-strong hover:border-accent hover:text-accent")
         }
       >
         Anfragen
       </button>
 
-      {/* Erst nach dem Klick im Baum - kein Weg steht im HTML der Seite. */}
+      {/* Erst nach dem Klick im Baum - kein Weg steht im HTML der Seite.
+          EIN Balken, zweigeteilt, Trennlinie mittig, Rahmen in Akzentblau
+          wie der offene ANFRAGEN-Knopf (Optikvorgabe vom 09.08.). */}
       {offen && (
-        <div id={feldId} className="mt-2 border border-line-strong">
+        <div id={feldId} className="mt-2 flex border border-accent">
           <a
             href={`https://wa.me/4367762080802?text=${encodeURIComponent(whatsappText)}`}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Per WhatsApp anfragen: ${titel}`}
-            className={wegKlasse}
+            className={haelfte}
           >
             <WhatsAppZeichen />
-            Per WhatsApp anfragen
+            <span className={wort}>WhatsApp</span>
           </a>
           <a
             href={`mailto:${mailKlartext()}?subject=${encodeURIComponent(betreff)}`}
             aria-label={`Per E-Mail anfragen: ${titel}`}
-            className={`${wegKlasse} border-t border-line-strong`}
+            className={`${haelfte} border-l border-accent`}
           >
             <BriefZeichen />
-            Per E-Mail anfragen
+            <span className={wort}>E-Mail</span>
           </a>
         </div>
       )}
