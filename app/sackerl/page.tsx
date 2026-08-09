@@ -6,7 +6,6 @@ import CheckoutGate from "../components/CheckoutGate";
 import FreeShippingBar from "../components/FreeShippingBar";
 import PriceTag from "../components/PriceTag";
 import { KAUFBAR } from "../lib/shop-mode";
-import { VERSAND, GRATIS_BIS_KG, euro } from "../lib/versand";
 import { loadCart } from "@/lib/cart/actions";
 
 // Eigenes canonical, sonst erbt die Seite das der Startseite aus
@@ -15,7 +14,7 @@ import { loadCart } from "@/lib/cart/actions";
 export const metadata: Metadata = {
   title: "Sackerl",
   robots: { index: false, follow: true },
-  alternates: { canonical: "/warenkorb" },
+  alternates: { canonical: "/sackerl" },
 };
 
 // Katalogmodus (KAUFBAR=aus): Kauf ist deaktiviert. Die Seite bleibt als
@@ -49,17 +48,16 @@ function Geschlossen() {
 function Leer() {
   return (
     <Container className="py-[clamp(40px,7vw,88px)]">
-      <p className="eyebrow mb-3">Sackerl</p>
+      {/* Ohne eyebrow-Zeile: SACKERL direkt ueber IHR SACKERL waere eine
+          Doppelzeile (Vorgabe vom 09.08., Punkt a). */}
       <h1 className="mb-10 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
         Ihr Sackerl
       </h1>
       <div className="border border-line px-6 py-16 text-center">
-        <p className="text-muted">Ihr Sackerl ist leer.</p>
-        {/* Werte zentral aus app/lib/versand.ts, derselbe Satz wie im
-            Laufband - die Zeile kann nie von der Staffel abweichen. */}
-        <p className="mt-2 text-[0.8rem] text-muted">
-          Versandkostenfrei ab {euro(VERSAND.freiAb)} netto (bis {GRATIS_BIS_KG} kg).
-        </p>
+        {/* Wortlaut woertlich nach Vorgabe vom 09.08., Punkt b. Der
+            Versandhinweis steht im Laufband und wird hier nicht doppelt
+            gezeigt. */}
+        <p className="text-muted">Keine Scheu. Wir sagen es auch keinem.</p>
         <Link
           href="/produkte"
           className="mt-8 inline-block border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
@@ -92,7 +90,7 @@ export default async function CartPage() {
 
   return (
     <Container className="py-[clamp(40px,7vw,88px)]">
-      <p className="eyebrow mb-3">Sackerl</p>
+      {/* Ohne eyebrow-Zeile, siehe Leer(). */}
       <h1 className="mb-10 text-[clamp(2rem,5vw,3.5rem)] font-black uppercase tracking-[-0.03em]">
         Ihr Sackerl
       </h1>

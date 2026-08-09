@@ -21,6 +21,18 @@ const nextConfig: NextConfig = {
     */
     inlineCss: true,
   },
+  async redirects() {
+    return [
+      // Umzug vom 09.08.2026: Die Sackerl-Seite heisst auch in der Adresse
+      // Sackerl. Dauerhaft mit 301 (statt Nexts 308), wie beauftragt -
+      // fuer den reinen Seitenaufruf per GET sind beide gleichwertig.
+      {
+        source: "/warenkorb",
+        destination: "/sackerl",
+        statusCode: 301,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -36,7 +36,7 @@ export default function CartLink() {
   const { count } = useCart();
   return (
     <Link
-      href="/warenkorb"
+      href="/sackerl"
       aria-label={`Sackerl, ${count} Artikel`}
       className="flex min-h-[44px] items-center gap-2 border border-line-strong px-[13px] text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-text transition-colors hover:border-accent hover:text-accent"
     >

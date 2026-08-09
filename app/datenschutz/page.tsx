@@ -69,7 +69,7 @@ export default function DatenschutzPage() {
       <h2>7. Cookies</h2>
       <p>
         Wir verwenden ausschließlich technisch notwendige Cookies, etwa für
-        den Warenkorb und den Bestellprozess. Cookies zu Analyse- oder
+        das Sackerl und den Bestellprozess. Cookies zu Analyse- oder
         Werbezwecken setzen wir nicht ein; ein Cookie-Banner ist daher nicht
         erforderlich.
       </p>
