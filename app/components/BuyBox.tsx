@@ -164,6 +164,31 @@ export default function BuyBox({
         Versand ab {euro(VERSAND_AB)}. Versandkostenfrei ab{" "}
         {euro(VERSAND.freiAb)} netto (bis {GRATIS_BIS_KG} kg).
       </p>
+
+      {/* Kaufbare Produkte: unter der Versandzeile derselbe zweigeteilte
+          Balken wie auf den Anfrage-Produkten, mit dem Wortlaut "Frage zu"
+          statt "Anfrage zu" und der erklaerenden Zeile darueber (Vorgabe
+          Rami, 09.08.2026; ersetzt den frueheren Knopf FRAGEN? PER
+          WHATSAPP). Er steht HIER und nicht auf der Seite, weil nur die
+          Kaufbox die GEWAEHLTE Verpackungseinheit kennt - deren
+          Artikelnummer gehoert in die Vorbefuellung. Auf Anfrage-Produkten
+          (preisOffen) steht der Balken schon oben, hier kommt nichts dazu. */}
+      {!preisOffen && (
+        // mt-6 zur Versandzeile darueber, mb-2 zum Balken darunter:
+        // Die Zeile soll optisch zum Balken gehoeren, nicht zur
+        // Versandzeile (Nachbesserung Rami, 09.08.2026).
+        <div className="mt-6">
+          {/* Machart wie VERPACKUNGSEINHEIT weiter oben: .eyebrow
+              (Versalien, Sperrung, grau) - Zwischenueberschrift,
+              keine Fussnote. */}
+          <p className="eyebrow mb-2">Fragen zum Produkt?</p>
+          <AnfrageWahl
+            titel={productTitle}
+            sku={selected?.sku ?? null}
+            wortlaut="frage"
+          />
+        </div>
+      )}
     </div>
   );
 }
