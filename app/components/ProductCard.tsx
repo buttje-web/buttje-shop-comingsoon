@@ -27,7 +27,7 @@ import type { Product } from "@/lib/shopify/types";
 //
 // WELCHER KAUFBEREICH, entschieden aus den Daten der Kachel:
 //   Preis 0,00                     ->  ANFRAGEN, Weg zur Produktseite
-//   mehr als eine Variante         ->  GROESSE WAEHLEN, ebenfalls dorthin
+//   mehr als eine Variante         ->  EINHEIT WAEHLEN, ebenfalls dorthin
 //   genau eine, verfuegbar, Preis  ->  Menge + INS SACKERL
 // Die Reihenfolge ist Absicht: Was keinen Preis hat, ist nicht kaufbar,
 // auch nicht mit nur einer Variante. Der Kunde sieht in dem Fall oben
@@ -102,9 +102,12 @@ export default function ProductCard({
         </WegKnopf>
       );
     } else if (varianten.length > 1) {
+      // "Einheit waehlen", nicht "Groesse waehlen": die Varianten des
+      // Shops sind Verpackungseinheiten (Rolle, Karton), keine Groessen.
+      // Umbenannt am 09.08. mit dem ersten echten Zweivarianten-Produkt.
       kaufbereich = (
         <WegKnopf href={ziel} titel={p.title}>
-          Größe wählen
+          Einheit wählen
         </WegKnopf>
       );
     } else if (einzige?.availableForSale) {

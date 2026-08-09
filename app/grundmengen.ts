@@ -136,6 +136,16 @@ export const GRUNDMENGEN: Record<string, Grundmenge> = {
   "taski-padschwamm-10-stueck": {
     menge: 10, einheit: "stueck", quelle: "VE-Feld: 10 Stück",
   },
+  // Nachgetragen am 09.08. nach Preispflege, Freigabe Rami:
+  "deiss-abfallsaecke-recycling-ldpe-120-l-transparent-de-29071-120": {
+    menge: 25, einheit: "stueck", quelle: "VE-Feld: Rolle à 25 Stück",
+  },
+  "scotch-brite-extreme-topfreiniger-extra-stark-12-stueck-3m-7100248037": {
+    menge: 12, einheit: "stueck", quelle: "VE-Feld: 12 Stück/Packung",
+  },
+  "noelle-profi-brush-jumbo-abfallsack-240-l-60-my-schwarz-nl-00738750": {
+    menge: 1, einheit: "stueck", quelle: "VE-Feld: 1 Stück",
+  },
   // Einzelstuecke: Grundpreis gleich dem Artikelpreis. Redundant, aber
   // belegt und regelkonform - die Zeile macht die Angabe vollstaendig.
   "dr-schnell-handsprueher-leer-600-ml": {
