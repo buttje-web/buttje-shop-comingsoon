@@ -4,6 +4,7 @@ import Container from "./components/Container";
 import KiLabel from "./components/KiLabel";
 import OptInForm from "./components/OptInForm";
 import FilmSektion from "./components/FilmSektion";
+import SortimentKnopf from "./components/SortimentKnopf";
 import { CATEGORIES } from "./categories";
 import { BILD_ALT, BILD_BASIS, bildSrcSet } from "./kategorie-bilder";
 
@@ -167,16 +168,11 @@ export default function HomePage() {
             </p>
 
             <div className="mt-9">
-              {/* Eigener halbtransparenter Grund unter dem Knopf: Er kann
-                  je nach Breite auf einem hellen Karton landen, und dort
-                  traegt der schwache Verlauf allein nicht. 60 % Deckung
-                  reichen, ohne dass ein Kasten entsteht. */}
-              <Link
-                href="/produkte"
-                className="inline-flex min-h-[48px] items-center border border-line-strong bg-[rgba(14,14,18,0.6)] px-7 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-text transition-colors hover:border-accent hover:text-accent"
-              >
-                Zum Sortiment →
-              </Link>
+              {/* Halbtransparenter Grund und Wortlaut unveraendert; das
+                  Ziel ist neu: scrollt zu den Kategorie-Kacheln unten
+                  statt auf /produkte zu fuehren (Entscheidung Rami,
+                  08.08.2026). Begruendung im Kopf von SortimentKnopf.tsx. */}
+              <SortimentKnopf />
             </div>
           </div>
         </Container>
@@ -188,7 +184,13 @@ export default function HomePage() {
           Reihe mehr vollstaendig ins Bild passte.
           Kein Text auf dem Bild - die Motive sind dunkel und kontrastarm,
           Schrift darauf waere in der Kachelgroesse nicht sicher lesbar. */}
-      <section className="border-t border-line">
+      {/* id="sortiment": Ankerziel des Hero-Knopfs. scroll-mt haelt beim
+          Anspringen Abstand zur klebenden Kopfleiste (Ticker ~32 + Leiste
+          62 + Rahmen ~1 = ~95 Punkte). 112 statt knapper 96, weil der
+          Ticker bei "weniger Bewegung" statisch rendert und dann
+          umbrechen kann - die Leiste waechst auf ~107, und die Kante
+          laege unter ihr. Die Reserve kostet nur etwas Luft. */}
+      <section id="sortiment" className="scroll-mt-28 border-t border-line">
         <Container className="py-[clamp(40px,7vw,80px)]">
           <p className="eyebrow mb-6">Sortiment</p>
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

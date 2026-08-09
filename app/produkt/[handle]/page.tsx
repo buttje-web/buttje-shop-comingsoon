@@ -7,10 +7,12 @@ import JsonLd from "../../components/JsonLd";
 import ProduktInfo from "../../components/ProduktInfo";
 import { boxZeilen } from "../../produktdaten";
 import { einheitenSchuetzen } from "../../lib/titel";
+import { bildBreite, bildSrcSet, DETAIL_STUFEN, DETAIL_SIZES } from "../../lib/bild";
 import { PRODUKTINHALTE } from "../../produktdaten";
 import BuyBox from "../../components/BuyBox";
 import { GRUNDMENGEN } from "../../grundmengen";
-import { SITE_URL, SITE_NAME } from "../../lib/seo";
+import CrossSelling from "../../components/CrossSelling";
+import { SITE_URL, SITE_NAME, OG_BILD, OG_ALT } from "../../lib/seo";
 import { KAUFBAR, istPreisOffen, PREIS_HINWEIS_KATALOG } from "../../lib/shop-mode";
 import { getProductByHandle } from "@/lib/shopify";
 import type { Product } from "@/lib/shopify/types";
@@ -64,7 +66,17 @@ export async function generateMetadata({
       title: `${product.title} | ${SITE_NAME}`,
       description,
       url,
-      images: product.featuredImage ? [{ url: product.featuredImage.url }] : undefined,
+      /*
+        Auf 1200 Punkte begrenzt. Ohne Begrenzung stand hier das
+        Originalfoto der Warenwirtschaft mit 2048 Punkten und rund 4,7 MB
+        - eine Groesse, an der Vorschau-Dienste abbrechen oder ins
+        Zeitlimit laufen. Das Produktfoto bleibt hier bewusst das
+        Vorschaubild und nicht das Standardmotiv: Wer einen Artikel teilt,
+        meint diesen Artikel.
+      */
+      images: product.featuredImage
+        ? [{ url: bildBreite(product.featuredImage.url, 1200) }]
+        : [{ url: OG_BILD, width: 1200, height: 630, alt: OG_ALT }],
     },
   };
 }
@@ -204,8 +216,17 @@ export default async function ProductPage({ params }: { params: Params }) {
           {product.featuredImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={product.featuredImage.url}
+              src={bildBreite(product.featuredImage.url, 640)}
+              srcSet={bildSrcSet(product.featuredImage.url, DETAIL_STUFEN)}
+              sizes={DETAIL_SIZES}
+              width={640}
+              height={640}
               alt={product.featuredImage.altText ?? product.title}
+              // Nicht lazy: Das ist das groesste Bild der Seite und steht
+              // sofort im Bild. Verzoegern hiesse die Ladezeit verschlechtern,
+              // die es misst.
+              fetchPriority="high"
+              decoding="async"
               className="h-full w-full object-contain"
             />
           ) : (
@@ -300,6 +321,10 @@ export default async function ProductPage({ params }: { params: Params }) {
           )}
         </div>
       </div>
+
+      {/* Cross-Selling: "Alternativen" + "Passt dazu", kuratiert je SKU
+          (app/crossselling.ts). Leere Bloecke verschwinden ersatzlos. */}
+      <CrossSelling sku={variant?.sku} eigenesHandle={product.handle} />
     </Container>
   );
 }

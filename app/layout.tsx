@@ -6,19 +6,35 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import JsonLd from "./components/JsonLd";
 import { CartProvider } from "./components/CartContext";
-import { ORG, SITE_URL } from "./lib/seo";
+import { ORG, ORG_ID, SITE_URL, SITE_NAME } from "./lib/seo";
 import { KAUFBAR } from "./lib/shop-mode";
 import { loadCart } from "@/lib/cart/actions";
 
 const organizationLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  // Stabile Kennung: die FAQ-Seite verweist darueber auf die Organisation
+  // als Herausgeber, ohne den Block zu duplizieren.
+  "@id": ORG_ID,
   name: ORG.name,
   legalName: ORG.legalName,
+  description: ORG.beschreibung,
   url: ORG.url,
-  // Kein "email" hier: siehe Begruendung in app/lib/seo.ts.
-  telephone: ORG.telephone,
+  // Kein "email" und KEINE Telefonnummer hier: siehe app/lib/seo.ts.
   vatID: ORG.vatID,
+  // Oesterreichische Firmenbuchnummer. schema.org kennt dafuer kein eigenes
+  // Feld, PropertyValue mit Klarnamen ist das uebliche Muster.
+  identifier: {
+    "@type": "PropertyValue",
+    name: "Firmenbuchnummer",
+    value: ORG.firmenbuchnummer,
+  },
+  logo: {
+    "@type": "ImageObject",
+    url: ORG.logo,
+    width: 512,
+    height: 512,
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: ORG.address.streetAddress,
@@ -44,6 +60,37 @@ export const metadata: Metadata = {
     "buttje Shop, Wien. Verbrauchsgüter und Hygienebedarf für Gewerbe: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung innerhalb Österreichs.",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
+  /*
+    Vorschaubild fuer geteilte Links, hier als Standard fuer ALLE Seiten.
+    Seiten mit eigenem openGraph-Block erben es, solange sie kein eigenes
+    Bild setzen - keine tut das.
+
+    metadataBase oben macht daraus eine vollstaendige Adresse mit
+    https://shop.buttje.at davor. Ein relativer Pfad genuegt hier nicht:
+    Die Vorschau-Dienste holen das Bild ohne Kenntnis unserer Seite.
+
+    Die KI-Kennzeichnung ist in die Datei GEBRANNT. Bei einem geteilten
+    Link gibt es kein HTML, in dem ein Label stehen koennte - siehe
+    scripts/og-bild.py und den Kopf von app/components/KiLabel.tsx.
+  */
+  openGraph: {
+    type: "website",
+    locale: "de_AT",
+    siteName: SITE_NAME,
+    url: "/",
+    title: "buttje Shop - Verbrauchsgüter & Hygienebedarf für Gewerbe",
+    description:
+      "Verbrauchsgüter und Hygienebedarf für Gewerbe in Wien: Müllsäcke, Papier, Seifen, Handschuhe, Chemie und Zubehör. Nettopreise, Lieferung innerhalb Österreichs.",
+    images: [
+      {
+        url: "/og/og-standard.jpg",
+        width: 1200,
+        height: 630,
+        alt: "buttje Shop, Wien: Kartons, Kanister, Müllsäcke und Zubehör (KI-generiert)",
+      },
+    ],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default async function RootLayout({
@@ -53,6 +100,21 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="de" className={`${inter.variable} h-full antialiased`}>
+      <head>
+        {/*
+          Verbindung zur Bild-Herkunft vorbereiten.
+
+          Die Produktfotos liegen auf einer anderen Herkunft als die Seite.
+          Ohne diesen Hinweis beginnen Namensaufloesung, Verbindungsaufbau
+          und Verschluesselung erst, wenn der Browser das erste Bild
+          anfordert. Das groesste sichtbare Bild - der Massstab fuer die
+          Ladezeit - haengt genau daran.
+
+          crossOrigin ist noetig, weil Bilder anonym geladen werden; ohne
+          das Attribut baut der Browser die Verbindung ein zweites Mal auf.
+        */}
+        <link rel="preconnect" href="https://cdn.shopify.com" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-full flex flex-col bg-base text-text">
         <JsonLd data={organizationLd} />
         {/* Privacy-friendly analytics by Plausible (offizielles Snippet,

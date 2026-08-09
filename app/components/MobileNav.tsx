@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CATEGORIES } from "../categories";
 import Suche from "./Suche";
+import KontoLink from "./KontoLink";
 
 /*
   Mobiles Menue (Burger) fuer Smartphone + Tablet hochkant (< lg).
@@ -83,6 +84,12 @@ export default function MobileNav() {
                 <Suche variant="menue" onNavigiert={() => setOpen(false)} />
               </div>
 
+              {/* "Produkte" ist hier BEWUSST kein Verweis, nur die
+                  Zwischenueberschrift der Kategorieliste. Der fruehere
+                  Sammel-Eintrag "Alle Produkte" (Link auf /produkte) ist
+                  ersatzlos entfallen - Entscheidung Rami (08.08.2026):
+                  Die Ware sieht man ausschliesslich ueber die Kategorien.
+                  Die Seite /produkte bleibt per Adresse erreichbar. */}
               <p className="eyebrow mb-2">Produkte</p>
               <ul className="mb-4 divide-y divide-line border-y border-line">
                 {CATEGORIES.map((c) => (
@@ -96,17 +103,13 @@ export default function MobileNav() {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link
-                    href="/produkte"
-                    onClick={() => setOpen(false)}
-                    className="block py-3 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-muted"
-                  >
-                    Alle Produkte
-                  </Link>
-                </li>
               </ul>
               <ul className="divide-y divide-line border-y border-line">
+                {/* Texteintrag KONTO (Vorgabe Rami, 08.08.2026): Das Wort
+                    entfaellt in der schmalen Kopfleiste, hier steht es. */}
+                <li>
+                  <KontoLink variant="menue" onNavigiert={() => setOpen(false)} />
+                </li>
                 <li>
                   <Link
                     href="/versand-zahlung"

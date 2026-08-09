@@ -42,9 +42,16 @@ export default function QuantityStepper({
   // NICHT text-base: dieses Projekt definiert die Farbe --color-base, damit
   // erzeugt Tailwind aus text-base eine FARBE (fast schwarz) statt einer
   // Schriftgroesse. Das Minus und das Plus waeren unsichtbar.
+  // In der kleinen Fassung ist der Knopf 32 x 32 Punkte gezeichnet. ziel44
+  // legt eine unsichtbare 44er-Flaeche darueber, nach aussen erweitert, damit
+  // das Zahlenfeld dazwischen antippbar bleibt (siehe globals.css).
+  // Die grosse Fassung ist mit 44 x 44 schon gross genug.
   const knopf = klein
-    ? "w-8 shrink-0 text-[1rem] leading-none transition-colors enabled:hover:text-accent disabled:opacity-30"
-    : "w-11 text-lg leading-none transition-colors enabled:hover:text-accent disabled:opacity-30";
+    ? "ziel44 ziel44-hoch w-8 shrink-0 text-[1rem] leading-none transition-colors enabled:hover:text-accent disabled:opacity-30"
+    // Die grosse Fassung ist 44 breit, in der Sackerl-Zeile aber nur 42 hoch:
+    // Der Rahmen hat min-h-[44px], die Knoepfe darin bekommen durch
+    // items-stretch die Innenhoehe. ziel44 gleicht die zwei Punkte aus.
+    : "ziel44 w-11 text-lg leading-none transition-colors enabled:hover:text-accent disabled:opacity-30";
   const feld = klein
     ? "min-w-0 flex-1 border-x border-line-strong bg-transparent text-center text-[0.8rem] font-semibold"
     : "w-16 border-x border-line-strong bg-transparent text-center text-sm font-semibold";
@@ -61,7 +68,7 @@ export default function QuantityStepper({
         aria-label="Menge verringern"
         disabled={disabled || value <= min}
         onClick={() => onChange(clamp(value - 1))}
-        className={knopf}
+        className={`${knopf} ${klein ? "ziel44-links" : ""}`}
       >
         −
       </button>
@@ -81,7 +88,7 @@ export default function QuantityStepper({
         aria-label="Menge erhöhen"
         disabled={disabled || (max !== undefined && value >= max)}
         onClick={() => onChange(clamp(value + 1))}
-        className={knopf}
+        className={`${knopf} ${klein ? "ziel44-rechts" : ""}`}
       >
         +
       </button>

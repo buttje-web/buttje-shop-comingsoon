@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BildPlatzhalter from "./BildPlatzhalter";
+import { bildBreite, bildSrcSet, KACHEL_STUFEN, KACHEL_SIZES } from "../lib/bild";
 import KachelKauf from "./KachelKauf";
 import PreisDetails from "./PreisDetails";
 import { einheitenSchuetzen } from "../lib/titel";
@@ -55,7 +56,8 @@ function WegKnopf({
       href={href}
       aria-label={`${titel}: ${children}`}
       className={
-        "flex h-8 w-full items-center justify-center border border-line-strong px-2 " +
+        // ziel44: 32 Punkte gezeichnet, 44 Punkte antippbar (globals.css)
+        "ziel44 flex h-8 w-full items-center justify-center border border-line-strong px-2 " +
         "text-[0.64rem] font-bold uppercase leading-none tracking-[0.16em] text-muted " +
         "transition-colors hover:border-text hover:text-text"
       }
@@ -65,7 +67,22 @@ function WegKnopf({
   );
 }
 
-export default function ProductCard({ product: p }: { product: Product }) {
+export default function ProductCard({
+  product: p,
+  zuerst = false,
+}: {
+  product: Product;
+  /*
+    Steht die Kachel in der ersten Rasterzeile? Dann wird ihr Bild sofort
+    geladen, alle uebrigen erst beim Heranscrollen.
+
+    Warum nicht alles lazy: Das groesste sichtbare Bild ist der Massstab
+    fuer die wahrgenommene Ladezeit. Ein "lazy" darauf verzoegert genau
+    das Bild, auf das es ankommt, weil der Browser es erst nach dem
+    Layout anfordert.
+  */
+  zuerst?: boolean;
+}) {
   const min = p.priceRange?.minVariantPrice;
   const max = p.priceRange?.maxVariantPrice;
   const preisOffen = istPreisOffen(min?.amount);
@@ -117,8 +134,15 @@ export default function ProductCard({ product: p }: { product: Product }) {
             {p.featuredImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={p.featuredImage.url}
+                src={bildBreite(p.featuredImage.url, 320)}
+                srcSet={bildSrcSet(p.featuredImage.url, KACHEL_STUFEN)}
+                sizes={KACHEL_SIZES}
+                width={320}
+                height={320}
                 alt={p.featuredImage.altText ?? p.title}
+                loading={zuerst ? "eager" : "lazy"}
+                fetchPriority={zuerst ? "high" : undefined}
+                decoding="async"
                 className="h-full w-full object-contain"
               />
             ) : (

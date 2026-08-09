@@ -4,7 +4,13 @@ import ProductCard from "../components/ProductCard";
 import { getProducts } from "@/lib/shopify";
 import type { Product } from "@/lib/shopify/types";
 
-export const metadata: Metadata = { title: "Produkte" };
+// Eigenes canonical, sonst erbt die Seite das der Startseite aus
+// app/layout.tsx und zeigt damit auf eine ANDERE Adresse. Genau daran
+// scheitert die SEO-Pruefung "Document does not have a valid rel=canonical".
+export const metadata: Metadata = {
+  title: "Produkte",
+  alternates: { canonical: "/produkte" },
+};
 
 // Produktliste / Kategorie-Seite. Solange der Store leer ist (oder Tokens
 // fehlen), zeigen wir einen ruhigen Platzhalter statt eines Fehlers.
@@ -38,8 +44,19 @@ export default async function ProductsPage() {
         </div>
       ) : (
         <ul className="grid grid-cols-1 border-l border-t border-line min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {/*
+            NUR die erste Kachel wird vorrangig geladen, nicht die ersten vier.
+
+            Frueher waren es vier - die erste Zeile im weitesten Raster. Auf
+            dem Handy steht dort aber nur EINE Kachel, die drei anderen liegen
+            unter dem Bildschirm. Vorrang fuer alle vier hiess: Sie teilen
+            sich die gedrosselte Bandbreite mit genau dem Bild, an dem die
+            Ladezeit gemessen wird, und bremsen es aus.
+            Auf dem Schreibtisch kostet das nichts: Die uebrigen drei laden
+            unmittelbar danach, dort ist die Leitung nicht der Engpass.
+          */}
+          {products.map((p, i) => (
+            <ProductCard key={p.id} product={p} zuerst={i === 0} />
           ))}
         </ul>
       )}

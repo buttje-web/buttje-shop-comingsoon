@@ -83,6 +83,8 @@ export const PRODUCTS_QUERY = `
                 id
                 title
                 availableForSale
+                # sku: Schluessel der Cross-Selling-Zuordnung (app/crossselling.ts)
+                sku
                 price { ...Money }
                 selectedOptions { name value }
               }
