@@ -25,7 +25,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Wie sind die Preise angegeben?",
-    a: "Alle Preise sind Nettopreise und verstehen sich zuzüglich der gesetzlichen Umsatzsteuer. Die Umsatzsteuer wird im Bestellprozess ausgewiesen.",
+    a: "Alle Preise sind Nettopreise und verstehen sich zuzüglich der gesetzlichen Umsatzsteuer. Der Bruttopreis steht bei jedem Artikel klein darunter. Die Umsatzsteuer wird im Bestellprozess ausgewiesen.",
   },
   {
     q: "Welche Zahlungsarten gibt es?",
