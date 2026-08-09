@@ -6,6 +6,7 @@ import CheckoutGate from "../components/CheckoutGate";
 import FreeShippingBar from "../components/FreeShippingBar";
 import PriceTag from "../components/PriceTag";
 import { KAUFBAR } from "../lib/shop-mode";
+import { VERSAND, GRATIS_BIS_KG, euro } from "../lib/versand";
 import { loadCart } from "@/lib/cart/actions";
 
 // Eigenes canonical, sonst erbt die Seite das der Startseite aus
@@ -54,6 +55,11 @@ function Leer() {
       </h1>
       <div className="border border-line px-6 py-16 text-center">
         <p className="text-muted">Ihr Sackerl ist leer.</p>
+        {/* Werte zentral aus app/lib/versand.ts, derselbe Satz wie im
+            Laufband - die Zeile kann nie von der Staffel abweichen. */}
+        <p className="mt-2 text-[0.8rem] text-muted">
+          Versandkostenfrei ab {euro(VERSAND.freiAb)} netto (bis {GRATIS_BIS_KG} kg).
+        </p>
         <Link
           href="/produkte"
           className="mt-8 inline-block border border-line-strong px-6 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
