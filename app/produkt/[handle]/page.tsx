@@ -276,6 +276,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                   variants={product.variants ?? []}
                   fallbackPrice={min ?? { amount: "0", currencyCode: "EUR" }}
                   productHandle={product.handle}
+                  productTitle={product.title}
                   grundmenge={GRUNDMENGEN[product.handle] ?? null}
                 />
                 <a

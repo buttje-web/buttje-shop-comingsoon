@@ -8,7 +8,7 @@ import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
 import PreisDetails from "./PreisDetails";
 import type { Grundmenge } from "../grundmengen";
-import EMailLink from "./EMailLink";
+import AnfrageWahl from "./AnfrageWahl";
 import { einheitenSchuetzen } from "../lib/titel";
 import { VERSAND, VERSAND_AB, GRATIS_BIS_KG, euro } from "../lib/versand";
 import type { ProductVariant, Money } from "@/lib/shopify/types";
@@ -20,11 +20,14 @@ export default function BuyBox({
   variants,
   fallbackPrice,
   productHandle,
+  productTitle,
   grundmenge = null,
 }: {
   variants: ProductVariant[];
   fallbackPrice: Money;
   productHandle: string;
+  /** Produktname im Klartext - fuer den vorbefuellten Anfragetext. */
+  productTitle: string;
   /** Belegte Menge je VE aus grundmengen.ts; null = kein Grundpreis. */
   grundmenge?: Grundmenge | null;
 }) {
@@ -101,27 +104,18 @@ export default function BuyBox({
         />
       )}
 
-      {preisOffen && (
-        <p className="mt-2 max-w-[42ch] text-[0.78rem] leading-relaxed text-muted">
-          Für diese Verpackungseinheit nennen wir Ihnen den Preis gern direkt.
-          Per{" "}
-          <a
-            href="https://wa.me/4367762080802"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent underline underline-offset-2"
-          >
-            WhatsApp
-          </a>{" "}
-          oder{" "}
-          <EMailLink className="text-accent underline underline-offset-2" />
-          .
-        </p>
-      )}
-
-      {/* Menge + In den Warenkorb */}
+      {/* Preis auf Anfrage: statt Menge und Sackerl-Knopf die Wegwahl
+          WhatsApp/E-Mail (Vorgabe vom 09.08.). Der fruehere Hinweistext
+          mit denselben zwei Wegen ist damit abgeloest. sku der GEWAEHLTEN
+          Einheit - bei mehreren Einheiten fragt der Kunde genau die an,
+          die er angeklickt hat. */}
+      {preisOffen ? (
+        <div className="mt-5">
+          <AnfrageWahl titel={productTitle} sku={selected?.sku ?? null} />
+        </div>
+      ) : (
       <div className="mt-5 flex flex-wrap items-center gap-3">
-        <QuantityStepper value={qty} onChange={setQty} disabled={!available || preisOffen} />
+        <QuantityStepper value={qty} onChange={setQty} disabled={!available} />
         <button
           type="button"
           disabled={disabled}
@@ -156,13 +150,12 @@ export default function BuyBox({
         >
           {pending
             ? "Wird hinzugefügt..."
-            : preisOffen
-              ? "Preis auf Anfrage"
-              : available
-                ? "Ins Sackerl"
-                : "Nicht verfügbar"}
+            : available
+              ? "Ins Sackerl"
+              : "Nicht verfügbar"}
         </button>
       </div>
+      )}
       {error && <p className="mt-2 text-[0.72rem] text-muted">{error}</p>}
 
       {/* Versand-Kurzinfo (Werte zentral in app/lib/versand.ts) */}

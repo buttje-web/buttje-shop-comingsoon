@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AnfrageWahl from "./AnfrageWahl";
 import BildPlatzhalter from "./BildPlatzhalter";
 import { bildBreite, bildSrcSet, KACHEL_STUFEN, KACHEL_SIZES } from "../lib/bild";
 import KachelKauf from "./KachelKauf";
@@ -96,10 +97,11 @@ export default function ProductCard({
   let kaufbereich: React.ReactNode = null;
   if (KAUFBAR) {
     if (preisOffen) {
+      // Seit 09.08. kein Weg zur Produktseite mehr, sondern die Wegwahl
+      // WhatsApp/E-Mail direkt am Knopf. Name und Bild der Kachel fuehren
+      // weiter auf die Produktseite.
       kaufbereich = (
-        <WegKnopf href={ziel} titel={p.title}>
-          Anfragen
-        </WegKnopf>
+        <AnfrageWahl titel={p.title} sku={einzige?.sku ?? null} klein />
       );
     } else if (varianten.length > 1) {
       // "Einheit waehlen", nicht "Groesse waehlen": die Varianten des
