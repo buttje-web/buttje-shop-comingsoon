@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AnfrageWahl from "./AnfrageWahl";
 import BildPlatzhalter from "./BildPlatzhalter";
 import { bildBreite, bildSrcSet, KACHEL_STUFEN, KACHEL_SIZES } from "../lib/bild";
 import KachelKauf from "./KachelKauf";
@@ -95,10 +96,13 @@ export default function ProductCard({
   let kaufbereich: React.ReactNode = null;
   if (KAUFBAR) {
     if (preisOffen) {
+      // Kein ANFRAGEN-Knopf mehr (Vorgabe Rami, 09.08.2026): An der Stelle
+      // von INS SACKERL steht dauerhaft der zweigeteilte Balken
+      // WhatsApp/E-Mail. Name und Bild der Kachel fuehren weiter auf die
+      // Produktseite. Artikelnummer nur bei genau einer Variante - bei
+      // mehreren bleibt im Anfragetext nur der Name.
       kaufbereich = (
-        <WegKnopf href={ziel} titel={p.title}>
-          Anfragen
-        </WegKnopf>
+        <AnfrageWahl titel={p.title} sku={einzige?.sku ?? null} klein />
       );
     } else if (varianten.length > 1) {
       kaufbereich = (

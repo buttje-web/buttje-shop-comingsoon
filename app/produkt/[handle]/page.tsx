@@ -256,15 +256,23 @@ export default async function ProductPage({ params }: { params: Params }) {
                   variants={product.variants ?? []}
                   fallbackPrice={min ?? { amount: "0", currencyCode: "EUR" }}
                   productHandle={product.handle}
+                  productTitle={product.title}
                 />
-                <a
-                  href="https://wa.me/4367762080802"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 inline-block border border-line-strong px-5 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
-                >
-                  Fragen? Per WhatsApp →
-                </a>
+                {/* Auf Anfrage-Produkten entfaellt der Knopf: Dort steht in
+                    der BuyBox bereits der WhatsApp/E-Mail-Balken, ein
+                    zweiter WhatsApp-Weg darunter waere eine Dublette
+                    (Vorgabe Rami, 09.08.2026). Auf kaufbaren Produkten
+                    bleibt er unveraendert. */}
+                {!preisOffen && (
+                  <a
+                    href="https://wa.me/4367762080802"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-block border border-line-strong px-5 py-3 text-[0.72rem] font-bold uppercase tracking-[0.2em] transition-colors hover:border-accent hover:text-accent"
+                  >
+                    Fragen? Per WhatsApp →
+                  </a>
+                )}
               </>
             ) : (
               <>
