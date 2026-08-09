@@ -83,12 +83,20 @@ export default function BuyBox({
         )}
       </p>
       {/* Brutto und, wo die Menge belegt ist, der Grundpreis. Rechnet
-          vom Preis der GEWAEHLTEN Einheit, nicht vom Produktminimum. */}
+          vom Preis der GEWAEHLTEN Einheit, nicht vom Produktminimum.
+
+          Grundpreis NUR bei genau einer Variante: grundmengen.ts belegt
+          die Menge je Produkt, der Preis gehoert aber zur Variante. Seit
+          dem 09.08. legt die Katalogpflege Karton-Zweitvarianten an
+          (Typ-100: Rolle und Karton) - traefe die Produktmenge auf die
+          Kartonvariante, waere der Grundpreis um den Kartonfaktor
+          falsch. Also lieber keine Zeile als eine falsche, bis das Feld
+          je Variante gefuehrt wird. */}
       {!preisOffen && (
         <PreisDetails
           nettoAmount={price.amount}
           currencyCode={price.currencyCode}
-          grundmenge={grundmenge}
+          grundmenge={variants.length === 1 ? grundmenge : null}
           className="mt-1"
         />
       )}
