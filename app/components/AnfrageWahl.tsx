@@ -67,6 +67,7 @@ export default function AnfrageWahl({
   titel,
   sku = null,
   klein = false,
+  wortlaut = "anfrage",
 }: {
   /** Produktname im Klartext (unformatiert, landet im Anfragetext). */
   titel: string;
@@ -74,13 +75,22 @@ export default function AnfrageWahl({
   sku?: string | null;
   /** Kachel-Fassung: 32 Punkte gezeichnet, wie die Nachbar-Knoepfe. */
   klein?: boolean;
+  /**
+   * Wortlaut der Vorbefuellung (Vorgabe Rami, 09.08.2026):
+   * - "anfrage": Anfrage-Produkte (Preis 0) - "Anfrage zu ..." / "Anfrage: ..."
+   * - "frage":   kaufbare Produkte - "Frage zu ..." / "Frage: ..."
+   * Der Balken selbst ist in beiden Faellen derselbe.
+   */
+  wortlaut?: "anfrage" | "frage";
 }) {
   const artikel = sku?.trim() ? sku.trim() : null;
+  const auftakt = wortlaut === "frage" ? "Frage" : "Anfrage";
 
-  // Vorgabe woertlich: "Anfrage zu [Produktname], Artikelnummer [Nr]:" -
-  // ohne Artikelnummer entfaellt der Nummern-Teil, der Doppelpunkt bleibt.
+  // Vorgabe woertlich: "[Anfrage|Frage] zu [Produktname], Artikelnummer
+  // [Nr]:" - ohne Artikelnummer entfaellt der Nummern-Teil, der
+  // Doppelpunkt bleibt.
   function whatsapp() {
-    const text = `Anfrage zu ${titel}${artikel ? `, Artikelnummer ${artikel}` : ""}:`;
+    const text = `${auftakt} zu ${titel}${artikel ? `, Artikelnummer ${artikel}` : ""}:`;
     window.open(
       `https://wa.me/4367762080802?text=${encodeURIComponent(text)}`,
       "_blank",
@@ -89,7 +99,7 @@ export default function AnfrageWahl({
   }
 
   function mail() {
-    const betreff = `Anfrage: ${titel}${artikel ? ` (${artikel})` : ""}`;
+    const betreff = `${auftakt}: ${titel}${artikel ? ` (${artikel})` : ""}`;
     window.location.href = `mailto:${mailKlartext()}?subject=${encodeURIComponent(betreff)}`;
   }
 
@@ -106,14 +116,27 @@ export default function AnfrageWahl({
 
   return (
     <div className={klein ? "@container flex w-full border border-accent" : "flex min-w-[260px] border border-accent"}>
-      <button type="button" onClick={whatsapp} aria-label={`Per WhatsApp anfragen: ${titel}`} className={haelfte}>
+      <button
+        type="button"
+        onClick={whatsapp}
+        aria-label={
+          wortlaut === "frage"
+            ? `Frage per WhatsApp stellen: ${titel}`
+            : `Per WhatsApp anfragen: ${titel}`
+        }
+        className={haelfte}
+      >
         <WhatsAppZeichen />
         <span className={wort}>WhatsApp</span>
       </button>
       <button
         type="button"
         onClick={mail}
-        aria-label={`Per E-Mail anfragen: ${titel}`}
+        aria-label={
+          wortlaut === "frage"
+            ? `Frage per E-Mail stellen: ${titel}`
+            : `Per E-Mail anfragen: ${titel}`
+        }
         className={`${haelfte} border-l border-accent`}
       >
         <BriefZeichen />
