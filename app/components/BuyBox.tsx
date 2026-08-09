@@ -174,8 +174,14 @@ export default function BuyBox({
           Artikelnummer gehoert in die Vorbefuellung. Auf Anfrage-Produkten
           (preisOffen) steht der Balken schon oben, hier kommt nichts dazu. */}
       {!preisOffen && (
-        <div className="mt-5">
-          <p className="mb-2 text-[0.66rem] text-muted">Fragen zum Produkt?</p>
+        // mt-6 zur Versandzeile darueber, mb-2 zum Balken darunter:
+        // Die Zeile soll optisch zum Balken gehoeren, nicht zur
+        // Versandzeile (Nachbesserung Rami, 09.08.2026).
+        <div className="mt-6">
+          {/* Machart wie VERPACKUNGSEINHEIT weiter oben: .eyebrow
+              (Versalien, Sperrung, grau) - Zwischenueberschrift,
+              keine Fussnote. */}
+          <p className="eyebrow mb-2">Fragen zum Produkt?</p>
           <AnfrageWahl
             titel={productTitle}
             sku={selected?.sku ?? null}
