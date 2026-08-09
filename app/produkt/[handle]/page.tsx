@@ -9,6 +9,7 @@ import { boxZeilen } from "../../produktdaten";
 import { einheitenSchuetzen } from "../../lib/titel";
 import { PRODUKTINHALTE } from "../../produktdaten";
 import BuyBox from "../../components/BuyBox";
+import { GRUNDMENGEN } from "../../grundmengen";
 import { SITE_URL, SITE_NAME } from "../../lib/seo";
 import { KAUFBAR, istPreisOffen, PREIS_HINWEIS_KATALOG } from "../../lib/shop-mode";
 import { getProductByHandle } from "@/lib/shopify";
@@ -235,6 +236,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                   variants={product.variants ?? []}
                   fallbackPrice={min ?? { amount: "0", currencyCode: "EUR" }}
                   productHandle={product.handle}
+                  grundmenge={GRUNDMENGEN[product.handle] ?? null}
                 />
                 <a
                   href="https://wa.me/4367762080802"

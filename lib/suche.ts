@@ -14,6 +14,9 @@ export type SuchEintrag = {
   bild: string | null;
   bildAlt: string | null;
   preis?: { amount: string; currencyCode: string } | null;
+  /** Hoechster Variantenpreis. Weicht er von preis ab, ist preis ein
+      "ab"-Preis. Fehlt in aelteren, vom CDN gecachten Indexstaenden. */
+  preisBis?: { amount: string; currencyCode: string } | null;
 };
 
 /** Kleinschreibung, Umlaute/ss vereinheitlicht, Sonderzeichen zu Leerzeichen.

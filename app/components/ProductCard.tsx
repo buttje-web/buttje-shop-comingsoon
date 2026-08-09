@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BildPlatzhalter from "./BildPlatzhalter";
 import KachelKauf from "./KachelKauf";
+import PreisDetails from "./PreisDetails";
 import { einheitenSchuetzen } from "../lib/titel";
 import PriceTag from "./PriceTag";
 import {
@@ -140,10 +141,20 @@ export default function ProductCard({ product: p }: { product: Product }) {
               {PREIS_AUF_ANFRAGE}
             </p>
           ) : (
-            <p className="mt-2 text-[0.8rem] font-semibold">
-              {abPreis}
-              <PriceTag amount={min!.amount} currency={min!.currencyCode} />
-            </p>
+            <>
+              <p className="mt-2 text-[0.8rem] font-semibold">
+                {abPreis}
+                <PriceTag amount={min!.amount} currency={min!.currencyCode} />
+              </p>
+              {/* Brutto klein darunter. Der Grundpreis entfaellt auf der
+                  Kachel aus Platzgruenden, er steht auf der Produktseite. */}
+              <PreisDetails
+                nettoAmount={min!.amount}
+                currencyCode={min!.currencyCode}
+                abPreis={!!abPreis}
+                className="mt-0.5"
+              />
+            </>
           )}
           {p.ve && (
             <p className="mt-0.5 text-[0.72rem] text-muted">VE: {p.ve}</p>

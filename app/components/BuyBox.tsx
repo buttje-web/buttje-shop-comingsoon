@@ -6,6 +6,8 @@ import { trackEvent } from "../lib/analytics";
 import { useCart } from "./CartContext";
 import QuantityStepper from "./QuantityStepper";
 import PriceTag from "./PriceTag";
+import PreisDetails from "./PreisDetails";
+import type { Grundmenge } from "../grundmengen";
 import EMailLink from "./EMailLink";
 import { einheitenSchuetzen } from "../lib/titel";
 import { VERSAND, VERSAND_AB, GRATIS_BIS_KG, euro } from "../lib/versand";
@@ -18,10 +20,13 @@ export default function BuyBox({
   variants,
   fallbackPrice,
   productHandle,
+  grundmenge = null,
 }: {
   variants: ProductVariant[];
   fallbackPrice: Money;
   productHandle: string;
+  /** Belegte Menge je VE aus grundmengen.ts; null = kein Grundpreis. */
+  grundmenge?: Grundmenge | null;
 }) {
   const first = variants.find((v) => v.availableForSale) ?? variants[0];
   const [selectedId, setSelectedId] = useState<string | null>(first?.id ?? null);
@@ -77,6 +82,16 @@ export default function BuyBox({
           <PriceTag amount={price.amount} currency={price.currencyCode} />
         )}
       </p>
+      {/* Brutto und, wo die Menge belegt ist, der Grundpreis. Rechnet
+          vom Preis der GEWAEHLTEN Einheit, nicht vom Produktminimum. */}
+      {!preisOffen && (
+        <PreisDetails
+          nettoAmount={price.amount}
+          currencyCode={price.currencyCode}
+          grundmenge={grundmenge}
+          className="mt-1"
+        />
+      )}
 
       {preisOffen && (
         <p className="mt-2 max-w-[42ch] text-[0.78rem] leading-relaxed text-muted">
