@@ -97,9 +97,11 @@ export default function ProductCard({
   let kaufbereich: React.ReactNode = null;
   if (KAUFBAR) {
     if (preisOffen) {
-      // Seit 09.08. kein Weg zur Produktseite mehr, sondern die Wegwahl
-      // WhatsApp/E-Mail direkt am Knopf. Name und Bild der Kachel fuehren
-      // weiter auf die Produktseite.
+      // Kein ANFRAGEN-Knopf mehr (Vorgabe Rami, 09.08.2026): An der Stelle
+      // von INS SACKERL steht dauerhaft der zweigeteilte Balken
+      // WhatsApp/E-Mail. Name und Bild der Kachel fuehren weiter auf die
+      // Produktseite. Artikelnummer nur bei genau einer Variante - bei
+      // mehreren bleibt im Anfragetext nur der Name.
       kaufbereich = (
         <AnfrageWahl titel={p.title} sku={einzige?.sku ?? null} klein />
       );

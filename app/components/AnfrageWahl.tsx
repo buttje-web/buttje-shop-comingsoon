@@ -1,23 +1,38 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
 import { mailKlartext } from "../lib/kontakt";
 
-// ANFRAGEN mit Wegwahl (Vorgabe vom 09.08.): Der Knopf klappt ein kleines
-// Feld mit genau zwei Wegen auf - WhatsApp und E-Mail. Kein schwebendes
-// Element: das Feld gehoert zum Knopf und schiebt den Inhalt darunter.
-//
-// Gilt fuer Produkte mit Preis auf Anfrage (Preis 0,00), auf der Kachel
-// wie auf der Produktseite. Die Fallunterscheidung treffen die Aufrufer
-// ueber das Preisfeld - dieselbe Pruefung wie fuer die Preiszeile. Damit
-// wandert das Verhalten automatisch mit: faellt ein Preis auf 0, kommt
-// die Wegwahl, bekommt ein Produkt einen Preis, verschwindet sie.
-//
-// Die Wege stehen NICHT im ausgelieferten HTML: das Feld wird erst nach
-// dem Klick gerendert, den es ohne JavaScript nicht gibt. Die
-// Mail-Adresse entsteht wie ueberall erst im Browser (app/lib/kontakt.ts,
-// Harvester-Schutz); ohne JavaScript bleibt die lesbare Pflichtangabe
-// im Impressum der Weg.
+/*
+  Anfrage-Wahl als DAUERHAFT SICHTBARER Balken (Vorgabe Rami, 09.08.2026;
+  ersetzt alle frueheren Fassungen). Kein ANFRAGEN-Knopf, kein Aufklappen:
+  Der zweigeteilte Balken selbst ist der eine, immer sichtbare Knopf.
+  Linke Haelfte WhatsApp-Zeichen + WHATSAPP, rechte Haelfte Briefsymbol +
+  E-MAIL, senkrechte Trennlinie mittig, Rahmen in Akzentblau, eine
+  Knopfhoehe (Kachel 32 gezeichnet, Produktseite 44).
+
+  Gilt fuer Produkte mit Preis auf Anfrage (Preis 0,00), auf der Kachel
+  wie auf der Produktseite. Die Fallunterscheidung treffen die Aufrufer
+  ueber das Preisfeld - dieselbe Pruefung wie fuer die Preiszeile. Damit
+  wandert das Verhalten automatisch mit: faellt ein Preis auf 0, kommt
+  der Balken, bekommt ein Produkt einen Preis, verschwindet er.
+
+  DIE ZIELE STEHEN NICHT IM AUSGELIEFERTEN HTML: Beide Haelften sind
+  Knoepfe, deren Adresse erst im Klick-Handler entsteht - WhatsApp-Nummer
+  und Anfragetext tauchen im Quelltext der Seite nicht auf, die
+  Mail-Adresse entsteht wie ueberall erst im Browser (app/lib/kontakt.ts,
+  Harvester-Schutz). Ohne JavaScript bleibt die lesbare Pflichtangabe im
+  Impressum der Weg.
+
+  Beruehrungsziele: beide Haelften einzeln antippbar mit mindestens 44
+  Punkten. Produktseite echt ueber Innenabstand (min-h 44). Kachel: 32
+  gezeichnet wie die Nachbar-Knoepfe, die Tippflaeche waechst per
+  ziel44-tief nach UNTEN in den Innenabstand der Kachel - nach oben liegt
+  die Produktverknuepfung, mit der sich die Flaeche nicht ueberlappen darf.
+
+  Unter 230 Punkten KACHELBREITE (Behaeltermass, nicht Fenstermass)
+  entfallen die Woerter, die Symbole bleiben - die Vorlese-Beschriftung
+  traegt immer den Produktnamen.
+*/
 
 /** WhatsApp-Zeichen in Markenfarbe - von Rami fuer die Wegwahl beauftragt. */
 function WhatsAppZeichen() {
@@ -52,6 +67,7 @@ export default function AnfrageWahl({
   titel,
   sku = null,
   klein = false,
+  wortlaut = "anfrage",
 }: {
   /** Produktname im Klartext (unformatiert, landet im Anfragetext). */
   titel: string;
@@ -59,109 +75,73 @@ export default function AnfrageWahl({
   sku?: string | null;
   /** Kachel-Fassung: 32 Punkte gezeichnet, wie die Nachbar-Knoepfe. */
   klein?: boolean;
+  /**
+   * Wortlaut der Vorbefuellung (Vorgabe Rami, 09.08.2026):
+   * - "anfrage": Anfrage-Produkte (Preis 0) - "Anfrage zu ..." / "Anfrage: ..."
+   * - "frage":   kaufbare Produkte - "Frage zu ..." / "Frage: ..."
+   * Der Balken selbst ist in beiden Faellen derselbe.
+   */
+  wortlaut?: "anfrage" | "frage";
 }) {
-  const [offen, setOffen] = useState(false);
-  const rahmen = useRef<HTMLDivElement>(null);
-  const knopf = useRef<HTMLButtonElement>(null);
-  const feldId = useId();
-
-  // Schliessen per Klick daneben und per Escape (Escape gibt den Fokus
-  // an den Knopf zurueck). Die Abhoerer existieren nur, solange offen ist.
-  useEffect(() => {
-    if (!offen) return;
-    const daneben = (e: PointerEvent) => {
-      if (!rahmen.current?.contains(e.target as Node)) setOffen(false);
-    };
-    const taste = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      setOffen(false);
-      knopf.current?.focus();
-    };
-    document.addEventListener("pointerdown", daneben);
-    document.addEventListener("keydown", taste);
-    return () => {
-      document.removeEventListener("pointerdown", daneben);
-      document.removeEventListener("keydown", taste);
-    };
-  }, [offen]);
-
   const artikel = sku?.trim() ? sku.trim() : null;
-  // Vorgabe woertlich: "Anfrage zu [Produktname], Artikelnummer [Nr]:" -
-  // ohne Artikelnummer entfaellt der Nummern-Teil, der Doppelpunkt bleibt.
-  const whatsappText = `Anfrage zu ${titel}${artikel ? `, Artikelnummer ${artikel}` : ""}:`;
-  const betreff = `Anfrage: ${titel}${artikel ? ` (${artikel})` : ""}`;
+  const auftakt = wortlaut === "frage" ? "Frage" : "Anfrage";
 
-  // Eine Haelfte des Balkens. In der Kachel-Fassung 32 Punkte gezeichnet,
-  // die Tippflaeche waechst per ziel44-tief nach UNTEN - nach oben sitzt
-  // der ANFRAGEN-Knopf, dessen eigene Flaeche in die Fuge reicht.
+  // Vorgabe woertlich: "[Anfrage|Frage] zu [Produktname], Artikelnummer
+  // [Nr]:" - ohne Artikelnummer entfaellt der Nummern-Teil, der
+  // Doppelpunkt bleibt.
+  function whatsapp() {
+    const text = `${auftakt} zu ${titel}${artikel ? `, Artikelnummer ${artikel}` : ""}:`;
+    window.open(
+      `https://wa.me/4367762080802?text=${encodeURIComponent(text)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }
+
+  function mail() {
+    const betreff = `${auftakt}: ${titel}${artikel ? ` (${artikel})` : ""}`;
+    window.location.href = `mailto:${mailKlartext()}?subject=${encodeURIComponent(betreff)}`;
+  }
+
+  // Eine Haelfte des Balkens: Machart wie der Sackerl-Knopf daneben
+  // (Akzentfarbe, Versalien, Hover-Toenung), Hoehe wie EIN Knopf.
   const haelfte =
-    `flex ${klein ? "ziel44 ziel44-tief h-8" : "min-h-[44px]"} min-w-0 flex-1 ` +
+    `flex ${klein ? "ziel44 ziel44-tief h-8" : "min-h-[44px] py-3"} min-w-0 flex-1 ` +
     "items-center justify-center gap-2 px-1 " +
     `${klein ? "text-[0.64rem]" : "text-[0.72rem]"} font-bold uppercase leading-none ` +
-    "tracking-[0.16em] transition-colors hover:text-accent focus-visible:text-accent";
-  // Woerter entfallen in schmalen Kacheln (Behaeltermass, nicht
-  // Fenstermass) - dann sprechen die Symbole, die Vorlese-Beschriftung
-  // bleibt immer dran.
+    "tracking-[0.16em] text-accent transition-colors hover:bg-[rgba(92,200,255,0.12)]";
+  // Woerter entfallen in schmalen Kacheln - dann sprechen die Symbole,
+  // die Vorlese-Beschriftung bleibt immer dran.
   const wort = klein ? "@max-[230px]:hidden" : "";
 
   return (
-    <div
-      ref={rahmen}
-      className={klein ? "@container w-full" : "inline-block min-w-[260px]"}
-    >
+    <div className={klein ? "@container flex w-full border border-accent" : "flex min-w-[260px] border border-accent"}>
       <button
-        ref={knopf}
         type="button"
-        aria-expanded={offen}
-        aria-controls={feldId}
-        aria-label={`Anfragen: ${titel}`}
-        onClick={() => setOffen((o) => !o)}
-        className={
-          // Zustand und Grundfarben schliessen sich aus, sonst entscheidet
-          // die CSS-Reihenfolge statt des Zustands (text-muted schlug
-          // text-accent).
-          klein
-            ? // wie WegKnopf der Kachel: 32 gezeichnet, 44 antippbar (ziel44)
-              "ziel44 flex h-8 w-full items-center justify-center border px-2 " +
-              "text-[0.64rem] font-bold uppercase leading-none tracking-[0.16em] transition-colors " +
-              (offen
-                ? "border-accent text-accent"
-                : "border-line-strong text-muted hover:border-text hover:text-text")
-            : "min-h-[44px] w-full border px-6 py-3 text-[0.72rem] font-bold " +
-              "uppercase tracking-[0.2em] transition-colors " +
-              (offen
-                ? "border-accent text-accent"
-                : "border-line-strong hover:border-accent hover:text-accent")
+        onClick={whatsapp}
+        aria-label={
+          wortlaut === "frage"
+            ? `Frage per WhatsApp stellen: ${titel}`
+            : `Per WhatsApp anfragen: ${titel}`
         }
+        className={haelfte}
       >
-        Anfragen
+        <WhatsAppZeichen />
+        <span className={wort}>WhatsApp</span>
       </button>
-
-      {/* Erst nach dem Klick im Baum - kein Weg steht im HTML der Seite.
-          EIN Balken, zweigeteilt, Trennlinie mittig, Rahmen in Akzentblau
-          wie der offene ANFRAGEN-Knopf (Optikvorgabe vom 09.08.). */}
-      {offen && (
-        <div id={feldId} className="mt-2 flex border border-accent">
-          <a
-            href={`https://wa.me/4367762080802?text=${encodeURIComponent(whatsappText)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Per WhatsApp anfragen: ${titel}`}
-            className={haelfte}
-          >
-            <WhatsAppZeichen />
-            <span className={wort}>WhatsApp</span>
-          </a>
-          <a
-            href={`mailto:${mailKlartext()}?subject=${encodeURIComponent(betreff)}`}
-            aria-label={`Per E-Mail anfragen: ${titel}`}
-            className={`${haelfte} border-l border-accent`}
-          >
-            <BriefZeichen />
-            <span className={wort}>E-Mail</span>
-          </a>
-        </div>
-      )}
+      <button
+        type="button"
+        onClick={mail}
+        aria-label={
+          wortlaut === "frage"
+            ? `Frage per E-Mail stellen: ${titel}`
+            : `Per E-Mail anfragen: ${titel}`
+        }
+        className={`${haelfte} border-l border-accent`}
+      >
+        <BriefZeichen />
+        <span className={wort}>E-Mail</span>
+      </button>
     </div>
   );
 }
