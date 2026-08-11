@@ -13,7 +13,7 @@ export default function VersandZahlungPage() {
   return (
     <LegalArticle eyebrow="Service" title="Versand & Zahlung">
       <h2>Liefergebiet</h2>
-      <p>Wir liefern innerhalb Österreichs.</p>
+      <p>Wir liefern ausschließlich innerhalb Österreichs.</p>
 
       {/* Zwei Faelle getrennt ausgewiesen, damit die Zusage aus dem Ticker
           ("3 bis 7 Werktage bei Lagerware") bei Beschaffungsware nicht bricht.
@@ -35,26 +35,54 @@ export default function VersandZahlungPage() {
       <p>Alle Angaben sind unverbindliche Richtwerte.</p>
 
       {/* Betraege bewusst ausgeschrieben, nicht aus app/lib/versand.ts
-          interpoliert - siehe Begruendung in app/agb/page.tsx (Punkt 5.4). */}
+          interpoliert - siehe Begruendung in app/agb/page.tsx (Punkt 5.4).
+          Die Staffel steht als sichtbare Tabelle, weil die FAQ-Antwort zu
+          den Versandkosten genau hierher verweist (Vorgabe vom 09.08.). */}
       <h2>Versandkosten</h2>
+      <p>Österreichweit, gestaffelt nach Sendungsgewicht:</p>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Sendungsgewicht</th>
+            <th scope="col">Versandkosten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>bis 20 kg</td>
+            <td>10,00 EUR netto</td>
+          </tr>
+          <tr>
+            <td>bis 40 kg</td>
+            <td>15,00 EUR netto</td>
+          </tr>
+          <tr>
+            <td>bis 60 kg</td>
+            <td>20,00 EUR netto</td>
+          </tr>
+          <tr>
+            <td>über 60 kg</td>
+            <td>auf Anfrage</td>
+          </tr>
+        </tbody>
+      </table>
       <p>
-        Österreichweit gestaffelt nach Sendungsgewicht: bis 20 kg 10,00 €, bis
-        40 kg 15,00 €, bis 60 kg 20,00 € (jeweils netto). Ab einem Warenwert von
-        150,00 EUR netto liefern wir bei Sendungen bis 20 kg versandkostenfrei.
-        Schwerere Sendungen sowie Lieferungen in Palettengröße kalkulieren wir
-        individuell. Fragen Sie uns an.
+        Ab einem Warenwert von 150,00 EUR netto liefern wir versandkostenfrei -
+        das gilt bei Sendungen bis 20 kg. Schwerere Sendungen sowie Lieferungen
+        in Palettengröße kalkulieren wir individuell. Fragen Sie uns an.
       </p>
 
       <h2>Zahlungsarten</h2>
       <ul>
-        <li>Kreditkarte</li>
-        <li>Sofortzahlung</li>
-        <li>Vorkasse per Überweisung</li>
+        <li>Karte</li>
+        <li>eps-Überweisung</li>
+        <li>Google Pay</li>
+        <li>Apple Pay</li>
       </ul>
       <p>
-        Die Ware wird nach vollständigem Zahlungseingang versendet. Es fallen
-        keine zusätzlichen Gebühren für die Wahl eines bestimmten Zahlungsmittels
-        an.
+        Kauf auf Rechnung bieten wir derzeit nicht an. Die Ware wird nach
+        vollständigem Zahlungseingang versendet. Es fallen keine zusätzlichen
+        Gebühren für die Wahl eines bestimmten Zahlungsmittels an.
       </p>
     </LegalArticle>
   );

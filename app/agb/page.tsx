@@ -8,7 +8,7 @@ export default function AgbPage() {
     <LegalArticle
       eyebrow="Rechtliches"
       title="AGB"
-      updated="01.08.2026"
+      updated="09.08.2026"
     >
       <p>
         <strong>
@@ -59,14 +59,10 @@ export default function AgbPage() {
 
       <h2>4. Zahlung</h2>
       <p>
-        4.1 Es stehen folgende Zahlungsarten zur Verfügung: Kreditkarte,
-        Sofortzahlung sowie Vorkasse per Überweisung.
+        4.1 Es stehen folgende Zahlungsarten zur Verfügung: Karte,
+        eps-Überweisung, Google Pay sowie Apple Pay.
       </p>
       <p>4.2 Die Ware wird erst nach vollständigem Zahlungseingang versendet.</p>
-      <p>
-        4.3 Ein Kauf auf Rechnung mit Zahlungsziel kann ausgewählten Stammkunden
-        nach gesonderter Vereinbarung eingeräumt werden.
-      </p>
 
       <h2>5. Lieferung</h2>
       <p>5.1 Die Lieferung erfolgt ausschließlich innerhalb Österreichs.</p>

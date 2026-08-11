@@ -300,6 +300,25 @@ body {
   color: var(--muted);
   font-size: 0.8rem;
 }
+/* Tabellen in Rechts-/Servicetexten, z.B. die Versandkostenstaffel auf
+   /versand-zahlung (die FAQ verweist auf genau diese Tabelle). */
+.legal table {
+  margin: 0 0 1rem;
+  width: 100%;
+  max-width: 34rem;
+  border-collapse: collapse;
+}
+.legal th,
+.legal td {
+  border: 1px solid var(--line);
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  color: var(--text-soft);
+}
+.legal th {
+  color: var(--text);
+  font-weight: 700;
+}
 
 /* ---------------------------------------------------------------------------
    News-Ticker der Kopfleiste.

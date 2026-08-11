@@ -12,7 +12,7 @@
 
 export const TICKER_MELDUNGEN: string[] = [
   "Verkauf ausschließlich an Gewerbetreibende, Vereine und öffentliche Einrichtungen",
-  "Versandkostenfrei ab 150 EUR netto",
+  "Versandkostenfrei ab 150 EUR netto (bis 20 kg)",
   "Lieferzeit 3 bis 7 Werktage bei Lagerware",
 ];
 
