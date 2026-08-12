@@ -348,7 +348,7 @@ export const PRODUKTINHALTE: Record<string, Produktinhalt> = {
     aufmacher:
       "Die oberste Klasse im Programm. Für Abfall, bei dem ein gerissener Sack keine Anekdote wäre, sondern ein Einsatz.",
     anwendung:
-      "Schwerlast-Abfallsack für Bauschutt-nahen Abfall, Werkstatt und Außenbereich.",
+      "Abfallsack für mittelschwere bis schwere Abfälle: Bauendreinigung, alte Tapeten, kantige Materialien, Werkstatt und Außenbereich.",
     technik: { weitere: [["Länge", "ca. 99 cm"], ["Tragfähigkeit", "Typ 100"], ["Behälter rund", "bis Ø 44,5 cm"], ["Behälter eckig", "bis 70 cm Kantensumme"]] },
   },
   "44904": {

@@ -31,7 +31,7 @@ export const CATEGORIES: Category[] = [
     label: "Entsorgung",
     headline: "Müllsäcke, die mehr aushalten als Ihr Team am Montagmorgen.",
     intro:
-      "Von dünn und billig bis Bauschutt-erprobt. Jede Stärke, jede Größe, immer ehrlich beschriftet. Der Dreck fragt nicht. Der richtige Sack antwortet trotzdem.",
+      "Von dünn und billig bis richtig reißfest. Jede Stärke, jede Größe, immer ehrlich beschriftet. Der Dreck fragt nicht. Der richtige Sack antwortet trotzdem.",
     // Hochformat-Fassung: ganzer Film bis zur letzten Szene (Endgrafik weg),
     // mit eingebrannten Untertiteln und Tonspur (Ton-Knopf im Player).
     //

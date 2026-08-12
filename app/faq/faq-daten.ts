@@ -227,7 +227,7 @@ export const FAQ_TEILE: FaqTeil[] = [
         "absaetze": [
           {
             "art": "text",
-            "text": "HDPE ist dünn, steif und raschelt hörbar. Es ist bei gleichem Volumen leichter und günstiger und eignet sich für leichte, trockene Abfälle wie Papier, Verpackungen und Büromüll. LDPE ist weich, dehnbar und deutlich elastischer. Es verträgt Feuchtigkeit, Gewicht und Kanten besser und ist die Wahl für schwere oder scharfkantige Abfälle. Für Bauschutt nimmt man LDPE, für den Papierkorb reicht HDPE."
+            "text": "HDPE ist dünn, steif und raschelt hörbar. Es ist bei gleichem Volumen leichter und günstiger und eignet sich für leichte, trockene Abfälle wie Papier, Verpackungen und Büromüll. LDPE ist weich, dehnbar und deutlich elastischer. Es verträgt Feuchtigkeit, Gewicht und Kanten besser und ist die Wahl für schwere oder scharfkantige Abfälle. Für schwere, kantige Abfälle nimmt man LDPE, für den Papierkorb reicht HDPE."
           }
         ]
       },
@@ -237,7 +237,7 @@ export const FAQ_TEILE: FaqTeil[] = [
         "absaetze": [
           {
             "art": "text",
-            "text": "Entscheidend ist die Kombination aus Material, Foliendicke und Machart, nicht eine einzelne Zahl. Als Orientierung: Für leichte Büro- und Papierabfälle genügen dünne HDPE-Beutel. Für gemischten Gewerbeabfall aus Küche, Werkstatt oder Reinigung nimmt man LDPE im mittleren Bereich. Für schweren oder scharfkantigen Abfall wie Bauschutt, Glas oder Metallteile greift man zu den kräftigsten Ausführungen, die üblicherweise als Typ 100 oder Premium verkauft werden. Wer zu dünn kauft, spart einmal und wischt zweimal."
+            "text": "Entscheidend ist die Kombination aus Material, Foliendicke und Machart, nicht eine einzelne Zahl. Als Orientierung: Für leichte Büro- und Papierabfälle genügen dünne HDPE-Beutel. Für gemischten Gewerbeabfall aus Küche, Werkstatt oder Reinigung nimmt man LDPE im mittleren Bereich. Für schweren oder scharfkantigen Abfall wie Glas, Metallteile oder Abfälle aus der Bauendreinigung greift man zu den kräftigsten Ausführungen, die üblicherweise als Typ 100 oder Premium verkauft werden. Wer zu dünn kauft, spart einmal und wischt zweimal."
           }
         ]
       },
